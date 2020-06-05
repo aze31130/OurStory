@@ -1,0 +1,25 @@
+name: Ourstory
+version: 1.3
+author: aze31130
+
+main: fr.aze31130.ourstory.Main
+
+commands:
+  statistics:
+    usage: /<command>
+    description: Displays your stats as a player
+  craft:
+    usage: /<command>
+    description: Opens crafting table
+  c:
+    usage: /<command>
+    description: Opens crafting table
+  enderchest:
+    usage: /<command>
+    description: Opens ender chest
+  ec:
+    usage: /<command>
+    description: Opens ender chest
+  changelog:
+    usage: /<command>
+    description: Displays the changelog file
