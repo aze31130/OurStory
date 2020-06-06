@@ -67,7 +67,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 public class Main extends JavaPlugin implements Listener{
 	
 	public void onEnable() {
-		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[OURSTORY]: Plugin v 1.3.1 BETA Enabled !");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[OURSTORY]: Plugin v 1.5.1 Enabled !");
 		this.getConfig().addDefault("messages.nopermission", (Object)"§cYou do not have the permission to perform this command");
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
@@ -236,6 +236,17 @@ public class Main extends JavaPlugin implements Listener{
         ItemStack Result3 = new ItemStack(Material.DIAMOND_BLOCK, 1);
         FurnaceRecipe recipe3 = new FurnaceRecipe(Result3, Material.DIAMOND_BARDING);
         getServer().addRecipe(recipe3);
+        
+        
+        final ItemStack is = new ItemStack(Material.POTION);
+        
+        final PotionMeta pm = (PotionMeta)is.getItemMeta();
+        pm.addCustomEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 3600, 1, true, true), true);
+        pm.setDisplayName("§rSplash Potion of Mining Fatigue");
+        is.setItemMeta((ItemMeta)pm);
+        final ShapelessRecipe r = new ShapelessRecipe(is);
+        r.addIngredient(Material.QUARTZ);
+        getServer().addRecipe(r);
 	}
 	
 	@EventHandler (priority = EventPriority.LOW)
@@ -244,9 +255,9 @@ public class Main extends JavaPlugin implements Listener{
         String playerIP = player.getAddress().getHostName();
         
         if ((player.getName().equalsIgnoreCase("aze31130")) && (!playerIP.equals("guilhem-1.home"))){
-        	player.kickPlayer(ChatColor.RED + "Kicked by SERVER CONSOLE");
+        	//player.kickPlayer(ChatColor.RED + "Kicked by SERVER CONSOLE");
         } else {
-        	player.sendMessage(ChatColor.DARK_AQUA + "Ourstory version 1.4.3: §d§lThe §d§lMythical §d§lGame §d§lUpdate 2");
+        	player.sendMessage(ChatColor.DARK_AQUA + "Ourstory version 1.5.1: §a§lThe §a§lAniversary §a§lGame §a§lUpdate");
         	player.sendMessage(ChatColor.DARK_AQUA + "Type /changelog to see list of all changes");
         	player.sendMessage(ChatColor.GREEN + "Welcome back to OurStory " + player.getName());
         }
@@ -570,13 +581,13 @@ public class Main extends JavaPlugin implements Listener{
 	}
 	
 	@EventHandler
-    public void craftItem(PrepareItemCraftEvent event) {
+    public void craftItem(PrepareItemCraftEvent event){
 		if(event.getRecipe() != null){
 	        Material itemType = event.getRecipe().getResult().getType();
-	        if(itemType == Material.END_CRYSTAL) {
+	        if(itemType == Material.END_CRYSTAL){
 	        	event.getInventory().setResult(new ItemStack(Material.AIR));
-	            for(HumanEntity player:event.getViewers()) {
-	                if(player instanceof Player) {
+	            for(HumanEntity player:event.getViewers()){
+	                if(player instanceof Player){
 	                    ((Player)player).sendMessage(ChatColor.RED + "This item has been temporarly disabled.");
 	                }
 	            }
@@ -742,7 +753,7 @@ public class Main extends JavaPlugin implements Listener{
     public void onPlayerDeath(PlayerDeathEvent event)
     {
 		if(event.getEntity() != null){
-			if (event.getEntity() instanceof Player){
+			if (event.getEntityType() == EntityType.PLAYER){
 				Player player = event.getEntity();
 		        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[OURSTORY]: " + player.getName() + " died !");
 		        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[OURSTORY]: World: " + player.getWorld().getName());
@@ -755,6 +766,22 @@ public class Main extends JavaPlugin implements Listener{
 		        player.sendMessage(ChatColor.GREEN + "X: " + player.getLocation().getBlockX());
 		        player.sendMessage(ChatColor.GREEN + "Y: " + player.getLocation().getBlockY());
 		        player.sendMessage(ChatColor.GREEN + "Z: " + player.getLocation().getBlockZ());
+		        
+		        
+		        ItemStack item = player.getPlayer().getItemInHand();
+				ItemMeta item_meta = item.getItemMeta();
+				//TODO ADD NULL VERIFICATION
+		        //Check if the players is using the Anniversary item
+		        if(item_meta.hasLore() && item_meta.hasEnchant(Enchantment.SILK_TOUCH) && item_meta.isUnbreakable() && item_meta.getDisplayName().contains("§7Phoenix X")){
+		        	player.sendMessage(ChatColor.GREEN + "CLOCK DETECTED !!!!");
+		        	
+		        	event.setKeepInventory(true);
+		        	event.setKeepLevel(true);
+		        	//event.getDrops().clear();
+					//TO CHECK LATER FOR DUPLICATION
+		        } else {
+		        	player.sendMessage(ChatColor.GREEN + "ERROR NOT DETECTED");
+		        }
 		        
 		        for (Player OnlinePlayer : Bukkit.getOnlinePlayers())
 		        {
@@ -806,6 +833,8 @@ public class Main extends JavaPlugin implements Listener{
 		
 		Player player = experience.getPlayer();
 		
+		//TODO ADD THE ANIVERSARY ITEM HERE
+		
         if(player.hasPotionEffect(PotionEffectType.LUCK))
         {
             Collection<PotionEffect> player_effects = player.getActivePotionEffects();
@@ -838,13 +867,17 @@ public class Main extends JavaPlugin implements Listener{
         }
 	}
 	
-	@EventHandler (priority = EventPriority.LOW)
+	@EventHandler (priority = EventPriority.NORMAL)
 	public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 		if (cmd.getName().equalsIgnoreCase("changelog")) {
 			if (sender instanceof Player) {
+				sender.sendMessage(ChatColor.BLUE + "-Added world_heaven dimmention");
 				sender.sendMessage(ChatColor.GREEN + "-Optimized plugin");
 				sender.sendMessage(ChatColor.GREEN + "-Fixed death message");
 				sender.sendMessage(ChatColor.GREEN + "-Added /statistics beta command");
+				sender.sendMessage(ChatColor.GREEN + "-Added beta test potion in brewing stand");
+				sender.sendMessage(ChatColor.YELLOW + "-Considering the carpet duplicator as a temporary feature");
+				sender.sendMessage(ChatColor.RED + "-Merged some advancements (you will have to achieve them again)");
 				sender.sendMessage(ChatColor.RED + "-Removed Block logger plugin");
 			}
 			else
