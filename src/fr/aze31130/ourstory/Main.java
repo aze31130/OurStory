@@ -1,20 +1,13 @@
 package fr.aze31130.ourstory;
 
-import org.bukkit.entity.Bat;
-import org.bukkit.entity.Boat;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Egg;
-import org.bukkit.entity.Enderman;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Ghast;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Minecart;
-import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
-import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,21 +24,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPortalEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -54,19 +42,15 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.FurnaceRecipe;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.BrewerInventory;
-import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
-public class Main extends JavaPlugin implements Listener{
+public class Main extends JavaPlugin implements Listener {
 	
-	public void onEnable() {
+	public void onEnable(){
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[OURSTORY]: Plugin v 1.5.1 Enabled !");
 		this.getConfig().addDefault("messages.nopermission", (Object)"§cYou do not have the permission to perform this command");
 		this.getConfig().options().copyDefaults(true);
@@ -236,21 +220,10 @@ public class Main extends JavaPlugin implements Listener{
         ItemStack Result3 = new ItemStack(Material.DIAMOND_BLOCK, 1);
         FurnaceRecipe recipe3 = new FurnaceRecipe(Result3, Material.DIAMOND_BARDING);
         getServer().addRecipe(recipe3);
-        
-        
-        final ItemStack is = new ItemStack(Material.POTION);
-        
-        final PotionMeta pm = (PotionMeta)is.getItemMeta();
-        pm.addCustomEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 3600, 1, true, true), true);
-        pm.setDisplayName("§rSplash Potion of Mining Fatigue");
-        is.setItemMeta((ItemMeta)pm);
-        final ShapelessRecipe r = new ShapelessRecipe(is);
-        r.addIngredient(Material.QUARTZ);
-        getServer().addRecipe(r);
 	}
 	
 	@EventHandler (priority = EventPriority.LOW)
-    public void onPlayerJoin(final PlayerJoinEvent event) {
+    public void onPlayerJoin(final PlayerJoinEvent event){
         Player player = event.getPlayer();
         String playerIP = player.getAddress().getHostName();
         
@@ -265,10 +238,9 @@ public class Main extends JavaPlugin implements Listener{
 	
 	
 	@EventHandler (priority = EventPriority.LOW)
-    public void onItemConsume(final PlayerItemConsumeEvent event) {
+    public void onItemConsume(final PlayerItemConsumeEvent event){
 		Player player = event.getPlayer();
 		ItemStack item = player.getInventory().getItemInMainHand();
-		//ItemStack item2 = player.getInventory().getItemInOffHand();
 		
 		if (item.getType() == Material.RABBIT_STEW){
 			event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 2400, 1));
@@ -592,7 +564,7 @@ public class Main extends JavaPlugin implements Listener{
 	                }
 	            }
 	        }
-		} else {
+		}else{
 			return;
 		}
     }
@@ -600,7 +572,7 @@ public class Main extends JavaPlugin implements Listener{
 	@EventHandler
 	public void onPlayerPlace(BlockPlaceEvent event) {
 		if (event.getBlock().getType().equals(Material.MOB_SPAWNER)) {
-			ItemStack item = event.getPlayer().getItemInHand();
+			ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
 			ItemMeta item_meta = item.getItemMeta();
 			
 			if (item_meta.hasLore() && item_meta.hasEnchant(Enchantment.VANISHING_CURSE) && item_meta.isUnbreakable() && (item_meta.getDisplayName().contains("§c§lSpawner")) && (item_meta.getDisplayName().contains("§4§lMythical"))) {
@@ -750,10 +722,9 @@ public class Main extends JavaPlugin implements Listener{
 	}
 	
 	@EventHandler (priority = EventPriority.LOW)
-    public void onPlayerDeath(PlayerDeathEvent event)
-    {
+    public void onPlayerDeath(PlayerDeathEvent event){
 		if(event.getEntity() != null){
-			if (event.getEntityType() == EntityType.PLAYER){
+			if (event.getEntity() instanceof Player){
 				Player player = event.getEntity();
 		        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[OURSTORY]: " + player.getName() + " died !");
 		        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[OURSTORY]: World: " + player.getWorld().getName());
@@ -767,61 +738,55 @@ public class Main extends JavaPlugin implements Listener{
 		        player.sendMessage(ChatColor.GREEN + "Y: " + player.getLocation().getBlockY());
 		        player.sendMessage(ChatColor.GREEN + "Z: " + player.getLocation().getBlockZ());
 		        
-		        
-		        ItemStack item = player.getPlayer().getItemInHand();
-				ItemMeta item_meta = item.getItemMeta();
-				//TODO ADD NULL VERIFICATION
-		        //Check if the players is using the Anniversary item
-		        if(item_meta.hasLore() && item_meta.hasEnchant(Enchantment.SILK_TOUCH) && item_meta.isUnbreakable() && item_meta.getDisplayName().contains("§7Phoenix X")){
-		        	player.sendMessage(ChatColor.GREEN + "CLOCK DETECTED !!!!");
-		        	
-		        	event.setKeepInventory(true);
-		        	event.setKeepLevel(true);
-		        	//event.getDrops().clear();
-					//TO CHECK LATER FOR DUPLICATION
-		        } else {
-		        	player.sendMessage(ChatColor.GREEN + "ERROR NOT DETECTED");
-		        }
-		        
-		        for (Player OnlinePlayer : Bukkit.getOnlinePlayers())
-		        {
+		        ItemStack offItem = player.getPlayer().getInventory().getItemInOffHand();
+		        ItemMeta itemMetaOffItem = offItem.getItemMeta();
+				
+				//Check if the players is using the Anniversary item
+				if((offItem != null) && (itemMetaOffItem != null)){
+					if((itemMetaOffItem.hasLore() && itemMetaOffItem.hasEnchant(Enchantment.SILK_TOUCH) && itemMetaOffItem.isUnbreakable() && itemMetaOffItem.getLore().contains("§7Phoenix X"))){
+			        	Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[OURSTORY]: " + player.getName() + " used the Phoenix enchantment");
+			        	player.sendMessage(ChatColor.GREEN + "The Phoenix enchantment saved your inventory");
+			        	event.setKeepInventory(true);
+			        }
+				}
+				
+		        for (Player OnlinePlayer : Bukkit.getOnlinePlayers()){
 		        	OnlinePlayer.playSound(OnlinePlayer.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1000, 1);
 		        }
-			} else {
+			}else{
 				return;
 			}
-		} else {
+		}else{
 			return;
 		}
 	}
 	
 	@EventHandler (priority = EventPriority.NORMAL)
-    public void onEntityHit(final EntityDamageByEntityEvent entity) {
-        if ((entity.getDamager() instanceof Snowball) && (entity.getEntity() instanceof Player)) {
+    public void onEntityHit(final EntityDamageByEntityEvent entity){
+        if ((entity.getDamager() instanceof Snowball) && (entity.getEntity() instanceof Player)){
         	entity.setDamage(1);
         	entity.getEntity().getWorld().playEffect(entity.getEntity().getLocation(), Effect.STEP_SOUND, 80, 1);
         }
-        if ((entity.getDamager() instanceof Egg) && (entity.getEntity() instanceof Player)) {
+        if ((entity.getDamager() instanceof Egg) && (entity.getEntity() instanceof Player)){
         	entity.setDamage(3);
         	entity.getEntity().getWorld().playEffect(entity.getEntity().getLocation(), Effect.STEP_SOUND, 80, 1);
         }
     }
 	
 	@EventHandler(priority = EventPriority.NORMAL)
-	public void onPlayerTeleport(PlayerTeleportEvent event)
-	{
+	public void onPlayerTeleport(PlayerTeleportEvent event){
 	    if(event.getCause() == TeleportCause.ENDER_PEARL){
 	    	event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
 	    }
 	    
 	    if(event.getCause() == TeleportCause.CHORUS_FRUIT){
-	    	event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 700, 1));
-	    	event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 600, 1));
+	    	event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 700, 0));
+	    	event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 600, 0));
 	    }
 	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)
-	public void onEntityPortal(EntityPortalEvent event) {
+	public void onEntityPortal(EntityPortalEvent event){
 		if(!(event.getEntity() instanceof Ghast) && !(event.getEntity() instanceof Cow) && !(event.getEntity() instanceof Player)){
             event.setCancelled(true);
             event.getEntity().setFireTicks(20);
@@ -829,48 +794,52 @@ public class Main extends JavaPlugin implements Listener{
 	}
 	
 	@EventHandler (priority = EventPriority.HIGHEST)
-	public void onXpPickup(PlayerExpChangeEvent experience) {
-		
-		Player player = experience.getPlayer();
-		
-		//TODO ADD THE ANIVERSARY ITEM HERE
-		
-        if(player.hasPotionEffect(PotionEffectType.LUCK))
-        {
-            Collection<PotionEffect> player_effects = player.getActivePotionEffects();
-            for(PotionEffect effect : player_effects)
-            {
-                if(effect.getType().equals(PotionEffectType.LUCK))
-                {
-                	int multiplier = 1;
-                	
-                	switch(effect.getAmplifier()){
-                		case 0:
-                			multiplier = 2;
-                			break;
-                		case 1:
-                			multiplier = 3;
-                			break;
-                		case 2:
-                			multiplier = 4;
-                			break;
-                		case 3:
-                			multiplier = 5;
-                			break;
-                		default:
-                			multiplier = 1;
-                	}
-                	
-                	experience.setAmount(experience.getAmount() * multiplier);
-                }
-            }
-        }
+	public void onXpPickup(PlayerExpChangeEvent experience){
+		if(experience != null){
+			Player player = experience.getPlayer();
+			int multiplier = 1;
+			
+			//Check if the players is using the Anniversary item
+			ItemStack offItem = player.getPlayer().getInventory().getItemInOffHand();
+	        ItemMeta itemMetaOffItem = offItem.getItemMeta();
+			
+			if((offItem != null) && (itemMetaOffItem != null)){
+				if((itemMetaOffItem.hasLore() && itemMetaOffItem.hasEnchant(Enchantment.SILK_TOUCH) && itemMetaOffItem.isUnbreakable() && itemMetaOffItem.getLore().contains("§7Phoenix X"))){
+					multiplier += 1;
+		        }
+			}
+			
+			//Check if the player has luck effect
+	        if(player.hasPotionEffect(PotionEffectType.LUCK)){
+	            Collection<PotionEffect> player_effects = player.getActivePotionEffects();
+	            for(PotionEffect effect : player_effects){
+	                if(effect.getType().equals(PotionEffectType.LUCK)){
+	                	switch(effect.getAmplifier()){
+	                		case 0:
+	                			multiplier += 1;
+	                			break;
+	                		case 1:
+	                			multiplier += 2;
+	                			break;
+	                		case 2:
+	                			multiplier += 3;
+	                			break;
+	                		case 3:
+	                			multiplier += 4;
+	                			break;
+	                		default:
+	                			multiplier += 0;
+	                	}
+	                }
+	            }
+	        }
+	        experience.setAmount(experience.getAmount() * multiplier);
+		}
 	}
 	
-	@EventHandler (priority = EventPriority.NORMAL)
-	public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
-		if (cmd.getName().equalsIgnoreCase("changelog")) {
-			if (sender instanceof Player) {
+	public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args){
+		if (cmd.getName().equalsIgnoreCase("changelog")){
+			if (sender instanceof Player){
 				sender.sendMessage(ChatColor.BLUE + "-Added world_heaven dimmention");
 				sender.sendMessage(ChatColor.GREEN + "-Optimized plugin");
 				sender.sendMessage(ChatColor.GREEN + "-Fixed death message");
@@ -879,26 +848,20 @@ public class Main extends JavaPlugin implements Listener{
 				sender.sendMessage(ChatColor.YELLOW + "-Considering the carpet duplicator as a temporary feature");
 				sender.sendMessage(ChatColor.RED + "-Merged some advancements (you will have to achieve them again)");
 				sender.sendMessage(ChatColor.RED + "-Removed Block logger plugin");
-			}
-			else
-			{
+			}else{
 				sender.sendMessage("Only players can run this command!");
 			}
 		}
 		
-		if ((cmd.getName().equalsIgnoreCase("c")) || (cmd.getName().equalsIgnoreCase("craft"))) {
+		if ((cmd.getName().equalsIgnoreCase("c")) || (cmd.getName().equalsIgnoreCase("craft"))){
 			if (sender instanceof Player) {
-				if (sender.hasPermission("ourstory.craft")) {
+				if (sender.hasPermission("ourstory.craft")){
 					final Player player = (Player)sender;
 					player.openWorkbench(player.getLocation(), true);
-				}
-				else
-				{
+				}else{
 					sender.sendMessage(this.getConfig().getString("messages.nopermission").replace("&", "§"));
 				}
-			}
-			else
-			{
+			}else{
 				sender.sendMessage("Only players can run this command!");
 			}
 		}
@@ -908,9 +871,7 @@ public class Main extends JavaPlugin implements Listener{
 				if (sender.hasPermission("ourstory.enderchest")) {
 					final Player player = (Player)sender;
 					player.openInventory(player.getEnderChest());
-				}
-				else
-				{
+				}else{
 					sender.sendMessage(this.getConfig().getString("messages.nopermission").replace("&", "§"));
 				}
 			}
@@ -925,9 +886,7 @@ public class Main extends JavaPlugin implements Listener{
 				if (sender.hasPermission("ourstory.stats")) {
 					final Player player = (Player)sender;
 					player.sendMessage(ChatColor.BOLD + "" + ChatColor.LIGHT_PURPLE + "OURSTORY " + ChatColor.RED + "This command is still under developement but it will be soon released");
-				}
-				else
-				{
+				}else{
 					sender.sendMessage(this.getConfig().getString("messages.nopermission").replace("&", "§"));
 				}
 			}
@@ -936,31 +895,7 @@ public class Main extends JavaPlugin implements Listener{
 				sender.sendMessage("Only players can run this command!");
 			}
 		}
-
-		//if ((cmd.getName().equalsIgnoreCase("a")) || (cmd.getName().equalsIgnoreCase("anvil"))) {
-			//if (sender instanceof Player) {
-				//if (sender.hasPermission("ourstory.anvil")) {
-					//final Player player = (Player)sender;
-					//if ((args.length > 0) && (args[0].equalsIgnoreCase("confirm"))) {
-						//Inventory anvil = Bukkit.createInventory(player, InventoryType.ANVIL);
-						//player.openInventory(anvil);
-					//} else {
-						//player.sendMessage(ChatColor.DARK_RED + "[WARNING] " + ChatColor.RED + "This command is still unstable for now and needs to be reviewed !");
-						//player.sendMessage(ChatColor.DARK_RED + "[WARNING] " + ChatColor.RED + "Note that if you loose any items by using this command, it will NOT be given back.");
-						//player.sendMessage(ChatColor.DARK_RED + "[WARNING] " + ChatColor.RED + "You still have this snapshot access by tapping the following command:");
-						//player.sendMessage(ChatColor.DARK_RED + "[WARNING] " + ChatColor.RED + "/a confirm " + ChatColor.DARK_RED + "or " + ChatColor.RED + "/anvil confirm ");
-					//}	
-				//}
-				//else
-				//{
-					//sender.sendMessage(this.getConfig().getString("messages.nopermission").replace("&", "§"));
-				//}
-			//}
-			//else
-			//{
-				//sender.sendMessage("Only players can run this command!");
-			//}
-		//}
+		
 		return true;
     }
 }
