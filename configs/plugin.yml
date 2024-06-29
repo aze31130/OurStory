@@ -1,8 +1,8 @@
 name: Ourstory
-version: 1.3
+version: 1.0
 author: aze31130
 
-main: fr.aze31130.ourstory.Main
+main: ourstory.Main
 
 commands:
   statistics:
