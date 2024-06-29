@@ -2,13 +2,15 @@ package ourstory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import ourstory.commands.Craft;
 import ourstory.events.*;
 
 public class Main extends JavaPlugin {
 
 	public static final String prefix = "OurStory";
-	public static final String version = "1.0";
-
+	public static final String version = "2.0";
 
 	@Override
 	public void onEnable() {
@@ -17,8 +19,13 @@ public class Main extends JavaPlugin {
 		// Registers all events
 		Bukkit.getPluginManager().registerEvents(new Player(), this);
 		Bukkit.getPluginManager().registerEvents(new Entity(), this);
-		Bukkit.getPluginManager().registerEvents(new CommandEvent(), this);
 
+		var manager = this.getLifecycleManager();
+		manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
+			final Commands commands = event.registrar();
+
+			commands.register("fun", "some help description string", new Craft());
+		});
 
 
 		// this.getConfig().addDefault("messages.nopermission", "You do not have the permission to perform

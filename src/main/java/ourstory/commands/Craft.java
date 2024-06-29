@@ -1,17 +1,11 @@
 package ourstory.commands;
 
-import org.bukkit.command.CommandSender;
+import io.papermc.paper.command.brigadier.BasicCommand;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
 
-public class Craft extends Command {
-	public Craft() {
-		super(
-				"c",
-				"Opens crafting table.",
-				new String[] {});
-	}
-
+public class Craft implements BasicCommand {
 	@Override
-	public void execute(CommandSender sender, String[] args) {
-		sender.sendMessage("craft command !");
+	public void execute(CommandSourceStack sender, String[] args) {
+		sender.getSender().sendMessage("craft command !");
 	}
 }
