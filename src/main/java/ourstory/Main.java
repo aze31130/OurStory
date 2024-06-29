@@ -1,21 +1,37 @@
 package ourstory;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import ourstory.events.*;
 
-public class Main extends JavaPlugin implements Listener {
+public class Main extends JavaPlugin {
+
+	public static final String prefix = "OurStory";
+	public static final String version = "1.0";
+
 
 	@Override
 	public void onEnable() {
-		Bukkit.getPluginManager().registerEvents(this, this);
+		Bukkit.getConsoleSender().sendMessage("Loading Ourstory...");
+
+		// Registers all events
+		Bukkit.getPluginManager().registerEvents(new Player(), this);
+		Bukkit.getPluginManager().registerEvents(new Entity(), this);
+		Bukkit.getPluginManager().registerEvents(new CommandEvent(), this);
+
+
+
+		// this.getConfig().addDefault("messages.nopermission", "You do not have the permission to perform
+		// this command");
+		// this.getConfig().options().copyDefaults(true);
+		// this.saveConfig();
+		// CustomCraft();
 	}
 
-	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent event) {
-		event.getPlayer().sendMessage(Component.text("Hello, " + event.getPlayer().getName() + "!"));
+	@Override
+	public void onDisable() {
+		Bukkit.getConsoleSender().sendMessage("Disabling Ourstory...");
+
+		// Save inventory, player state, anything the plugin is manipulating
 	}
 }

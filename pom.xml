@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>src.ourstory</groupId>
 	<artifactId>OurStory</artifactId>
-	<version>ALPHA-1.0.0</version>
+	<version>ALPHA-2.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>OurStory</name>
@@ -10,8 +10,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.source>22</maven.compiler.source>
+		<maven.compiler.target>22</maven.compiler.target>
 	</properties>
 
 	<repositories>
