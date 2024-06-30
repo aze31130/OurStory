@@ -11,9 +11,6 @@ commands:
   statistics:
     usage: /<command>
     description: Displays your stats as a player
-  craft:
-    usage: /<command>
-    description: Opens crafting table
   c:
     usage: /<command>
     description: Opens crafting table

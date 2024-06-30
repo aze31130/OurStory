@@ -5,6 +5,7 @@ import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -98,5 +99,19 @@ public class Player implements Listener {
 		// ItemStack offItem = player.getPlayer().getInventory().getItemInOffHand();
 		// ItemMeta itemMetaOffItem = offItem.getItemMeta();
 		// if itemMetaOffItem.getLore().contains("�7Phoenix X"))) { event.setKeepInventory(true);
+	}
+
+	@EventHandler
+	public void onXpPickup(PlayerExpChangeEvent experience) {
+		org.bukkit.entity.Player player = experience.getPlayer();
+		int multiplier = 1;
+
+		// LUCK potion effect works as exp multiplicator
+		if (player.hasPotionEffect(PotionEffectType.LUCK)) {
+			PotionEffect pe = player.getPotionEffect(PotionEffectType.LUCK);
+			multiplier += pe.getAmplifier() + 1;
+		}
+
+		experience.setAmount(experience.getAmount() * multiplier);
 	}
 }

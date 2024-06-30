@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import ourstory.commands.Craft;
+import ourstory.commands.EnderChest;
 import ourstory.events.*;
 
 public class Main extends JavaPlugin {
@@ -20,11 +21,15 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new Player(), this);
 		Bukkit.getPluginManager().registerEvents(new Entity(), this);
 
+
+		// Registers all commands
 		var manager = this.getLifecycleManager();
 		manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
 			final Commands commands = event.registrar();
 
-			commands.register("fun", "some help description string", new Craft());
+			commands.register("craft", "some help description string", new Craft());
+			commands.register("ec", "some help description string", new EnderChest());
+
 		});
 
 
@@ -32,7 +37,6 @@ public class Main extends JavaPlugin {
 		// this command");
 		// this.getConfig().options().copyDefaults(true);
 		// this.saveConfig();
-		// CustomCraft();
 	}
 
 	@Override

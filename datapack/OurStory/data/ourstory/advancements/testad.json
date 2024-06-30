@@ -1,0 +1,26 @@
+{
+	"display": {
+		"icon": {
+			"id": "minecraft:diamond_axe"
+		},
+		"title": "Test",
+		"description": "test",
+		"background": "dirt",
+		"frame": "challenge",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"criteria": {
+		"test": {
+			"trigger": "minecraft:used_ender_eye"
+		}
+	},
+	"rewards": {
+		"recipes": [
+			"minecraft:wither_elytra"
+		],
+		"experience": 10000
+	},
+	"sends_telemetry_event": false
+}
