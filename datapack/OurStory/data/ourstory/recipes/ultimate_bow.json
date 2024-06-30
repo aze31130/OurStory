@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" NS",
+		"N S",
+		" NS"
+	],
+	"key": {
+		"N": {
+			"item": "minecraft:nether_star"
+		},
+		"S": {
+			"item": "minecraft:string"
+		}
+	},
+	"result": {
+		"id": "minecraft:bow",
+		"count": 1
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" NN",
+		" SN",
+		" S "
+	],
+	"key": {
+		"N": {
+			"item": "minecraft:nether_star"
+		},
+		"S": {
+			"item": "minecraft:stick"
+		}
+	},
+	"result": {
+		"id": "minecraft:diamond_axe",
+		"count": 1,
+		"components": {
+			"minecraft:damage": 10,
+			"minecraft:max_damage": 30,
+			"minecraft:custom_name": "{'text':'Ultimate Axe','color':'light_purple','italic':false}",
+			"minecraft:unbreakable": {
+				"show_in_tooltip": true
+			},
+			"minecraft:enchantment_glint_override": true,
+			"minecraft:lore": [
+				"Test",
+				"test",
+				"Test"
+			]
+		}
+	}
+}

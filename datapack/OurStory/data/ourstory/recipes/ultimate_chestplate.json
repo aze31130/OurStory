@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"N N",
+		"NNN",
+		"NNN"
+	],
+	"key": {
+		"N": {
+			"item": "minecraft:nether_star"
+		}
+	},
+	"result": {
+		"id": "minecraft:diamond_chestplate",
+		"count": 1,
+		"components": {
+			"minecraft:custom_name": "{'text':'Ultimate Chestplate','color':'light_purple','italic':false}",
+			"minecraft:unbreakable": {
+				"show_in_tooltip": true
+			},
+			"minecraft:enchantment_glint_override": true,
+			"minecraft:lore": [
+				"Test",
+				"test",
+				"Test"
+			]
+		}
+	}
+}

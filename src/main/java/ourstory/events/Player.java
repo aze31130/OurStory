@@ -28,8 +28,6 @@ public class Player implements Listener {
 		// if ((player.getName().equalsIgnoreCase("aze31130")) && (!ip.equals("guilhem-1.home"))){
 		// player.kick();
 
-
-
 		player.sendMessage(Component.text("Welcome back to OurStory 2.0 " + player.getName() + " !")
 				.color(TextColor.color(0x443344)));
 		player.sendMessage(Component.text("Type /changelog to see list of all changes"));

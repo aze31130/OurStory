@@ -1,11 +1,16 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"#"
+		"NNN",
+		"NEN",
+		"NNN"
 	],
 	"key": {
-		"#": {
-			"item": "minecraft:dirt"
+		"E": {
+			"item": "minecraft:elytra"
+		},
+		"N": {
+			"item": "minecraft:nether_star"
 		}
 	},
 	"result": {
