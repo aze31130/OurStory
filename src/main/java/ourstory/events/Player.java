@@ -1,9 +1,11 @@
 package ourstory.events;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -97,6 +99,13 @@ public class Player implements Listener {
 		// ItemStack offItem = player.getPlayer().getInventory().getItemInOffHand();
 		// ItemMeta itemMetaOffItem = offItem.getItemMeta();
 		// if itemMetaOffItem.getLore().contains("�7Phoenix X"))) { event.setKeepInventory(true);
+	}
+
+	@EventHandler
+	public void onPlayerPlace(BlockPlaceEvent event) {
+		if (event.getBlock().getType().equals(Material.TNT)) {
+			// TODO send alert message including coords
+		}
 	}
 
 	@EventHandler

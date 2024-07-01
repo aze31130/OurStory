@@ -18,3 +18,10 @@ announceAdvancements true
 doLimitedCrafting true
 doInsomnia false
 playersSleepingPercentage 10
+
+
+## How boss system works
+
+We simply use loot tables
+
+/summon zombie ~ ~ ~ {DeathLootTable:"ourstory:test"}

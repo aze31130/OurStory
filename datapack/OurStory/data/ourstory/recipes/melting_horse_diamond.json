@@ -1,0 +1,11 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"item": "minecraft:diamond_horse_armor"
+	},
+	"result": {
+		"id": "minecraft:diamond_block"
+	},
+	"experience": 20,
+	"cookingtime": 20
+}

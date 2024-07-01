@@ -16,6 +16,9 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		Bukkit.getConsoleSender().sendMessage("Loading Ourstory...");
 
+		// Instanciate Singleton (used for storing config data, tpa requests)
+		// TODO
+
 		// Registers all events
 		Bukkit.getPluginManager().registerEvents(new Player(), this);
 		Bukkit.getPluginManager().registerEvents(new Entity(), this);
@@ -27,6 +30,8 @@ public class Main extends JavaPlugin {
 
 			commands.register("craft", "some help description string", new Craft());
 			commands.register("ec", "some help description string", new EnderChest());
+
+			commands.register("warp", "TODO", new Warp());
 
 		});
 
