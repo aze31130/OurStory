@@ -1,17 +1,8 @@
 package ourstory;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import io.papermc.paper.command.brigadier.Commands;
-import io.papermc.paper.math.Position;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import ourstory.commands.*;
 import ourstory.events.*;
@@ -38,6 +29,8 @@ public class Main extends JavaPlugin {
 			final Commands commands = event.registrar();
 
 			commands.register("boss", "some help description string", new Boss());
+			commands.register("split", "some help description string", new Split());
+			commands.register("ping", "some help description string", new Ping());
 
 			// commands.register("shop", "some help description string", new Boss());
 
