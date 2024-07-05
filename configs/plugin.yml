@@ -7,16 +7,3 @@ website: https://minecraft.aze.sh
 
 main: ourstory.Main
 
-commands:
-  statistics:
-    usage: /<command>
-    description: Displays your stats as a player
-  c:
-    usage: /<command>
-    description: Opens crafting table
-  enderchest:
-    usage: /<command>
-    description: Opens ender chest
-  ec:
-    usage: /<command>
-    description: Opens ender chest

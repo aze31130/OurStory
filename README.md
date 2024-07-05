@@ -25,3 +25,10 @@ playersSleepingPercentage 10
 We simply use loot tables
 
 /summon zombie ~ ~ ~ {DeathLootTable:"ourstory:test"}
+
+
+## TODO
+
+- Boss
+- Items Custom
+- Recipes / Knowledge Books

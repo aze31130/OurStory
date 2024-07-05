@@ -1,7 +1,7 @@
 {
 	"display": {
 		"icon": {
-			"id": "minecraft:diamond_axe"
+			"id": "minecraft:wooden_axe"
 		},
 		"title": "Test",
 		"description": "test",
@@ -11,9 +11,10 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
+	"parent": "ourstory:root",
 	"criteria": {
-		"test": {
-			"trigger": "minecraft:used_ender_eye"
+		"requirement": {
+			"trigger": "minecraft:impossible"
 		}
 	},
 	"rewards": {
@@ -21,6 +22,5 @@
 			"minecraft:wither_elytra"
 		],
 		"experience": 10000
-	},
-	"sends_telemetry_event": false
+	}
 }

@@ -1,8 +1,17 @@
 package ourstory;
 
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.math.Position;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import ourstory.commands.*;
 import ourstory.events.*;
@@ -28,10 +37,9 @@ public class Main extends JavaPlugin {
 		manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
 			final Commands commands = event.registrar();
 
-			commands.register("craft", "some help description string", new Craft());
-			commands.register("ec", "some help description string", new EnderChest());
+			commands.register("boss", "some help description string", new Boss());
 
-			commands.register("warp", "TODO", new Warp());
+			// commands.register("shop", "some help description string", new Boss());
 
 		});
 

@@ -1,0 +1,17 @@
+{
+	"display": {
+		"icon": {
+			"id": "minecraft:barrier"
+		},
+		"title": {"translate":"???"},
+		"description": {"color":"#CCCCCC","translate":"??????"},
+		"background": "minecraft:textures/block/dirt.png",
+		"show_toast": true,
+		"announce_to_chat": true
+	},		
+	"criteria": {
+		"requirement": {
+			"trigger": "minecraft:tick"
+		}
+	}
+}

@@ -6,6 +6,7 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 public class Entity implements Listener {
 	@EventHandler
@@ -18,5 +19,15 @@ public class Entity implements Listener {
 			entity.setDamage(3);
 			entity.getEntity().getWorld().playEffect(entity.getEntity().getLocation(), Effect.STEP_SOUND, 80, 1);
 		}
+	}
+
+	@EventHandler
+	public void mobDeath(EntityDeathEvent event) {
+		/*
+		 * if (event.getEntity().getKiller().getInventory().getItemInMainHand().getEnchantments()
+		 * .containsKey(Enchantment.LOOT_BONUS_MOBS)) { LootingLevel =
+		 * event.getEntity().getKiller().getInventory().getItemInMainHand()
+		 * .getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS); }
+		 */
 	}
 }
