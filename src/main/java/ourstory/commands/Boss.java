@@ -1,18 +1,66 @@
 package ourstory.commands;
 
-import org.bukkit.Bukkit;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import ourstory.bosses.Difficulty;
+import ourstory.bosses.Shadowblade;
+import ourstory.storage.Storage;
 import ourstory.utils.Permissions;
 
 public class Boss implements BasicCommand {
+	private final List<String> bossNames = List.of("Shadowblade");
+
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {
 		if (!Permissions.checkPermissions(sender.getSender(), "ourstory.boss"))
 			return;
 
-		// Bukkit.dispatchCommand(sender.getSender().getServer().getConsoleSender(), "function
-		// ourstory:example_boss");
-		Bukkit.dispatchCommand(sender.getSender().getServer().getConsoleSender(), "world world_nether");
+		if (args.length < 2) {
+			sender.getSender().sendMessage("You need to provide a boss name and a difficulty !");
+			return;
+		}
+
+		String bossName = args[0];
+		Difficulty difficulty = Difficulty.valueOf(args[1]);
+
+		ourstory.bosses.Boss boss = null;
+
+		switch (bossName) {
+			case "Shadowblade":
+				boss = new Shadowblade(difficulty, sender.getLocation(), sender.getLocation().getWorld());
+				boss.onSpawn();
+				break;
+
+			default:
+				sender.getSender().sendMessage("This boss does not exist !");
+				return;
+		}
+
+		// TODO tp player
+
+		// Register boss instance
+		Storage s = Storage.getInstance();
+		s.bossInstance = boss;
+	}
+
+	/*
+	 * /boss <bossname> <difficulty>
+	 */
+	@Override
+	public List<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
+		if (args.length == 0)
+			return bossNames;
+
+		if (args.length == 1) {
+			List<String> difficulties = new ArrayList<>();
+			for (Difficulty d : Difficulty.values())
+				difficulties.add(d.name());
+			return difficulties;
+		}
+
+		return Collections.emptyList();
 	}
 }

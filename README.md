@@ -24,11 +24,21 @@ playersSleepingPercentage 10
 
 We simply use loot tables
 
-/summon zombie ~ ~ ~ {DeathLootTable:"ourstory:test"}
-
+/summon zombie ~ ~ ~ {DeathLootTable:"ourstory:test",Health:20000,Attributes:[{Name:"generic.max_health",Base:20000f}]}
 
 ## TODO
 
 - Boss
 - Items Custom
 - Recipes / Knowledge Books
+
+
+# Questions to ask
+
+- Webui of all the map ? (! secret bases !)
+- 
+
+# spigot.yml
+  attribute:
+    maxHealth:
+      max: 2000000.0

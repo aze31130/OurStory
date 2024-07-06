@@ -3,8 +3,8 @@
 		"icon": {
 			"id": "minecraft:wooden_axe"
 		},
-		"title": "Test",
-		"description": "test",
+		"title": "Test2",
+		"description": "test2",
 		"frame": "challenge",
 		"announce_to_chat": true,
 		"hidden": false

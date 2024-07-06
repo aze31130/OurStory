@@ -31,7 +31,7 @@ public class Player implements Listener {
 		// player.kick();
 
 		player.sendMessage(Component.text("Welcome back to OurStory 2.0 " + player.getName() + " !")
-				.color(TextColor.color(0x443344)));
+				.color(TextColor.color(0xff4244)));
 		player.sendMessage(Component.text("Type /changelog to see list of all changes"));
 	}
 
