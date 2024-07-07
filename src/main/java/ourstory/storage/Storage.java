@@ -1,6 +1,8 @@
 package ourstory.storage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import org.bukkit.boss.BossBar;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -31,5 +33,5 @@ public class Storage {
 	public Boss bossInstance;
 
 	// Party list
-	// public List<List<UUID>> partyList = new ArrayList<>();
+	public List<List<UUID>> partyList = new ArrayList<>();
 }

@@ -1,5 +1,6 @@
 package ourstory.bosses;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import org.bukkit.Bukkit;
@@ -14,6 +15,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -41,13 +43,18 @@ public class Shadowblade extends Boss implements Runnable {
 
 	public Thread skills = new Thread(this);
 	public final String name = "Commander Shadowblade";
+	public Monster entity;
+	public Difficulty difficulty;
+	public int phase;
 
-	public Shadowblade(Difficulty difficulty, Location l, World w) {
+	public List<Player> players;
+
+	public Shadowblade(Difficulty difficulty, List<Player> players, Location l, World w) {
 		// Define boss health
 		this.difficulty = difficulty;
 		this.phase = 1;
-
-		Monster entity = (Monster) w.spawnEntity(l, EntityType.ZOMBIE);
+		this.players = players;
+		this.entity = (Monster) w.spawnEntity(l, EntityType.ZOMBIE);
 
 		EntityEquipment equipment = entity.getEquipment();
 		ItemStack[] armor = {
@@ -102,12 +109,15 @@ public class Shadowblade extends Boss implements Runnable {
 		Random r = new Random();
 
 		while (true) {
-			int rng = r.nextInt(100);
-			System.out.println("Boss Skill here");
 
-			// Player damager = (Player) event.getDamager();
-			// Monster boss = (Monster) event.getEntity();
-			//
+
+			if (this.difficulty.level > Difficulty.NORMAL.level) {
+				Skills.shoot(entity, players);
+				Skills.summonMinions(entity, players);
+			}
+
+			// int rng = r.nextInt(100);
+
 			// 3% chance to spawn minion
 			// if (rng < 10)
 			// Skills.summonMinions(boss, List.of(damager));
@@ -157,9 +167,9 @@ public class Shadowblade extends Boss implements Runnable {
 		this.skills.interrupt();
 
 		// Death animation
-		double x = damager.getLocation().getX();
-		double y = damager.getLocation().getY();
-		double z = damager.getLocation().getZ();
+		double x = damager.getX();
+		double y = damager.getY();
+		double z = damager.getZ();
 
 		for (int i = -2; i < 2; i++) {
 			damager.getWorld().spawnParticle(Particle.CLOUD, x + i, y, z + i, 50);

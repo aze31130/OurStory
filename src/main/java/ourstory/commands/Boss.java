@@ -29,7 +29,8 @@ public class Boss implements BasicCommand {
 
 		switch (bossName) {
 			case "Shadowblade":
-				boss = new Shadowblade(difficulty, sender.getLocation(), sender.getLocation().getWorld());
+				boss = new Shadowblade(difficulty, List.of((org.bukkit.entity.Player) sender.getSender()), sender.getLocation(),
+						sender.getLocation().getWorld());
 				boss.onSpawn();
 				break;
 
