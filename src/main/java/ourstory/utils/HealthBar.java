@@ -8,9 +8,8 @@ import org.bukkit.entity.Monster;
 
 public class HealthBar {
 	public static BarColor getColor(Entity entity) {
-		// String name = entity.getType().getKey().asString();
-		// TODO check for bossnames ?
-
+		if (entity.getScoreboardTags().contains("isBoss"))
+			return BarColor.PURPLE;
 		if (entity instanceof Monster)
 			return BarColor.RED;
 		if (entity instanceof Animals)
@@ -20,9 +19,6 @@ public class HealthBar {
 	}
 
 	public static BarStyle getStyle(Entity entity) {
-		// String name = entity.getType().getKey().asString();
-		// TODO check for bossnames ?
-
 		return BarStyle.SOLID;
 	}
 

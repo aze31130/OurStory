@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import net.kyori.adventure.text.Component;
@@ -96,9 +97,10 @@ public class Player implements Listener {
 			OnlinePlayer.playSound(OnlinePlayer.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1000, 1);
 
 		// Test for Phoenix enchant
-		// ItemStack offItem = player.getPlayer().getInventory().getItemInOffHand();
-		// ItemMeta itemMetaOffItem = offItem.getItemMeta();
-		// if itemMetaOffItem.getLore().contains("�7Phoenix X"))) { event.setKeepInventory(true);
+		ItemStack offItem = player.getPlayer().getInventory().getItemInOffHand();
+		ItemMeta itemMetaOffItem = offItem.getItemMeta();
+		if (itemMetaOffItem.getLore().contains("�7Phoenix X"))
+			event.setKeepInventory(true);
 	}
 
 	@EventHandler

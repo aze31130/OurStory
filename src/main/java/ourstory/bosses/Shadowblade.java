@@ -5,6 +5,7 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
@@ -13,17 +14,14 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.loot.LootTable;
 import net.kyori.adventure.text.Component;
 import ourstory.utils.EnchantItem;
 
-public class Shadowblade extends Boss {
+public class Shadowblade extends Boss implements Runnable {
 
 	private Map<Difficulty, Map<Attribute, Double>> attributes = Map.of(
 			Difficulty.EASY, Map.of(
@@ -31,45 +29,54 @@ public class Shadowblade extends Boss {
 					Attribute.GENERIC_ATTACK_DAMAGE, 5.0),
 			Difficulty.NORMAL, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 1500.0,
-					Attribute.GENERIC_ATTACK_DAMAGE, 15.0),
+					Attribute.GENERIC_ATTACK_DAMAGE, 11.0),
 			Difficulty.HARD, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 15000.0,
-					Attribute.GENERIC_ATTACK_DAMAGE, 30.0,
+					Attribute.GENERIC_ATTACK_DAMAGE, 21.0,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.CHAOS, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 200000.0,
-					Attribute.GENERIC_ATTACK_DAMAGE, 70.0,
+					Attribute.GENERIC_ATTACK_DAMAGE, 45.0,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 10.0));
 
-	public Zombie entity;
-	// public BossBar healthBar = Bukkit.createBossBar("Test Boss", BarColor.PURPLE, BarStyle.SOLID);
+	public Thread skills = new Thread(this);
+	public final String name = "Commander Shadowblade";
 
 	public Shadowblade(Difficulty difficulty, Location l, World w) {
-		this.entity = (Zombie) w.spawnEntity(l, EntityType.ZOMBIE);
+		// Define boss health
+		this.difficulty = difficulty;
+		this.phase = 1;
+
+		Monster entity = (Monster) w.spawnEntity(l, EntityType.ZOMBIE);
 
 		EntityEquipment equipment = entity.getEquipment();
 		ItemStack[] armor = {
 				EnchantItem.createEnchantedItem(Material.GOLDEN_BOOTS, Map.of(Enchantment.THORNS, 3)),
 				EnchantItem.createEnchantedItem(Material.DIAMOND_LEGGINGS, Map.of()),
-				EnchantItem.createEnchantedItem(Material.CHAINMAIL_CHESTPLATE, Map.of()),
+				EnchantItem.createEnchantedItem(Material.CHAINMAIL_CHESTPLATE, Map.of(Enchantment.THORNS, 1)),
 				EnchantItem.createEnchantedItem(Material.CHAINMAIL_HELMET, Map.of())
 		};
 
 		equipment.setArmorContents(armor);
-		equipment.setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
-		entity.customName(Component.text("Commander Shadowblade"));
+		equipment.setItemInMainHand(EnchantItem.createEnchantedItem(Material.NETHERITE_SWORD, Map.of()));
+		entity.customName(Component.text(this.name));
 		entity.setCustomNameVisible(true);
 		entity.addScoreboardTag("isBoss");
-		entity.clearLootTable();
+		entity.addScoreboardTag(difficulty.name());
+
+
+
+		// Parse the loot table key
+		NamespacedKey key = NamespacedKey.fromString("ourstory:example_boss");
+		LootTable lootTable = Bukkit.getLootTable(key);
+		entity.setLootTable(lootTable);
+
+
 		entity.setGlowing(true);
 		entity.setAggressive(true);
 
-		// Define boss health
-		this.difficulty = difficulty;
-		this.name = "Test Boss";
-
+		// Apply attributes modifiers
 		for (Map.Entry<Attribute, Double> entry : attributes.get(difficulty).entrySet()) {
-			System.out.println(entry.getKey());
 			AttributeInstance a = entity.getAttribute(entry.getKey());
 			a.setBaseValue(entry.getValue());
 		}
@@ -79,46 +86,75 @@ public class Shadowblade extends Boss {
 	}
 
 	public void onSpawn() {
+		/*
+		 * Some dialogue / effects here
+		 */
 
+		// Start skill thread
+		this.skills.start();
 	}
 
 	/*
 	 * Boss skills. For now, they only trigger randomly after an hit.
 	 */
-	public void onHit(EntityDamageByEntityEvent event) {
-		int rng = new Random().nextInt(100);
+	@Override
+	public void run() {
+		Random r = new Random();
 
-		Player damager = (Player) event.getDamager();
-		Monster boss = (Monster) event.getEntity();
+		while (true) {
+			int rng = r.nextInt(100);
+			System.out.println("Boss Skill here");
 
-		// 3% chance to spawn minion
-		if (rng < 3) {
-			damager.sendMessage("Feel my strengh");
-			// event.getEntity().getWorld().spawnEntity(null, null)
-		}
+			// Player damager = (Player) event.getDamager();
+			// Monster boss = (Monster) event.getEntity();
+			//
+			// 3% chance to spawn minion
+			// if (rng < 10)
+			// Skills.summonMinions(boss, List.of(damager));
+			//
+			// if (rng < 5)
+			// Skills.explode(boss, List.of(damager));
+			//
+			// if (rng < 50 && this.difficulty.equals(Difficulty.HARD))
+			// Skills.heal(boss, List.of(damager));
+			//
+			// if (rng < 50) {
+			//
+			// }
 
-		// Launch fireballs
-		if (rng < 5) {
-			damager.sendMessage("Take this !");
-		}
-
-		// Regen
-		if (rng < 50) {
-			damager.sendMessage("Heal !");
-			boss.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_DAMAGE, 20, 100));
-		}
-
-		// Random TP + Blindness
-		if (rng < 50) {
-			damager.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
-			damager.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 1));
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				return;
+			}
 		}
 	}
 
+	/*
+	 * Method used to change phase
+	 */
+	public void onHit(EntityDamageByEntityEvent event) {
+		Monster boss = (Monster) event.getEntity();
+
+		Double maxHealth = attributes.get(difficulty).get(Attribute.GENERIC_MAX_HEALTH);
+		Double currentHealth = boss.getHealth();
+
+		Double healthPercent = (currentHealth * 100) / maxHealth;
+
+		if (healthPercent < 20 && difficulty.equals(Difficulty.HARD)) {
+			// Summon special skill
+		}
+
+		if (healthPercent < 20 && difficulty.equals(Difficulty.CHAOS)) {
+			// Summon special skill
+		}
+	}
+
+
 	public void onDeath(Entity damager) {
-		// Generate loot table here
-		Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),
-				"setblock 1 128 39 minecraft:chest{LootTable:\"ourstory:example_boss\"} destroy");
+		// Stop skill loop
+		this.skills.interrupt();
 
 		// Death animation
 		double x = damager.getLocation().getX();

@@ -1,6 +1,5 @@
 package ourstory.commands;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import io.papermc.paper.command.brigadier.BasicCommand;
@@ -54,12 +53,8 @@ public class Boss implements BasicCommand {
 		if (args.length == 0)
 			return bossNames;
 
-		if (args.length == 1) {
-			List<String> difficulties = new ArrayList<>();
-			for (Difficulty d : Difficulty.values())
-				difficulties.add(d.name());
-			return difficulties;
-		}
+		if (args.length == 1)
+			return Difficulty.getNames();
 
 		return Collections.emptyList();
 	}
