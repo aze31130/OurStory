@@ -21,6 +21,8 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTable;
 import net.kyori.adventure.text.Component;
+import ourstory.skills.Skills;
+import ourstory.skills.Summon;
 import ourstory.utils.EnchantItem;
 
 public class Shadowblade extends Boss implements Runnable {
@@ -28,17 +30,21 @@ public class Shadowblade extends Boss implements Runnable {
 	private Map<Difficulty, Map<Attribute, Double>> attributes = Map.of(
 			Difficulty.EASY, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 200.0,
+					Attribute.GENERIC_MOVEMENT_SPEED, 0.3,
 					Attribute.GENERIC_ATTACK_DAMAGE, 5.0),
 			Difficulty.NORMAL, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 1500.0,
+					Attribute.GENERIC_MOVEMENT_SPEED, 0.5,
 					Attribute.GENERIC_ATTACK_DAMAGE, 11.0),
 			Difficulty.HARD, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 15000.0,
+					Attribute.GENERIC_MOVEMENT_SPEED, 0.7,
 					Attribute.GENERIC_ATTACK_DAMAGE, 21.0,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.CHAOS, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 200000.0,
 					Attribute.GENERIC_ATTACK_DAMAGE, 45.0,
+					Attribute.GENERIC_MOVEMENT_SPEED, 1.2,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 10.0));
 
 	public Thread skills = new Thread(this);
@@ -70,8 +76,6 @@ public class Shadowblade extends Boss implements Runnable {
 		entity.setCustomNameVisible(true);
 		entity.addScoreboardTag("isBoss");
 		entity.addScoreboardTag(difficulty.name());
-
-
 
 		// Parse the loot table key
 		NamespacedKey key = NamespacedKey.fromString("ourstory:example_boss");
@@ -113,7 +117,7 @@ public class Shadowblade extends Boss implements Runnable {
 
 			if (this.difficulty.level > Difficulty.NORMAL.level) {
 				Skills.shoot(entity, players);
-				Skills.summonMinions(entity, players);
+				Summon.summonMinions(entity, players);
 			}
 
 			// int rng = r.nextInt(100);
