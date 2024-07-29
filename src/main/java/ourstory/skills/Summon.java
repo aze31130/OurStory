@@ -12,14 +12,18 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import ourstory.storage.Storage;
 import ourstory.utils.EnchantItem;
 import ourstory.utils.PlayerUtils;
 
 public class Summon {
-	public static void summonMinions(Monster boss, List<Player> damager) {
-		PlayerUtils.broadcastToPlayers(damager, "Go Minions, show no mercy !");
+	public static void summonMinions() {
+		Storage s = Storage.getInstance();
+		Monster boss = s.bossInstance.monster.entity;
 
-		for (int i = 0; i < 10; i++) {
+		PlayerUtils.broadcastToPlayers(s.bossInstance.players, "Go Minions, show no mercy !");
+
+		for (int i = 0; i < 3; i++) {
 			new BukkitRunnable() {
 				@Override
 				public void run() {

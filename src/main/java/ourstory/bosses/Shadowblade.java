@@ -1,5 +1,6 @@
 package ourstory.bosses;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -21,45 +22,43 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTable;
 import net.kyori.adventure.text.Component;
-import ourstory.skills.Skills;
+import ourstory.skills.Offensive;
 import ourstory.skills.Summon;
+import ourstory.storage.Storage;
 import ourstory.utils.EnchantItem;
+import ourstory.utils.TimeUtils;
 
 public class Shadowblade extends Boss implements Runnable {
 
 	private Map<Difficulty, Map<Attribute, Double>> attributes = Map.of(
 			Difficulty.EASY, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 200.0,
-					Attribute.GENERIC_MOVEMENT_SPEED, 0.3,
+					Attribute.GENERIC_MOVEMENT_SPEED, 0.1,
 					Attribute.GENERIC_ATTACK_DAMAGE, 5.0),
 			Difficulty.NORMAL, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 1500.0,
-					Attribute.GENERIC_MOVEMENT_SPEED, 0.5,
+					Attribute.GENERIC_MOVEMENT_SPEED, 0.15,
 					Attribute.GENERIC_ATTACK_DAMAGE, 11.0),
 			Difficulty.HARD, Map.of(
-					Attribute.GENERIC_MAX_HEALTH, 15000.0,
-					Attribute.GENERIC_MOVEMENT_SPEED, 0.7,
+					Attribute.GENERIC_MAX_HEALTH, 1500.0,
+					Attribute.GENERIC_MOVEMENT_SPEED, 0.2,
 					Attribute.GENERIC_ATTACK_DAMAGE, 21.0,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.CHAOS, Map.of(
-					Attribute.GENERIC_MAX_HEALTH, 200000.0,
+					Attribute.GENERIC_MAX_HEALTH, 2000.0,
 					Attribute.GENERIC_ATTACK_DAMAGE, 45.0,
-					Attribute.GENERIC_MOVEMENT_SPEED, 1.2,
+					Attribute.GENERIC_MOVEMENT_SPEED, 0.25,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 10.0));
 
 	public Thread skills = new Thread(this);
 	public final String name = "Commander Shadowblade";
-	public Monster entity;
 	public Difficulty difficulty;
 	public int phase;
 
-	public List<Player> players;
-
-	public Shadowblade(Difficulty difficulty, List<Player> players, Location l, World w) {
+	public Shadowblade(Difficulty difficulty, Location l, World w) {
 		// Define boss health
 		this.difficulty = difficulty;
 		this.phase = 1;
-		this.players = players;
 		this.entity = (Monster) w.spawnEntity(l, EntityType.ZOMBIE);
 
 		EntityEquipment equipment = entity.getEquipment();
@@ -101,6 +100,7 @@ public class Shadowblade extends Boss implements Runnable {
 		 * Some dialogue / effects here
 		 */
 
+
 		// Start skill thread
 		this.skills.start();
 	}
@@ -111,16 +111,47 @@ public class Shadowblade extends Boss implements Runnable {
 	@Override
 	public void run() {
 		Random r = new Random();
+		Storage s = Storage.getInstance();
+
+		// Waiting time for boss skills
+		try {
+			Thread.sleep(15000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			return;
+		}
 
 		while (true) {
 
+			/*
+			 * Check if party ran out of time
+			 */
+			TimeUtils.displayTimeWarning();
+			Date currentDate = new Date();
 
-			if (this.difficulty.level > Difficulty.NORMAL.level) {
-				Skills.shoot(entity, players);
-				Summon.summonMinions(entity, players);
+			if (currentDate.after(s.bossInstance.finished)) {
+				// Kill the boss
+				this.entity.setHealth(0);
+
+				// TP back player
+				// TODO
+
+				// Message
+				for (Player p : s.bossInstance.players)
+					p.sendMessage("Too late, the ran out of time !");
 			}
 
-			// int rng = r.nextInt(100);
+			int rng = r.nextInt(100);
+
+			if (rng < 10) {
+				Summon.summonMinions();
+			}
+
+			if (this.difficulty.level > Difficulty.NORMAL.level) {
+				Offensive.shoot();
+				// Summon.summonMinions(entity, players);
+			}
+
 
 			// 3% chance to spawn minion
 			// if (rng < 10)
@@ -146,10 +177,21 @@ public class Shadowblade extends Boss implements Runnable {
 	}
 
 	/*
-	 * Method used to change phase
+	 * Method used for phase transitions
 	 */
 	public void onHit(EntityDamageByEntityEvent event) {
 		Monster boss = (Monster) event.getEntity();
+		Player p = (Player) event.getDamager();
+		Storage s = Storage.getInstance();
+
+		// Increase party damage
+		s.bossInstance.damage.put(p, s.bossInstance.damage.get(p) + event.getDamage());
+
+
+
+		// Check phase
+
+
 
 		Double maxHealth = attributes.get(difficulty).get(Attribute.GENERIC_MAX_HEALTH);
 		Double currentHealth = boss.getHealth();
@@ -170,15 +212,21 @@ public class Shadowblade extends Boss implements Runnable {
 		// Stop skill loop
 		this.skills.interrupt();
 
+		Storage s = Storage.getInstance();
+		s.bossInstance.isFinished = true;
+
 		// Death animation
 		double x = damager.getX();
 		double y = damager.getY();
 		double z = damager.getZ();
 
 		for (int i = -2; i < 2; i++) {
-			damager.getWorld().spawnParticle(Particle.CLOUD, x + i, y, z + i, 50);
+			damager.getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, x + i, y, z + i, 50);
 		}
 
 		damager.sendMessage("Aaaaaa you killed me " + damager.getName());
+
+		for (Map.Entry<Player, Double> entry : s.bossInstance.damage.entrySet())
+			damager.sendMessage(entry.getKey().getName() + " dealt " + String.format("%.2f", entry.getValue()) + " damage");
 	}
 }

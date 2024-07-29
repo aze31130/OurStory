@@ -2,10 +2,14 @@ package ourstory.commands;
 
 import java.util.Collections;
 import java.util.List;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import ourstory.bosses.Difficulty;
 import ourstory.bosses.Shadowblade;
+import ourstory.storage.BossInstance;
 import ourstory.storage.Storage;
 import ourstory.utils.Permissions;
 
@@ -27,10 +31,14 @@ public class Boss implements BasicCommand {
 
 		ourstory.bosses.Boss boss = null;
 
+		// Teleport player to the arena
+		World arena = Bukkit.getWorld("arena");
+		Player p = (Player) sender.getSender();
+		p.teleport(arena.getSpawnLocation());
+
 		switch (bossName) {
 			case "Shadowblade":
-				boss = new Shadowblade(difficulty, List.of((org.bukkit.entity.Player) sender.getSender()), sender.getLocation(),
-						sender.getLocation().getWorld());
+				boss = new Shadowblade(difficulty, arena.getSpawnLocation().set(-20, 2, 0), arena);
 				boss.onSpawn();
 				break;
 
@@ -39,11 +47,9 @@ public class Boss implements BasicCommand {
 				return;
 		}
 
-		// TODO tp player
-
 		// Register boss instance
 		Storage s = Storage.getInstance();
-		s.bossInstance = boss;
+		s.bossInstance = new BossInstance(boss, List.of(p), 15);
 	}
 
 	/*

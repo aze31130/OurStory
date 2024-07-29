@@ -14,7 +14,7 @@ public class Entity implements Listener {
 		// Call onHit method for boss monsters
 		if (entity.getEntity().getScoreboardTags().contains("isBoss")) {
 			Storage s = Storage.getInstance();
-			s.bossInstance.onHit(entity);
+			s.bossInstance.monster.onHit(entity);
 		}
 
 
@@ -79,7 +79,7 @@ public class Entity implements Listener {
 		// Call on death boss method
 		if (event.getEntity().getScoreboardTags().contains("isBoss")) {
 			Storage s = Storage.getInstance();
-			s.bossInstance.onDeath(event.getEntity().getKiller());
+			s.bossInstance.monster.onDeath(event.getEntity().getKiller());
 		}
 		/*
 		 * if (event.getEntity().getKiller().getInventory().getItemInMainHand().getEnchantments()
