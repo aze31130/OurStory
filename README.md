@@ -2,17 +2,54 @@
 
 Ourstory is a private minecraft server between long time friends. This plugin aims to provide a vanilla+ experience by adding challenges trough custom advancements, bosses and enchantments.
 
+## Docker image
 
-## Custom server launch flags
+The server runs in a docker container using [itzg's image](https://github.com/itzg/docker-minecraft-server).
 
-https://docs.papermc.io/paper/aikars-flags
+We use the latest release of [Paper](https://papermc.io/), an ultra optimized version of minecraft server that fixes multiple bugs.
+
+Bellow, the `docker-compose.yml` file used to run the server:
 
 ```
-java -Xms10G -Xmx10G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar paper.jar --nogui
+services:
+  minecraft:
+    image: docker.io/itzg/minecraft-server
+    container_name: minecraft
+    tty: true
+    stdin_open: true
+    ports:
+      - 25565:25565
+      - 8100:8100
+    environment:
+      UID: "0"
+      GID: "0"
+      EULA: "TRUE"
+      TYPE: "PAPER"
+      VERSION: "1.21"
+      MEMORY: "10G"
+      INIT_MEMORY: "2G"
+      GUI: "FALSE"
+      ENABLE_RCON: "FALSE"
+      ENABLE_COMMAND_BLOCK: "FALSE"
+      FORCE_GAMEMODE: "TRUE"
+      MODE: "survival"
+      VIEW_DISTANCE: "16"
+    volumes:
+      - ./Server:/data:Z
+    restart: always
+
+networks:
+  grafana_collector:
+    external: true
 ```
 
+## Gameplay features
 
-## Must have gamerules
+TODO
+- Boss
+- Items Custom
+- Recipes / Knowledge Books
+
 
 announceAdvancements true
 doLimitedCrafting true
@@ -25,18 +62,6 @@ playersSleepingPercentage 10
 We simply use loot tables
 
 /summon zombie ~ ~ ~ {DeathLootTable:"ourstory:test",Health:20000,Attributes:[{Name:"generic.max_health",Base:20000f}]}
-
-## TODO
-
-- Boss
-- Items Custom
-- Recipes / Knowledge Books
-
-
-# Questions to ask
-
-- Webui of all the map ? (! secret bases !)
-- 
 
 # spigot.yml
   attribute:
