@@ -5,9 +5,11 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -27,13 +29,8 @@ public class Player implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		org.bukkit.entity.Player player = event.getPlayer();
 
-		// String ip = player.getAddress().getHostName();
-		// if ((player.getName().equalsIgnoreCase("aze31130")) && (!ip.equals("guilhem-1.home"))){
-		// player.kick();
-
 		player.sendMessage(Component.text("Welcome back to OurStory 2.0 " + player.getName() + " !")
 				.color(TextColor.color(0xff4244)));
-		player.sendMessage(Component.text("Type /changelog to see list of all changes"));
 	}
 
 
@@ -122,5 +119,16 @@ public class Player implements Listener {
 		}
 
 		experience.setAmount(experience.getAmount() * multiplier);
+	}
+
+	@EventHandler
+	public void cancelPlayerJumpOnFarmland(PlayerInteractEvent e) {
+		if (e == null)
+			return;
+
+		// Disable jumping on farmlands
+		if (e.getAction() == Action.PHYSICAL && e.getClickedBlock().getType().equals(Material.FARMLAND)) {
+			e.setCancelled(true);
+		}
 	}
 }

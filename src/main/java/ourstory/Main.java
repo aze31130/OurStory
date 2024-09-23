@@ -6,11 +6,14 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import ourstory.commands.*;
 import ourstory.events.*;
+import ourstory.recipes.Furnace;
+import ourstory.recipes.StoneCutter;
 
 public class Main extends JavaPlugin {
 
+	public static final String namespace = "ourstory";
 	public static final String prefix = "OurStory";
-	public static final String version = "2.0";
+	public static final String version = "2.0.1";
 
 	@Override
 	public void onEnable() {
@@ -34,6 +37,10 @@ public class Main extends JavaPlugin {
 			// commands.register("shop", "some help description string", new Boss());
 
 		});
+
+		// Registers custom recipe
+		StoneCutter.createCustomRecipes();
+		Furnace.createCustomRecipes();
 
 		// this.getConfig().addDefault("messages.nopermission", "You do not have the permission to perform
 		// this command");

@@ -81,7 +81,6 @@ public class Shadowblade extends Boss implements Runnable {
 		LootTable lootTable = Bukkit.getLootTable(key);
 		entity.setLootTable(lootTable);
 
-
 		entity.setGlowing(true);
 		entity.setAggressive(true);
 
