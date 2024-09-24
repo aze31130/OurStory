@@ -31,7 +31,12 @@ public class Split implements BasicCommand {
 
 		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
 		int enchantAmount = meta.getStoredEnchants().size();
-		int levelPrice = enchantAmount * 3;
+
+		int totalLevel = 0;
+		for (Integer value : meta.getStoredEnchants().values())
+			totalLevel += value;
+
+		int levelPrice = enchantAmount * 3 + totalLevel;
 
 		if (enchantAmount <= 1) {
 			sender.getSender().sendMessage("You need at least two enchant to split a book !");
@@ -50,6 +55,7 @@ public class Split implements BasicCommand {
 
 		p.setLevel(p.getLevel() - levelPrice);
 		splitEnchants(p, item);
+		sender.getSender().sendMessage("Successfully splitted for " + levelPrice + " levels.");
 	}
 
 	private static void splitEnchants(org.bukkit.entity.Player player, ItemStack book) {
