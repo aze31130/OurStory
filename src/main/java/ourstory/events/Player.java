@@ -1,5 +1,6 @@
 package ourstory.events;
 
+import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -15,22 +16,41 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 
 public class Player implements Listener {
 
-	static final String[] deathMessages = {"[player] died !", "[player] decided to alt-f4"};
+	private static final String[] deathMessages = {
+			"[player] died !",
+			"[player] decided to alt-f4",
+			"Look at [player], he's dead now !",
+			"[player] forgot to read the safety manual",
+			"[player] was just trying to mind their own business...",
+			"[player] thought he was invincible. He was wrong.",
+			"[player] was having a good day... until now",
+			"[player] is now a ghost, haunting this very spot",
+			"[player] challenged Minecraft and lost",
+			"[player] underestimated the situation",
+			"[player] took a shortcut... to the afterlife",
+			"1... 2... 3... [player] is gone !",
+			"[player] was yeeted out of existence",
+			"[player] just bus-canned"};
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		org.bukkit.entity.Player player = event.getPlayer();
 
-		player.sendMessage(Component.text("Welcome back to OurStory 2.0 " + player.getName() + " !")
-				.color(TextColor.color(0xff4244)));
+		player.sendMessage(Component.text("Welcome back to OurStory " + player.getName() + " !")
+				.color(NamedTextColor.AQUA));
+
+		player.sendMessage(
+				Component.text(
+						"! WARNING TO NEW PLAYERS ! In order to fully access the server (break blocks, eat, ...) you need to fill the server's form at https://forms.gle/zWbcYjQWpHZLrC818 or directly contact the server owner !")
+						.color(NamedTextColor.RED).decorate(TextDecoration.BOLD));
 	}
 
 
@@ -80,24 +100,27 @@ public class Player implements Listener {
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		org.bukkit.entity.Player player = event.getPlayer();
 
-		Bukkit.broadcast(Component.text(player.getName() + " died !"));
+		Random rng = new Random();
+
+		Bukkit.broadcast(Component.text(deathMessages[rng.nextInt(deathMessages.length)].replace("[player]", player.getName())).color(NamedTextColor.DARK_RED));
 
 		// Whisper to player his death location
-		player.sendMessage("Your death location:");
-		player.sendMessage("World: " + player.getWorld().getName());
-		player.sendMessage("X: " + player.getLocation().getBlockX());
-		player.sendMessage("Y: " + player.getLocation().getBlockY());
-		player.sendMessage("Z: " + player.getLocation().getBlockZ());
+		player.sendMessage(Component.text(
+				"Death location (" + player.getWorld().getName() + ")" +
+						" X: " + player.getLocation().getBlockX() +
+						" Y: " + player.getLocation().getBlockY() +
+						" Z: " + player.getLocation().getBlockZ())
+				.color(NamedTextColor.LIGHT_PURPLE));
 
 		// Death sound
 		for (org.bukkit.entity.Player OnlinePlayer : Bukkit.getOnlinePlayers())
 			OnlinePlayer.playSound(OnlinePlayer.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1000, 1);
 
 		// Test for Phoenix enchant
-		ItemStack offItem = player.getPlayer().getInventory().getItemInOffHand();
-		ItemMeta itemMetaOffItem = offItem.getItemMeta();
-		if (itemMetaOffItem.getLore().contains("�7Phoenix X"))
-			event.setKeepInventory(true);
+		// ItemStack offItem = player.getPlayer().getInventory().getItemInOffHand();
+		// ItemMeta itemMetaOffItem = offItem.getItemMeta();
+		// if (itemMetaOffItem.getLore().contains("�7Phoenix X"))
+		// event.setKeepInventory(true);
 	}
 
 	@EventHandler
@@ -121,6 +144,9 @@ public class Player implements Listener {
 		experience.setAmount(experience.getAmount() * multiplier);
 	}
 
+	/*
+	 * Removes player that breaks farmland if jumped on top
+	 */
 	@EventHandler
 	public void cancelPlayerJumpOnFarmland(PlayerInteractEvent e) {
 		if (e == null)

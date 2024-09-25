@@ -6,6 +6,7 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import ourstory.commands.*;
 import ourstory.events.*;
+import ourstory.recipes.CraftingTable;
 import ourstory.recipes.Furnace;
 import ourstory.recipes.StoneCutter;
 
@@ -13,7 +14,6 @@ public class Main extends JavaPlugin {
 
 	public static final String namespace = "ourstory";
 	public static final String prefix = "OurStory";
-	public static final String version = "2.0.1";
 
 	@Override
 	public void onEnable() {
@@ -39,6 +39,7 @@ public class Main extends JavaPlugin {
 		});
 
 		// Registers custom recipe
+		CraftingTable.createCustomRecipes();
 		StoneCutter.createCustomRecipes();
 		Furnace.createCustomRecipes();
 

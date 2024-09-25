@@ -18,9 +18,7 @@ public class Furnace {
 				new CustomRecipeFurnace("rotten_leather", Material.ROTTEN_FLESH, new ItemStack(Material.LEATHER, 1), 1, 200));
 
 		for (CustomRecipeFurnace r : recipes) {
-			FurnaceRecipe recipe =
-					new FurnaceRecipe(
-							new NamespacedKey(Main.namespace, r.recipeName()), r.result(), r.source(), r.exp(), r.cookTime());
+			FurnaceRecipe recipe = new FurnaceRecipe(new NamespacedKey(Main.namespace, r.recipeName()), r.result(), r.source(), r.exp(), r.cookTime());
 
 			Bukkit.addRecipe(recipe);
 		}
