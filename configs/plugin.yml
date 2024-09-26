@@ -7,3 +7,5 @@ website: https://minecraft.aze.sh
 
 main: ourstory.Main
 
+depend:
+  - Vault
