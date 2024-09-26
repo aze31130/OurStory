@@ -40,6 +40,7 @@ public class Main extends JavaPlugin {
 
 			commands.register("boss", "some help description string", new Boss());
 			commands.register("split", "some help description string", new Split());
+			commands.register("rankup", "some help description string", new RankUp(this));
 
 			// commands.register("shop", "some help description string", new Boss());
 
