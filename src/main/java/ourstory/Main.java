@@ -10,10 +10,15 @@ import ourstory.recipes.CraftingTable;
 import ourstory.recipes.Furnace;
 import ourstory.recipes.StoneCutter;
 
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
+
 public class Main extends JavaPlugin {
 
 	public static final String namespace = "ourstory";
 	public static final String prefix = "OurStory";
+	public Permission permissions = null;
+	public Economy economy = null;
 
 	@Override
 	public void onEnable() {
@@ -21,6 +26,8 @@ public class Main extends JavaPlugin {
 
 		// Instanciate Singleton (used for storing config data, tpa requests)
 		// TODO
+		this.permissions = getServer().getServicesManager().getRegistration(Permission.class).getProvider();
+		this.economy = getServer().getServicesManager().getRegistration(Economy.class).getProvider();
 
 		// Registers all events
 		Bukkit.getPluginManager().registerEvents(new Player(), this);
