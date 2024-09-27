@@ -66,7 +66,7 @@ public class RankUp implements BasicCommand {
 	}
 
 	private void upgradeRank(Player player, RankPrice rank_price) {
-		plugin.permissions.playerAddGroup(player, rank_price.to_rank);
-		plugin.permissions.playerRemoveGroup(player, rank_price.from_rank);
+		plugin.permissions.playerAddGroup("default", player, rank_price.to_rank);
+		plugin.permissions.playerRemoveGroup("default", player, rank_price.from_rank);
 	}
 }
