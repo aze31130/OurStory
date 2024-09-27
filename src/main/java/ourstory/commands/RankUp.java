@@ -54,17 +54,12 @@ public class RankUp implements BasicCommand {
 		return player_balance >= rank_price.price;
 	}
 
-	record RankPrice(String from_rank, String to_rank, Double price) {
-	}
-
-	private static List<RankPrice> rankPrices() {
-		return List.of(
-				new RankPrice("member", "ecuyer", 1000.),
-				new RankPrice("ecuyer", "comte", 1000.),
-				new RankPrice("comte", "prince", 1000.),
-				new RankPrice("prince", "roi", 1000.),
-				new RankPrice("roi", "empereur", 1000.));
-	}
+	private static final List<RankPrice> rankPrices = List.of(
+			new RankPrice("member", "ecuyer", 1000.),
+			new RankPrice("ecuyer", "comte", 1000.),
+			new RankPrice("comte", "prince", 1000.),
+			new RankPrice("prince", "roi", 1000.),
+			new RankPrice("roi", "empereur", 1000.));
 
 	private void takePrice(Player player, RankPrice rank_price) {
 		plugin.economy.withdrawPlayer(player, rank_price.price);
