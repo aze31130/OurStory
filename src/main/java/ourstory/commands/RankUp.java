@@ -14,6 +14,9 @@ public class RankUp implements BasicCommand {
 		this.plugin = plugin;
 	}
 
+	record RankPrice(String from_rank, String to_rank, Double price) {
+	}
+
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {
 		var executor = sender.getExecutor();
@@ -38,7 +41,7 @@ public class RankUp implements BasicCommand {
 	}
 
 	private Optional<RankPrice> nextRankPriceFor(Player player) {
-		for (var price : rankPrices()) {
+		for (RankPrice price : rankPrices) {
 			var player_in_base_rank = plugin.permissions.playerInGroup(player, price.from_rank);
 			if (player_in_base_rank)
 				return Optional.of(price);
