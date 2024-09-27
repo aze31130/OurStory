@@ -29,12 +29,12 @@ public class RankUp implements BasicCommand {
 		}
 		var rank_price = maybe_rank_price.get();
 		if (!this.playerHasPrice(player, rank_price)) {
-			sender.getSender().sendMessage("Ranking up to", rank_price.to_rank, "costs", rank_price.price.toString(), ".");
+			sender.getSender().sendMessage("Can't rank up, ranking up to " + rank_price.to_rank + " costs " + rank_price.price.toString() + "$.");
 			return;
 		}
 		this.takePrice(player, rank_price);
 		this.upgradeRank(player, rank_price);
-		sender.getSender().sendMessage("You have ranked up to", rank_price.to_rank, "for", rank_price.price.toString(), ".");
+		sender.getSender().sendMessage("You have ranked up to " + rank_price.to_rank + " for " + rank_price.price.toString() + "$.");
 	}
 
 	private Optional<RankPrice> nextRankPriceFor(Player player) {
