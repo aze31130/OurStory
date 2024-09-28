@@ -6,9 +6,7 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import ourstory.commands.*;
 import ourstory.events.*;
-import ourstory.recipes.CraftingTable;
-import ourstory.recipes.Furnace;
-import ourstory.recipes.StoneCutter;
+import ourstory.recipes.*;
 
 public class Main extends JavaPlugin {
 
@@ -17,9 +15,6 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		Bukkit.getConsoleSender().sendMessage("Loading Ourstory...");
-
-		// Instanciate Singleton (used for storing config data, tpa requests)
-		// TODO
 
 		// Registers all events
 		Bukkit.getPluginManager().registerEvents(new Player(), this);
@@ -30,9 +25,9 @@ public class Main extends JavaPlugin {
 		manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
 			final Commands commands = event.registrar();
 
-			commands.register("boss", "some help description string", new Boss());
-			commands.register("split", "some help description string", new Split());
-			commands.register("rankup", "some help description string", new RankUp());
+			commands.register("boss", "TODO", new Boss());
+			commands.register("split", "Splits the enchants on your books", new Split());
+			commands.register("rankup", "Increases your rank", new RankUp());
 		});
 
 		// Registers custom recipe

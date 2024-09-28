@@ -20,7 +20,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 
 public class Player implements Listener {
 
@@ -44,13 +43,7 @@ public class Player implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		org.bukkit.entity.Player player = event.getPlayer();
 
-		player.sendMessage(Component.text("Welcome back to OurStory " + player.getName() + " !")
-				.color(NamedTextColor.AQUA));
-
-		player.sendMessage(
-				Component.text(
-						"! WARNING TO NEW PLAYERS ! In order to fully access the server (break blocks, eat, ...) you need to fill the server's form at https://forms.gle/zWbcYjQWpHZLrC818 or directly contact the server owner !")
-						.color(NamedTextColor.RED).decorate(TextDecoration.BOLD));
+		player.sendMessage(Component.text("Welcome back to OurStory " + player.getName() + " !").color(NamedTextColor.AQUA));
 	}
 
 
@@ -153,8 +146,7 @@ public class Player implements Listener {
 			return;
 
 		// Disable jumping on farmlands
-		if (e.getAction() == Action.PHYSICAL && e.getClickedBlock().getType().equals(Material.FARMLAND)) {
+		if (e.getAction() == Action.PHYSICAL && e.getClickedBlock().getType().equals(Material.FARMLAND))
 			e.setCancelled(true);
-		}
 	}
 }

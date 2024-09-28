@@ -1,1 +1,0 @@
-tellraw @p {"text":"Example Boss","color":"green"}

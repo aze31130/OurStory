@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "ourstory:final_damage",
+    "ourstory:leech",
+    "ourstory:phoenix",
+    "ourstory:xp_hunter"
+  ]
+}
