@@ -11,7 +11,7 @@ public class Unsit implements Listener {
 	Main plugin;
 
 	public Unsit(Main plugin) {
-		//
+		this.plugin = plugin;
 	}
 
 	@EventHandler
