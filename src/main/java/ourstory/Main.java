@@ -25,6 +25,8 @@ public class Main extends JavaPlugin {
 		// Registers all events
 		Bukkit.getPluginManager().registerEvents(new Player(), this);
 		Bukkit.getPluginManager().registerEvents(new Entity(), this);
+		Bukkit.getPluginManager().registerEvents(new Sit(this), this);
+		Bukkit.getPluginManager().registerEvents(new Unsit(this), this);
 
 		// Registers all commands
 		var manager = this.getLifecycleManager();
