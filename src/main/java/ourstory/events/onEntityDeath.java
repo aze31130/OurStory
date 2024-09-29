@@ -14,11 +14,6 @@ public class onEntityDeath implements Listener {
 			s.bossInstance.monster.onDeath(entity.getEntity().getKiller());
 		}
 
-		// Check if the entity is a 'chair pig'
-		if (entity.getEntity().getScoreboardTags().contains("chair")) {
-			entity.getDrops().clear();
-			entity.setDroppedExp(0);
-		}
 		/*
 		 * if (event.getEntity().getKiller().getInventory().getItemInMainHand().getEnchantments()
 		 * .containsKey(Enchantment.LOOT_BONUS_MOBS)) { LootingLevel =

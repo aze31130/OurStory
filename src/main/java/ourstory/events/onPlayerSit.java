@@ -1,6 +1,5 @@
 package ourstory.events;
 
-import java.util.Collection;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,22 +10,26 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Slab;
 import org.bukkit.block.data.type.Stairs;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDismountEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.material.Directional;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class onPlayerSit implements Listener {
 
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	private static String CHAIR_ENTITY_TAG = "chair";
+	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
+
+	@EventHandler()
 	public void playerSit(PlayerInteractEvent event) {
 		EquipmentSlot hand = event.getHand();
 
@@ -60,26 +63,15 @@ public class onPlayerSit implements Listener {
 	private void configurePig(Pig pig) {
 		// movement speed to 0 to block carrot on a stick item effect
 		pig.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
-		pig.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
 		pig.setSaddle(true);
-		pig.setInvulnerable(false); // Allow player to kill the pig if chair moved
+		pig.setInvulnerable(true);
 		pig.setSilent(true);
-		pig.addScoreboardTag("chair");
+		pig.setMetadata(CHAIR_ENTITY_TAG, new FixedMetadataValue(p, true));
 		pig.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 9999999, 0, false, false));
 		pig.setAI(false);
 	}
 
 	private boolean isValidChairBlock(BlockData block, Location pigLocation) {
-		// Check if a chair pig is already placed
-		Collection<Entity> nearbyEntities = pigLocation.getWorld().getNearbyEntities(pigLocation, 1, 1, 1);
-
-		for (Entity e : nearbyEntities) {
-			if (e instanceof Pig && e.getScoreboardTags().contains("chair")) {
-				Bukkit.getConsoleSender().sendMessage("cancel");
-				return false;
-			}
-		}
-
 		if (block instanceof Stairs) {
 			Bisected bisected = (Bisected) block;
 			if (bisected.getHalf().equals(Bisected.Half.BOTTOM))
@@ -98,7 +90,7 @@ public class onPlayerSit implements Listener {
 		BlockData blockData = block.getBlockData();
 		Location loc = block.getLocation();
 		loc.setX(loc.getX() + 0.5);
-		loc.setY(loc.getY() - 0.3);
+		loc.setY(loc.getY() - 0.4);
 		loc.setZ(loc.getZ() + 0.5);
 
 		if (blockData instanceof Directional) {
@@ -131,5 +123,12 @@ public class onPlayerSit implements Listener {
 			}
 		}
 		return loc;
+	}
+
+	@EventHandler
+	public void onDismount(EntityDismountEvent e) {
+		if (e.getDismounted().hasMetadata(CHAIR_ENTITY_TAG)) {
+			Bukkit.getScheduler().runTaskLater(p, () -> e.getDismounted().remove(), 1L);
+		}
 	}
 }
