@@ -1,5 +1,7 @@
 package ourstory;
 
+import java.util.Map;
+import java.util.Map.Entry;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import io.papermc.paper.command.brigadier.Commands;
@@ -17,8 +19,15 @@ public class Main extends JavaPlugin {
 		Bukkit.getConsoleSender().sendMessage("Loading Ourstory...");
 
 		// Registers all events
-		Bukkit.getPluginManager().registerEvents(new Player(), this);
-		Bukkit.getPluginManager().registerEvents(new Entity(), this);
+		Bukkit.getPluginManager().registerEvents(new onEntityDeath(), this);
+		Bukkit.getPluginManager().registerEvents(new onEntityHit(), this);
+		Bukkit.getPluginManager().registerEvents(new onItemConsume(), this);
+		Bukkit.getPluginManager().registerEvents(new onPlayerDeath(), this);
+		Bukkit.getPluginManager().registerEvents(new onPlayerInteract(), this);
+		Bukkit.getPluginManager().registerEvents(new onPlayerJoin(), this);
+		Bukkit.getPluginManager().registerEvents(new onPlayerSit(), this);
+		Bukkit.getPluginManager().registerEvents(new onTeleport(), this);
+		Bukkit.getPluginManager().registerEvents(new onXpPickup(), this);
 
 		// Registers all commands
 		var manager = this.getLifecycleManager();
@@ -39,6 +48,17 @@ public class Main extends JavaPlugin {
 		// this command");
 		// this.getConfig().options().copyDefaults(true);
 		// this.saveConfig();
+		// String name = this.getConfig().getString("player-name");
+
+		// Bukkit.getConsoleSender().sendMessage(name);
+
+
+		// Map<String, Object> def =
+		// this.getConfig().getConfigurationSection("deathMessages").getValues(false);
+
+		// for (Entry<String, Object> v : def.entrySet()) {
+		// Bukkit.getConsoleSender().sendMessage(v.getKey() + " : " + v.getValue());
+		// }
 	}
 
 	@Override

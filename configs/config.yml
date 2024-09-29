@@ -1,0 +1,5 @@
+test: "hello"
+
+deathMessages:
+	- "[player] died !"
+	- "[player] decided to alt-f4"

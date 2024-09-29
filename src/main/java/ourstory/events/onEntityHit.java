@@ -5,12 +5,11 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
 import ourstory.storage.Storage;
 
-public class Entity implements Listener {
+public class onEntityHit implements Listener {
 	@EventHandler
-	public void onEntityHit(EntityDamageByEntityEvent entity) {
+	public void entityHit(EntityDamageByEntityEvent entity) {
 		// Call onHit method for boss monsters
 		if (entity.getEntity().getScoreboardTags().contains("isBoss")) {
 			Storage s = Storage.getInstance();
@@ -72,20 +71,5 @@ public class Entity implements Listener {
 		// }
 		// };
 		// bukkitRunnable.runTaskLater(Bukkit.getPluginManager().getPlugin("Ourstory"), (long) (10 * 20));
-	}
-
-	@EventHandler
-	public void mobDeath(EntityDeathEvent event) {
-		// Call on death boss method
-		if (event.getEntity().getScoreboardTags().contains("isBoss")) {
-			Storage s = Storage.getInstance();
-			s.bossInstance.monster.onDeath(event.getEntity().getKiller());
-		}
-		/*
-		 * if (event.getEntity().getKiller().getInventory().getItemInMainHand().getEnchantments()
-		 * .containsKey(Enchantment.LOOT_BONUS_MOBS)) { LootingLevel =
-		 * event.getEntity().getKiller().getInventory().getItemInMainHand()
-		 * .getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS); }
-		 */
 	}
 }
