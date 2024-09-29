@@ -8,7 +8,7 @@
 		"minecraft:enchanted_book",
 		"minecraft:book"
 	],
-	"weight": 8,
+	"weight": 6,
 	"max_level": 3,
 	"min_cost": {
 		"base": 15,
@@ -20,6 +20,6 @@
 	},
 	"anvil_cost": 6,
 	"slots": [
-		"armor"
+		"mainhand"
 	]
 }

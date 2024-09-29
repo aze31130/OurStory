@@ -8,53 +8,19 @@ The server runs in a docker container using [itzg's image](https://github.com/it
 
 We use the latest release of [Paper](https://papermc.io/), an ultra optimized version of minecraft server that fixes multiple bugs.
 
-Bellow, the `docker-compose.yml` file used to run the server:
-
-```
-services:
-  minecraft:
-    image: docker.io/itzg/minecraft-server
-    container_name: minecraft
-    tty: true
-    stdin_open: true
-    ports:
-      - 25565:25565
-      - 8100:8100
-    environment:
-      UID: "0"
-      GID: "0"
-      EULA: "TRUE"
-      TYPE: "PAPER"
-      VERSION: "1.21"
-      MEMORY: "10G"
-      INIT_MEMORY: "2G"
-      GUI: "FALSE"
-      ENABLE_RCON: "FALSE"
-      ENABLE_COMMAND_BLOCK: "FALSE"
-      FORCE_GAMEMODE: "TRUE"
-      MODE: "survival"
-      VIEW_DISTANCE: "16"
-    volumes:
-      - ./Server:/data:Z
-    restart: always
-
-networks:
-  grafana_collector:
-    external: true
-```
-
 ## Gameplay features
 
-TODO
-- Boss
-- Items Custom
-- Recipes / Knowledge Books
+Custom Enchants
+  - Phoenix (1 => 10)
+  - Final Damage (1 => 10)
+  - Leech (1 => 10)
+  - XP Hunter (1 => 1)
 
+Boss
+  - TODO
 
-announceAdvancements true
-doLimitedCrafting true
-doInsomnia false
-playersSleepingPercentage 10
+Custom Crafts
+  - TODO
 
 
 ## How boss system works

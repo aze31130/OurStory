@@ -14,6 +14,9 @@ public class onEntityDeath implements Listener {
 			s.bossInstance.monster.onDeath(entity.getEntity().getKiller());
 		}
 
+		// Compute Leech enchant
+		// TODO
+
 		/*
 		 * if (event.getEntity().getKiller().getInventory().getItemInMainHand().getEnchantments()
 		 * .containsKey(Enchantment.LOOT_BONUS_MOBS)) { LootingLevel =

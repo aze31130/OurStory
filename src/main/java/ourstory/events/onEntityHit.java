@@ -1,10 +1,14 @@
 package ourstory.events;
 
+import java.util.Map;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Egg;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
 import ourstory.storage.Storage;
 
 public class onEntityHit implements Listener {
@@ -16,7 +20,6 @@ public class onEntityHit implements Listener {
 			s.bossInstance.monster.onHit(entity);
 		}
 
-
 		if ((entity.getDamager() instanceof Snowball))
 			entity.setDamage(1);
 
@@ -25,8 +28,34 @@ public class onEntityHit implements Listener {
 	}
 
 	@EventHandler
-	public void onEntityDamagedByPlayer(EntityDamageByEntityEvent e) {
-		return;
+	public void onEntityDamagedByPlayer(EntityDamageByEntityEvent event) {
+		// Cancel if not player
+		if (!(event.getDamager() instanceof Player))
+			return;
+
+		Player p = (Player) event.getDamager();
+
+		// Compute Final Damage enchant
+		ItemStack weapon = p.getInventory().getItemInMainHand();
+		int totalFinalDamageLevel = 0;
+
+		if (weapon != null) {
+			Map<Enchantment, Integer> enchants = weapon.getEnchantments();
+
+			for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
+				Enchantment enchantment = entry.getKey();
+				int level = entry.getValue();
+
+				if (enchantment.getKey().getKey().equals("final_damage"))
+					totalFinalDamageLevel += level;
+			}
+		}
+
+		double newDamage = event.getDamage() * (1 + 0.05 * totalFinalDamageLevel);
+
+		event.setDamage(newDamage);
+
+
 		// LivingEntity entity = (LivingEntity) e.getEntity();
 		// org.bukkit.entity.Player p = (org.bukkit.entity.Player) e.getDamager();
 		// Storage s = Storage.getInstance();
