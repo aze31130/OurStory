@@ -65,6 +65,7 @@ public class onPlayerSit implements Listener {
 		pig.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
 		pig.setSaddle(true);
 		pig.setInvulnerable(true);
+		pig.setGravity(false);
 		pig.setSilent(true);
 		pig.setMetadata(CHAIR_ENTITY_TAG, new FixedMetadataValue(p, true));
 		pig.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 9999999, 0, false, false));
@@ -90,7 +91,7 @@ public class onPlayerSit implements Listener {
 		BlockData blockData = block.getBlockData();
 		Location loc = block.getLocation();
 		loc.setX(loc.getX() + 0.5);
-		loc.setY(loc.getY() - 0.4);
+		loc.setY(loc.getY() - 0.45);
 		loc.setZ(loc.getZ() + 0.5);
 
 		if (blockData instanceof Directional) {
