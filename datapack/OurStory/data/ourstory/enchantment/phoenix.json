@@ -8,7 +8,7 @@
 		"minecraft:enchanted_book",
 		"minecraft:book"
 	],
-	"weight": 5,
+	"weight": 7,
 	"max_level": 4,
 	"min_cost": {
 		"base": 15,
