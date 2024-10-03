@@ -34,12 +34,15 @@ public class onXpPickup implements Listener {
 					Enchantment enchantment = entry.getKey();
 					int level = entry.getValue();
 
-					if (enchantment.getKey().getKey().equals("xp_hunter")) {
+					if (enchantment.getKey().getKey().equals("xp_hunter"))
 						totalXPHunterLevels += level;
-					}
 				}
 			}
 		}
+
+		// Sets maximum level of enchant
+		if (totalXPHunterLevels > 4)
+			totalXPHunterLevels = 4;
 
 		int baseExp = experience.getAmount();
 		int totalExp = (int) (baseExp * multiplier + (baseExp * 0.25 * totalXPHunterLevels));

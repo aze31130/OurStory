@@ -1,7 +1,5 @@
 package ourstory;
 
-import java.util.Map;
-import java.util.Map.Entry;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import io.papermc.paper.command.brigadier.Commands;
@@ -21,12 +19,14 @@ public class Main extends JavaPlugin {
 		// Registers all events
 		Bukkit.getPluginManager().registerEvents(new onEntityDeath(), this);
 		Bukkit.getPluginManager().registerEvents(new onEntityHit(), this);
+		// Bukkit.getPluginManager().registerEvents(new onFireworkUse(), this);
 		Bukkit.getPluginManager().registerEvents(new onItemConsume(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerDeath(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerInteract(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerJoin(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerSit(), this);
 		Bukkit.getPluginManager().registerEvents(new onTeleport(), this);
+		// Bukkit.getPluginManager().registerEvents(new onTridentUse(), this);
 		Bukkit.getPluginManager().registerEvents(new onXpPickup(), this);
 
 		// Registers all commands
