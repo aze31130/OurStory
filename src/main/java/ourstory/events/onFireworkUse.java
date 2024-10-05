@@ -7,17 +7,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class onFireworkUse implements Listener {
-
+	/*
+	 * Nerf elytra speed.
+	 */
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 
-		if (player.isGliding() && event.getMaterial() == Material.FIREWORK_ROCKET) {
-
-			if (player.getVelocity().length() > 0.85) {
-				player.setVelocity(player.getVelocity().normalize());
-				event.setCancelled(true);
-			}
-		}
+		if (player.isGliding() && event.getMaterial() == Material.FIREWORK_ROCKET && player.getVelocity().length() > 0.70)
+			event.setCancelled(true);
 	}
 }

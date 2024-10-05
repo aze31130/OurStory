@@ -3,6 +3,7 @@ package ourstory;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import ourstory.commands.*;
@@ -13,17 +14,30 @@ public class Main extends JavaPlugin {
 
 	public static final String namespace = "ourstory";
 	public static List<String> deathMessages;
+	public static List<String> tipMessages;
 
 	@Override
 	public void onEnable() {
 		Bukkit.getConsoleSender().sendMessage("Loading Ourstory...");
 
+		// Load custom messages
 		deathMessages = getConfig().getStringList("deathMessages");
+		tipMessages = getConfig().getStringList("tipMessages");
 
-		// Registers all events
+		// Register task for running the periodic tip broadcast
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				onPlayerTips.playerTips();
+			}
+		}.runTaskTimer(this, 0L, 30000L);
+
+		/*
+		 * Registers all events
+		 */
 		Bukkit.getPluginManager().registerEvents(new onEntityDeath(), this);
 		Bukkit.getPluginManager().registerEvents(new onEntityHit(), this);
-		// Bukkit.getPluginManager().registerEvents(new onFireworkUse(), this);
+		Bukkit.getPluginManager().registerEvents(new onFireworkUse(), this);
 		Bukkit.getPluginManager().registerEvents(new onItemConsume(), this);
 		Bukkit.getPluginManager().registerEvents(new onMineAmethyst(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerDeath(), this);
@@ -31,9 +45,10 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new onPlayerJoin(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerPlace(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerSit(), this);
+		Bukkit.getPluginManager().registerEvents(new onSpawnerDrop(), this);
 		Bukkit.getPluginManager().registerEvents(new onTeleport(), this);
-		// Bukkit.getPluginManager().registerEvents(new onTridentUse(), this);
 		Bukkit.getPluginManager().registerEvents(new onXpPickup(), this);
+		Bukkit.getPluginManager().registerEvents(new onZombieDeath(), this);
 
 		// Registers all commands
 		var manager = this.getLifecycleManager();
@@ -55,17 +70,6 @@ public class Main extends JavaPlugin {
 		// this command");
 		// this.getConfig().options().copyDefaults(true);
 		// this.saveConfig();
-		// String name = this.getConfig().getString("player-name");
-
-		// Bukkit.getConsoleSender().sendMessage(name);
-
-
-		// Map<String, Object> def =
-		// this.getConfig().getConfigurationSection("deathMessages").getValues(false);
-
-		// for (Entry<String, Object> v : def.entrySet()) {
-		// Bukkit.getConsoleSender().sendMessage(v.getKey() + " : " + v.getValue());
-		// }
 	}
 
 	@Override

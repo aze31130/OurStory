@@ -1,0 +1,18 @@
+{
+	"display": {
+		"icon": {
+			"id": "minecraft:structure_block"
+		},
+		"title": {"translate":"OurStory Challenges"},
+		"description": {"translate":"Fight beyond the real endgame"},
+		"background": "minecraft:textures/block/crying_obsidian.png",
+		"show_toast": false,
+		"announce_to_chat": false,
+		"frame": "challenge"
+	},		
+	"criteria": {
+		"requirement": {
+			"trigger": "minecraft:tick"
+		}
+	}
+}

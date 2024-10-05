@@ -1,24 +1,21 @@
 {
 	"display": {
 		"icon": {
-			"id": "minecraft:wooden_axe"
+			"id": "minecraft:diamond_axe"
 		},
-		"title": "Test",
-		"description": "test",
+		"title": {"translate":"Hard Boss Slayer"},
+		"description": {"translate":"Slay a boss in Hard mode"},
 		"frame": "challenge",
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "ourstory:root",
+	"parent": "ourstory:boss_killer",
 	"criteria": {
 		"requirement": {
 			"trigger": "minecraft:impossible"
 		}
 	},
 	"rewards": {
-		"recipes": [
-			"minecraft:wither_elytra"
-		],
-		"experience": 10000
+		"experience": 100
 	}
 }

@@ -1,10 +1,10 @@
 {
 	"display": {
 		"icon": {
-			"id": "minecraft:wooden_axe"
+			"id": "minecraft:iron_axe"
 		},
-		"title": "Test2",
-		"description": "test2",
+		"title": {"translate":"Normal Boss Killer"},
+		"description": {"translate":"Kill your first normal boss"},
 		"frame": "challenge",
 		"announce_to_chat": true,
 		"hidden": false
@@ -16,9 +16,6 @@
 		}
 	},
 	"rewards": {
-		"recipes": [
-			"minecraft:wither_elytra"
-		],
-		"experience": 10000
+		"experience": 100
 	}
 }
