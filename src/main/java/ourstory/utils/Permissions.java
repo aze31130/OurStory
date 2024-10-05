@@ -1,6 +1,8 @@
 package ourstory.utils;
 
 import org.bukkit.command.CommandSender;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 public class Permissions {
 	public Permissions() {
@@ -11,7 +13,7 @@ public class Permissions {
 		boolean allowedPerm = sender.hasPermission(requestedPermission);
 
 		if (!allowedPerm)
-			sender.sendMessage("You do not have the permission to perform this command !");
+			sender.sendMessage(Component.text("You do not have the permission to perform this command !").color(NamedTextColor.RED));
 
 		return allowedPerm;
 	}

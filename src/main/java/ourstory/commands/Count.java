@@ -3,11 +3,14 @@ package ourstory.commands;
 import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import ourstory.utils.Permissions;
 
 public class Count implements BasicCommand {
@@ -21,19 +24,31 @@ public class Count implements BasicCommand {
 			return;
 		}
 
-		if (args.length < 1) {
-			sender.getSender().sendMessage("You need to provide an item name !");
+		Player p = (Player) sender.getSender();
+		Material material = null;
+
+		if (args.length > 0) {
+			Bukkit.getConsoleSender().sendMessage("Test");
+			material = Material.getMaterial(args[0]);
+		} else {
+			Bukkit.getConsoleSender().sendMessage("Test2");
+			ItemStack item = p.getInventory().getItemInMainHand();
+			Bukkit.getConsoleSender().sendMessage("Test3");
+			if (!item.isEmpty())
+				material = item.getType();
+		}
+
+		if (material == null) {
+			sender.getSender().sendMessage(Component.text("You need to provide an item name !").color(NamedTextColor.RED));
 			return;
 		}
 
-		Player p = (Player) sender.getSender();
-		Material material = Material.getMaterial(args[0]);
 		int count = countItems(p, material);
 		if (count == 0) {
-			sender.getSender().sendMessage("You don't have any " + args[0] + " in your Inventory.");
+			sender.getSender().sendMessage("You don't have any " + material.toString() + " in your Inventory.");
 			return;
 		}
-		sender.getSender().sendMessage("You have " + count + " " + args[0] + " in your Inventory.");
+		sender.getSender().sendMessage("You have " + count + " " + material.toString() + " in your Inventory.");
 	}
 
 	@Override
