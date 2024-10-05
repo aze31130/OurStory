@@ -28,12 +28,9 @@ public class Count implements BasicCommand {
 		Material material = null;
 
 		if (args.length > 0) {
-			Bukkit.getConsoleSender().sendMessage("Test");
 			material = Material.getMaterial(args[0]);
 		} else {
-			Bukkit.getConsoleSender().sendMessage("Test2");
 			ItemStack item = p.getInventory().getItemInMainHand();
-			Bukkit.getConsoleSender().sendMessage("Test3");
 			if (!item.isEmpty())
 				material = item.getType();
 		}

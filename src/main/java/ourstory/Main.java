@@ -21,6 +21,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new onEntityHit(), this);
 		// Bukkit.getPluginManager().registerEvents(new onFireworkUse(), this);
 		Bukkit.getPluginManager().registerEvents(new onItemConsume(), this);
+		Bukkit.getPluginManager().registerEvents(new onMineAmethyst(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerDeath(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerInteract(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerJoin(), this);
