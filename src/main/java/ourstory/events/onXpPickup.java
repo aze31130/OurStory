@@ -1,7 +1,5 @@
 package ourstory.events;
 
-import java.util.Map;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +7,7 @@ import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import ourstory.utils.EnchantItem;
 
 public class onXpPickup implements Listener {
 	@EventHandler
@@ -26,19 +25,8 @@ public class onXpPickup implements Listener {
 		ItemStack[] armorContents = player.getInventory().getArmorContents();
 		int totalXPHunterLevels = 0;
 
-		for (ItemStack armor : armorContents) {
-			if (armor != null) {
-				Map<Enchantment, Integer> enchants = armor.getEnchantments();
-
-				for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
-					Enchantment enchantment = entry.getKey();
-					int level = entry.getValue();
-
-					if (enchantment.getKey().getKey().equals("xp_hunter"))
-						totalXPHunterLevels += level;
-				}
-			}
-		}
+		for (ItemStack armor : armorContents)
+			totalXPHunterLevels += EnchantItem.getEnchantAmount(armor, "xp_hunter");
 
 		// Sets maximum level of enchant
 		if (totalXPHunterLevels > 4)

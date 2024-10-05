@@ -21,4 +21,23 @@ public class EnchantItem {
 		result.setItemMeta(im);
 		return result;
 	}
+
+	public static int getEnchantAmount(ItemStack item, String enchantName) {
+		int totalLevels = 0;
+
+		if (item == null)
+			return totalLevels;
+
+		Map<Enchantment, Integer> enchants = item.getEnchantments();
+
+		for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
+			Enchantment enchantment = entry.getKey();
+			int level = entry.getValue();
+
+			if (enchantment.getKey().getKey().equals(enchantName))
+				totalLevels += level;
+		}
+
+		return totalLevels;
+	}
 }

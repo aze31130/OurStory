@@ -1,7 +1,5 @@
 package ourstory.events;
 
-import java.util.Map;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -10,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import ourstory.storage.Storage;
+import ourstory.utils.EnchantItem;
 
 public class onEntityHit implements Listener {
 	@EventHandler
@@ -37,19 +36,7 @@ public class onEntityHit implements Listener {
 
 		// Compute Final Damage enchant
 		ItemStack weapon = p.getInventory().getItemInMainHand();
-		int totalFinalDamageLevel = 0;
-
-		if (weapon != null) {
-			Map<Enchantment, Integer> enchants = weapon.getEnchantments();
-
-			for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
-				Enchantment enchantment = entry.getKey();
-				int level = entry.getValue();
-
-				if (enchantment.getKey().getKey().equals("final_damage"))
-					totalFinalDamageLevel += level;
-			}
-		}
+		int totalFinalDamageLevel = EnchantItem.getEnchantAmount(weapon, "final_damage");
 
 		double newDamage = event.getDamage() * (1 + 0.05 * totalFinalDamageLevel);
 

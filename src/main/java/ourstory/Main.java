@@ -1,5 +1,6 @@
 package ourstory;
 
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import io.papermc.paper.command.brigadier.Commands;
@@ -11,10 +12,13 @@ import ourstory.recipes.*;
 public class Main extends JavaPlugin {
 
 	public static final String namespace = "ourstory";
+	public static List<String> deathMessages;
 
 	@Override
 	public void onEnable() {
 		Bukkit.getConsoleSender().sendMessage("Loading Ourstory...");
+
+		deathMessages = getConfig().getStringList("deathMessages");
 
 		// Registers all events
 		Bukkit.getPluginManager().registerEvents(new onEntityDeath(), this);

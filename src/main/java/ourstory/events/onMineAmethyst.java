@@ -19,9 +19,7 @@ public class onMineAmethyst implements Listener {
 		Player player = event.getPlayer();
 		ItemStack itemInHand = player.getInventory().getItemInMainHand();
 
-		if (block.getType() == Material.BUDDING_AMETHYST && itemInHand.containsEnchantment(Enchantment.SILK_TOUCH)) {
+		if (block.getType() == Material.BUDDING_AMETHYST && itemInHand.containsEnchantment(Enchantment.SILK_TOUCH))
 			block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.BUDDING_AMETHYST));
-			// block.setType(Material.AIR);
-		}
 	}
 }

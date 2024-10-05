@@ -50,6 +50,12 @@
 					<include>plugin.yml</include>
 				</includes>
 			</resource>
+			<resource>
+				<directory>configs</directory>
+				<includes>
+					<include>config.yml</include>
+				</includes>
+			</resource>
 		</resources>
 	</build>
 </project>
