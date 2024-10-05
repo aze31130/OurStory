@@ -15,7 +15,7 @@ public class onPlayerPlace implements Listener {
 	public void onBlockPlace(BlockPlaceEvent event) {
 		ItemStack itemInHand = event.getItemInHand();
 
-		if (itemInHand != null && itemInHand.hasItemMeta() && itemInHand.getItemMeta().hasEnchants()) {
+		if (itemInHand != null && itemInHand.getType().isBlock() && itemInHand.hasItemMeta() && itemInHand.getItemMeta().hasEnchants()) {
 			event.setCancelled(true);
 			event.getPlayer().sendMessage(Component.text("You cannot place blocks that have enchantments !").color(NamedTextColor.RED));
 		}
