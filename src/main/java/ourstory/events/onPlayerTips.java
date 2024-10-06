@@ -8,6 +8,10 @@ import ourstory.Main;
 
 public class onPlayerTips {
 	public static void playerTips() {
+		// Skip event if no one is online
+		if (Bukkit.getOnlinePlayers().size() == 0)
+			return;
+
 		Random rng = new Random();
 		int randomIndex = rng.nextInt(Main.tipMessages.size());
 

@@ -10,8 +10,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import ourstory.utils.EnchantItem;
 import ourstory.utils.MonsterUtils;
 
@@ -39,7 +41,13 @@ public class onSpawnerDrop implements Listener {
 			EntityType entityType = entity.getEntity().getType();
 			Material spawnEgg = MonsterUtils.getMonsterEgg(entityType);
 
-			entity.getDrops().add(new ItemStack(spawnEgg, 1));
+			ItemStack eggItem = new ItemStack(spawnEgg, 1);
+			ItemMeta eggMeta = eggItem.getItemMeta();
+
+			eggMeta.itemName(Component.text("Mythical " + spawnEgg.name()).color(NamedTextColor.DARK_PURPLE).decorate(TextDecoration.BOLD));
+			eggItem.setItemMeta(eggMeta);
+
+			entity.getDrops().add(eggItem);
 
 			Bukkit.broadcast(Component.text("Player " + killer.getName() + " just dropped a Mythical " + spawnEgg.toString() + " !").color(NamedTextColor.DARK_PURPLE));
 			Bukkit.broadcast(Component.text("Congratulation on such an amazing achievement !").color(NamedTextColor.DARK_PURPLE));
