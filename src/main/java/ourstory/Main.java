@@ -30,7 +30,7 @@ public class Main extends JavaPlugin {
 			public void run() {
 				onPlayerTips.playerTips();
 			}
-		}.runTaskTimer(this, 0L, 30000L);
+		}.runTaskTimer(this, 0L, 24000L);
 
 		/*
 		 * Registers all events

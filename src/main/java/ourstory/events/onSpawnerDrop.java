@@ -52,8 +52,7 @@ public class onSpawnerDrop implements Listener {
 			Bukkit.broadcast(Component.text("Player " + killer.getName() + " just dropped a Mythical " + spawnEgg.toString() + " !").color(NamedTextColor.DARK_PURPLE));
 			Bukkit.broadcast(Component.text("Congratulation on such an amazing achievement !").color(NamedTextColor.DARK_PURPLE));
 
-			for (Player OnlinePlayer : Bukkit.getOnlinePlayers())
-				OnlinePlayer.playSound(OnlinePlayer.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, 1000, 1);
+			killer.playSound(killer.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, 1000, 1);
 		}
 	}
 }
