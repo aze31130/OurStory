@@ -2,7 +2,6 @@ package ourstory.skills;
 
 import ourstory.storage.Storage;
 import ourstory.utils.PlayerUtils;
-import org.bukkit.entity.Entity;
 
 public class Buff {
 	public static void reinforce() {
@@ -14,7 +13,7 @@ public class Buff {
 
 	public static void heal() {
 		Storage s = Storage.getInstance();
-		Entity boss = s.bossInstance.monster.entity;
+		// Entity boss = s.bossInstance.monster.entity;
 
 		PlayerUtils.broadcastToPlayers(s.bossInstance.players, "Ultimate Heal !");
 
