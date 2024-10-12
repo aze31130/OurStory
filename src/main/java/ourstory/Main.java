@@ -58,6 +58,7 @@ public class Main extends JavaPlugin {
 			commands.register("split", "Splits the enchants on your books", new Split());
 			commands.register("rankup", "Increases your rank", new RankUp());
 			commands.register("count", "Count items in your inventory", new Count());
+			commands.register("chall", "Display the chosen advancement", new Chall());
 		});
 
 		// Registers custom recipe
