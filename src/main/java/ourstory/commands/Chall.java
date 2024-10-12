@@ -128,7 +128,7 @@ public class Chall implements BasicCommand {
 
 
 		Bukkit.broadcast(Component.text(advname).color(found_adv.getDisplay().description().color())
-				.hoverEvent(HoverEvent.showText(lores))
+				.hoverEvent(HoverEvent.showText(lores)));
 
 	}
 
