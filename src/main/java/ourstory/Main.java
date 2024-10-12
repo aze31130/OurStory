@@ -54,7 +54,7 @@ public class Main extends JavaPlugin {
 		manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
 			final Commands commands = event.registrar();
 
-			commands.register("boss", "TODO", new Boss());
+			commands.register("boss", "WIP", new Boss());
 			commands.register("split", "Splits the enchants on your books", new Split());
 			commands.register("rankup", "Increases your rank", new RankUp());
 			commands.register("count", "Count items in your inventory", new Count());
