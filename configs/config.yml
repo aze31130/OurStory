@@ -146,3 +146,16 @@ tipMessages:
   - "Want to upgrade ? /anvil as a Comte"
   - "Need to split your enchanted books ? /split as a Prince"
   - "/ec allows all Kings to open their ender chest."
+
+skins:
+  - id: 484
+    name: "Test1"
+    price: 10
+
+  - id: 412
+    name: "Test2"
+    price: 10
+
+  - id: 241
+    name: "Test3"
+    price: 10
