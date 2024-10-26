@@ -15,7 +15,7 @@ import ourstory.recipes.*;
 public class Main extends JavaPlugin {
 
 	public static final String namespace = "ourstory";
-	public static List<String> deathMessages, tipMessages;
+	public static List<String> deathMessagesFr, deathMessagesEn, tipMessages;
 	public static List<CustomSkin> skins = new ArrayList<>();
 
 	public record CustomSkin(int id, String name, int price) {
@@ -26,7 +26,8 @@ public class Main extends JavaPlugin {
 		Bukkit.getConsoleSender().sendMessage("Loading Ourstory...");
 
 		// Load custom messages
-		deathMessages = getConfig().getStringList("deathMessages");
+		deathMessagesFr = getConfig().getStringList("deathMessages.fr");
+		deathMessagesEn = getConfig().getStringList("deathMessages.en");
 		tipMessages = getConfig().getStringList("tipMessages");
 
 		loadSkins();
