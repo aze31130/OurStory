@@ -21,7 +21,6 @@ import ourstory.utils.Permissions;
 public class Chall implements BasicCommand {
 
 	private static final String completedAdvancement = "☑ Achieved";
-	// private static final String inprogressAdvancement = "☐ In Progress";
 	private static final String uncompletedAdvancement = "☒ Not Completed";
 
 	@Override
@@ -39,12 +38,9 @@ public class Chall implements BasicCommand {
 
 		if (args.length == 0) {
 			int totalAdvancements = advancements.size();
-			int succeed = 0;
 
 			// Count finished advancements
-			for (Advancement a : advancements)
-				if (p.getAdvancementProgress(a).isDone())
-					succeed++;
+			int succeed = (int) advancements.stream().filter(ad -> p.getAdvancementProgress(ad).isDone()).count();
 
 			sender.getSender().sendMessage(
 					Component.text("You achieved ").append(Component.text(succeed).color(NamedTextColor.DARK_GREEN).decorate(TextDecoration.BOLD)
@@ -86,8 +82,6 @@ public class Chall implements BasicCommand {
 
 			float progress = (float) completedCriterias / criterias;
 
-			Bukkit.getConsoleSender().sendMessage(progress + "");
-
 			// Compute gradiant from Dark Red to Gold colors ([170, 0, 0] to [255, 170, 0])
 			TextColor gradientColor = TextColor.color(Math.round(170 + 170 * (progress)), Math.round(340 * progress), 0);
 
@@ -102,8 +96,10 @@ public class Chall implements BasicCommand {
 					.append(Component.text(")")));
 		}
 
-		Bukkit.broadcast(Component.text(getAdvancementName(advancement))
-				.color(advancement.getDisplay().description().color()).hoverEvent(HoverEvent.showText(lores)));
+		Component intro = Component.text(p.getName() + " shared ");
+		Component advComponent = Component.text(getAdvancementName(advancement)).color(advancement.getDisplay().description().color()).hoverEvent(HoverEvent.showText(lores));
+
+		Bukkit.broadcast(intro.append(advComponent));
 	}
 
 	private List<Advancement> getAdvancements() {
@@ -142,4 +138,3 @@ public class Chall implements BasicCommand {
 		return suggestions;
 	}
 }
-
