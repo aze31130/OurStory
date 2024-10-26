@@ -72,7 +72,8 @@ public class Skin implements BasicCommand {
 			return suggestions;
 
 		for (CustomSkin cs : Main.skins)
-			suggestions.add(cs.name());
+			if (args.length == 0 || (args.length > 0 && cs.name().toLowerCase().startsWith(args[0].toLowerCase())))
+				suggestions.add(cs.name());
 
 		return suggestions;
 	}
