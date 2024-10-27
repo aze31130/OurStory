@@ -40,4 +40,16 @@ public class EnchantItem {
 
 		return totalLevels;
 	}
+
+	public static int getEnchantLevelQuantity(ItemStack item) {
+		int totalLevels = 0;
+
+		if (item == null)
+			return totalLevels;
+
+		for (Map.Entry<Enchantment, Integer> entry : item.getEnchantments().entrySet())
+			totalLevels += entry.getValue();
+
+		return totalLevels;
+	}
 }
