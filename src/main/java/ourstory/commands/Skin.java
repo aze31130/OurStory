@@ -16,6 +16,7 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import ourstory.Main;
 import ourstory.Main.CustomSkin;
+import ourstory.utils.Permissions;
 
 public class Skin implements BasicCommand {
 
@@ -24,6 +25,9 @@ public class Skin implements BasicCommand {
 
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {
+		if (!Permissions.checkPermissions(sender.getSender(), "ourstory.skin"))
+			return;
+
 		Entity executor = sender.getExecutor();
 
 		if (!(executor instanceof Player)) {

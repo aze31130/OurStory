@@ -44,10 +44,15 @@ public class Reset implements BasicCommand {
 		}
 
 		Repairable r = (Repairable) itemMeta;
-		int cost = (r.getRepairCost() + EnchantItem.getEnchantLevelQuantity(item)) * 500;
+		int cost = (r.getRepairCost() * 100) + (EnchantItem.getEnchantLevelQuantity(item) * 2000);
 
 		if (cost > 1000000)
 			cost = 1000000;
+
+		if (cost == 0) {
+			player.sendMessage(Component.text("You cannot reset that item !").color(NamedTextColor.RED));
+			return;
+		}
 
 		if (args.length == 0 || !args[0].equalsIgnoreCase("confirm")) {
 			player.sendMessage(Component.text("You are about to reset your item for " + cost + " money !").color(NamedTextColor.YELLOW));
