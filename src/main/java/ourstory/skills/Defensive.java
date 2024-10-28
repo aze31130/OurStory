@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import ourstory.storage.Storage;
+import ourstory.utils.PlayerUtils;
 
 public class Defensive {
 	/*
@@ -18,6 +19,22 @@ public class Defensive {
 	 */
 	public static void concentration() {
 
+	}
+
+	public static void reinforce() {
+		Storage s = Storage.getInstance();
+
+		PlayerUtils.broadcastToPlayers(s.bossInstance.players, "Feel my strengh");
+
+	}
+
+	public static void heal() {
+		Storage s = Storage.getInstance();
+		// Entity boss = s.bossInstance.monster.entity;
+
+		PlayerUtils.broadcastToPlayers(s.bossInstance.players, "Ultimate Heal !");
+
+		// boss.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_DAMAGE, 20, 120));
 	}
 
 	/*
