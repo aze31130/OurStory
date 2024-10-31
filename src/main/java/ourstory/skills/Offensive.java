@@ -3,6 +3,7 @@ package ourstory.skills;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
@@ -44,7 +45,6 @@ public class Offensive {
 	}
 
 	public static void meteors() {
-		// PlayerUtils.broadcastToPlayers(damager, "Take this !");
 
 	}
 
@@ -53,7 +53,32 @@ public class Offensive {
 	}
 
 	public static void arrowWall() {
+		Storage s = Storage.getInstance();
+		Monster boss = s.bossInstance.monster.entity;
+		Location bossLocation = boss.getLocation().add(0, 3, 0); // Spawn arrows 3 blocks above boss
 
+		for (int i = 0; i < 800; i++) {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					// Generate a random direction for each arrow in a spherical pattern
+					double theta = Math.random() * 2 * Math.PI; // Angle around the Y-axis
+					double phi = Math.random() * Math.PI; // Angle from the Y-axis down
+
+
+
+					// Convert spherical coordinates to Cartesian (X, Y, Z)
+					double x = Math.sin(phi) * Math.cos(theta);
+					double y = Math.cos(phi);
+					double z = Math.sin(phi) * Math.sin(theta);
+					Vector direction = new Vector(x, y, z).normalize().multiply(4); // Speed of 3 blocks/sec
+
+					// Spawn the arrow at the boss's location with the calculated direction
+					Arrow arrow = boss.getWorld().spawnArrow(bossLocation, direction, 2, 0);
+					arrow.setShooter(boss); // Set the boss as the shooter (optional)
+				}
+			}.runTaskLater(Bukkit.getPluginManager().getPlugin("OurStory"), i / 10); // Slight delay for each arrow
+		}
 	}
 
 	public static void wave() {

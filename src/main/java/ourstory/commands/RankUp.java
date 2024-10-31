@@ -59,11 +59,11 @@ public class RankUp implements BasicCommand {
 
 	private Optional<RankPrice> getNextRank(Player player) {
 		List<RankPrice> rankPrices = List.of(
-				new RankPrice("member", "ecuyer", 20000.),
+				new RankPrice("member", "ecuyer", 25000.),
 				new RankPrice("ecuyer", "comte", 50000.),
-				new RankPrice("comte", "prince", 70000.),
-				new RankPrice("prince", "roi", 100000.),
-				new RankPrice("roi", "empereur", 150000.));
+				new RankPrice("comte", "prince", 100000.),
+				new RankPrice("prince", "roi", 200000.),
+				new RankPrice("roi", "empereur", 300000.));
 
 		for (RankPrice price : rankPrices)
 			if (this.permissions.playerInGroup(player, price.srcRank))

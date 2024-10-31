@@ -1,7 +1,7 @@
 {
 	"display": {
 		"icon": {
-			"id": "minecraft:structure_block"
+			"item": "minecraft:structure_block"
 		},
 		"title": {"translate":"OurStory Challenges"},
 		"description": {"translate":"Fight beyond the real endgame"},

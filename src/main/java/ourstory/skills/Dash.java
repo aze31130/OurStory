@@ -1,7 +1,7 @@
 package ourstory.skills;
 
 
-public class Move {
+public class Dash {
 	public static void teleport() {
 
 	}
