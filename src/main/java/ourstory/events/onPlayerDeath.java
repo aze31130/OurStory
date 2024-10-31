@@ -24,7 +24,7 @@ public class onPlayerDeath implements Listener {
 		int rng = random.nextInt(Main.deathMessagesEn.size());
 
 		for (Player p : Bukkit.getOnlinePlayers())
-			p.sendMessage(Component.text(DeathMessage.getRandomDeathMessage(p.locale(), p, rng)).color(NamedTextColor.DARK_RED));
+			p.sendMessage(Component.text(DeathMessage.getRandomDeathMessage(p.locale(), player, rng)).color(NamedTextColor.DARK_RED));
 
 		// Whisper to player his death location
 		player.sendMessage(Component.text(
