@@ -1,0 +1,25 @@
+{
+	"description": "Fast Eater",
+	"supported_items": [
+		"minecraft:enchanted_book",
+		"minecraft:book"
+	],
+	"primary_items": [
+		"minecraft:enchanted_book",
+		"minecraft:book"
+	],
+	"weight": 3,
+	"max_level": 2,
+	"min_cost": {
+		"base": 25,
+		"per_level_above_first": 1
+	},
+	"max_cost": {
+		"base": 29,
+		"per_level_above_first": 1
+	},
+	"anvil_cost": 6,
+	"slots": [
+		"head"
+	]
+}
