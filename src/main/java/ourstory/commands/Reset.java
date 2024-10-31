@@ -44,7 +44,7 @@ public class Reset implements BasicCommand {
 		}
 
 		Repairable r = (Repairable) itemMeta;
-		int cost = (r.getRepairCost() * 100) + (EnchantItem.getEnchantLevelQuantity(item) * 2000);
+		long cost = (r.getRepairCost() * 100) + (EnchantItem.getEnchantLevelQuantity(item) * 2000);
 
 		if (cost > 1000000)
 			cost = 1000000;
