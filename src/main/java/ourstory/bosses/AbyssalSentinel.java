@@ -33,23 +33,23 @@ public class AbyssalSentinel extends Boss implements Runnable {
 
 	private Map<Difficulty, Map<Attribute, Double>> attributes = Map.of(
 			Difficulty.EASY, Map.of(
-					Attribute.GENERIC_MAX_HEALTH, 500.0,
-					Attribute.GENERIC_MOVEMENT_SPEED, 0.5,
+					Attribute.GENERIC_MAX_HEALTH, 800.0,
+					Attribute.GENERIC_MOVEMENT_SPEED, 0.1,
 					Attribute.GENERIC_ATTACK_DAMAGE, 5.0,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.NORMAL, Map.of(
-					Attribute.GENERIC_MAX_HEALTH, 1500.0,
-					Attribute.GENERIC_MOVEMENT_SPEED, 0.5,
+					Attribute.GENERIC_MAX_HEALTH, 1900.0,
+					Attribute.GENERIC_MOVEMENT_SPEED, 0.2,
 					Attribute.GENERIC_ATTACK_DAMAGE, 11.0,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.HARD, Map.of(
-					Attribute.GENERIC_MAX_HEALTH, 3000.0,
-					Attribute.GENERIC_MOVEMENT_SPEED, 0.5,
+					Attribute.GENERIC_MAX_HEALTH, 3500.0,
+					Attribute.GENERIC_MOVEMENT_SPEED, 0.3,
 					Attribute.GENERIC_ATTACK_DAMAGE, 21.0,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.CHAOS, Map.of(
-					Attribute.GENERIC_MAX_HEALTH, 10000.0,
-					Attribute.GENERIC_MOVEMENT_SPEED, 0.7,
+					Attribute.GENERIC_MAX_HEALTH, 8000.0,
+					Attribute.GENERIC_MOVEMENT_SPEED, 0.4,
 					Attribute.GENERIC_ATTACK_DAMAGE, 45.0,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0));
 
@@ -64,33 +64,33 @@ public class AbyssalSentinel extends Boss implements Runnable {
 					new LootEntry(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), 1, 20.0),
 					new LootEntry(new ItemStack(Material.NETHER_STAR), 2, 30.0)),
 			Difficulty.HARD, List.of(
-					new LootEntry(new ItemStack(Material.SPAWNER), 1, 15.0),
+					new LootEntry(new ItemStack(Material.SPAWNER), 1, 25.0),
 					new LootEntry(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), 3, 30.0),
 					new LootEntry(new ItemStack(Material.TOTEM_OF_UNDYING), 3, 30.0),
 					new LootEntry(new ItemStack(Material.GOLDEN_CARROT), 15, 65.0),
 					new LootEntry(new ItemStack(Material.NETHERITE_INGOT), 5, 15.0)),
 			Difficulty.CHAOS, List.of(
-					new LootEntry(new ItemStack(Material.SPAWNER), 1, 20.0),
+					new LootEntry(new ItemStack(Material.SPAWNER), 1, 50.0),
 					new LootEntry(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), 5, 60.0),
-					new LootEntry(new ItemStack(Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.COAST_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.WILD_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.WARD_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.EYE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.VEX_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.RIB_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.FLOW_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0),
-					new LootEntry(new ItemStack(Material.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 5.0)));
+					new LootEntry(new ItemStack(Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.COAST_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.WILD_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.WARD_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.EYE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.VEX_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.RIB_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.FLOW_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
+					new LootEntry(new ItemStack(Material.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0)));
 
 	public Thread skills = new Thread(this);
 
@@ -109,17 +109,12 @@ public class AbyssalSentinel extends Boss implements Runnable {
 		};
 
 		equipment.setArmorContents(armor);
-		equipment.setItemInMainHand(EnchantItem.createEnchantedItem(Material.NETHERITE_SWORD, Map.of()));
+		equipment.setItemInMainHand(EnchantItem.createEnchantedItem(Material.NETHERITE_SWORD, Map.of(Enchantment.SHARPNESS, 7)));
 		entity.customName(Component.text(this.name));
 		entity.setCustomNameVisible(true);
 
 		entity.setMetadata("isBoss", new FixedMetadataValue(p, true));
 		entity.setMetadata("difficulty", new FixedMetadataValue(p, difficulty.name()));
-
-		// Parse the loot table key
-		// NamespacedKey key = NamespacedKey.fromString("ourstory:example_boss");
-		// LootTable lootTable = Bukkit.getLootTable(key);
-		// entity.setLootTable(lootTable);
 
 		entity.setGlowing(true);
 		entity.setAggressive(true);
@@ -182,10 +177,12 @@ public class AbyssalSentinel extends Boss implements Runnable {
 
 			int rng = r.nextInt(100);
 
-			ArrowWall a = new ArrowWall();
-			a.cast(entity, null);
-
 			if (rng < 10) {
+				ArrowWall a = new ArrowWall();
+				a.cast(entity, null);
+			}
+
+			if (rng < 25) {
 				Summon su = new Summon();
 				su.cast(entity, null);
 			}
@@ -215,23 +212,29 @@ public class AbyssalSentinel extends Boss implements Runnable {
 		// Increase party damage
 		s.bossInstance.damage.put(p, s.bossInstance.damage.get(p) + event.getDamage());
 
-
-
 		// Check phase
-
-
-
 		Double maxHealth = attributes.get(difficulty).get(Attribute.GENERIC_MAX_HEALTH);
 		Double currentHealth = boss.getHealth();
 
 		Double healthPercent = (currentHealth * 100) / maxHealth;
 
-		if (healthPercent < 20 && difficulty.equals(Difficulty.HARD)) {
-			// Summon special skill
+		if (healthPercent < 55 && phase == 1) {
+			ArrowWall a = new ArrowWall();
+			a.cast(entity, null);
+			phase = 2;
 		}
 
-		if (healthPercent < 20 && difficulty.equals(Difficulty.CHAOS)) {
+		if (healthPercent < 20 && difficulty.equals(Difficulty.HARD) && phase == 2) {
 			// Summon special skill
+			phase = 3;
+		}
+
+		if (healthPercent < 20 && difficulty.equals(Difficulty.CHAOS) && phase == 2) {
+			// Summon special skill
+			Annihilation an = new Annihilation();
+			an.cast(boss, null);
+
+			phase = 3;
 		}
 	}
 
@@ -259,7 +262,6 @@ public class AbyssalSentinel extends Boss implements Runnable {
 		for (Map.Entry<Player, Double> entry : s.bossInstance.damage.entrySet())
 			Bukkit.broadcast(Component.text(entry.getKey().getName() + " dealt " + String.format("%.2f", entry.getValue()) + " damage"));
 
-
-		event.getDrops().add(new ItemStack(Material.DIAMOND, 32));
+		generateDrops(event, loots);
 	}
 }

@@ -68,6 +68,7 @@ public class Main extends JavaPlugin {
 
 			commands.register("boss", "WIP", new Boss());
 			commands.register("reset", "Resets the repair cost of your items", new Reset());
+			commands.register("test", "Test command", new Test());
 			commands.register("skin", "Change the skin of your current weapon", new Skin());
 			commands.register("split", "Splits the enchants on your books", new Split());
 			commands.register("rankup", "Increases your rank", new RankUp());

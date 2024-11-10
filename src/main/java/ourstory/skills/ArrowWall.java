@@ -32,7 +32,7 @@ public class ArrowWall implements Skills {
 
 					// Spawn the arrow at the boss's location with the calculated direction
 					Arrow arrow = caster.getWorld().spawnArrow(bossLocation, direction, 2, 0);
-					arrow.setLifetimeTicks(200);
+					arrow.setLifetimeTicks(1000);
 					// arrow.setShooter(caster); // Set the boss as the shooter (optional)
 				}
 			}.runTaskLater(Bukkit.getPluginManager().getPlugin("OurStory"), i / 20); // Slight delay for each arrow

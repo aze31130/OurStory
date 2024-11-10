@@ -60,7 +60,7 @@ public class Boss implements BasicCommand {
 		if (args.length == 0)
 			return bossNames;
 
-		if (args.length == 1)
+		if (args.length >= 1)
 			return Difficulty.getNames();
 
 		return Collections.emptyList();
