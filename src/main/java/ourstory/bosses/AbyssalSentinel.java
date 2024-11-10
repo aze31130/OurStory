@@ -27,7 +27,7 @@ import ourstory.storage.Storage;
 import ourstory.utils.EnchantItem;
 import ourstory.utils.TimeUtils;
 
-public class Shadowblade extends Boss implements Runnable {
+public class AbyssalSentinel extends Boss implements Runnable {
 
 	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
 
@@ -94,7 +94,7 @@ public class Shadowblade extends Boss implements Runnable {
 
 	public Thread skills = new Thread(this);
 
-	public Shadowblade(Difficulty difficulty, Location l, World w) {
+	public AbyssalSentinel(Difficulty difficulty, Location l, World w) {
 		super("Abyssal Sentinel", difficulty);
 
 		// Define boss health

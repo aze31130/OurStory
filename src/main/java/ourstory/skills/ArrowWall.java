@@ -3,6 +3,7 @@ package ourstory.skills;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -30,7 +31,8 @@ public class ArrowWall implements Skills {
 					Vector direction = new Vector(x, y, z).normalize().multiply(4); // Speed of 3 blocks/sec
 
 					// Spawn the arrow at the boss's location with the calculated direction
-					caster.getWorld().spawnArrow(bossLocation, direction, 2, 0);
+					Arrow arrow = caster.getWorld().spawnArrow(bossLocation, direction, 2, 0);
+					arrow.setLifetimeTicks(200);
 					// arrow.setShooter(caster); // Set the boss as the shooter (optional)
 				}
 			}.runTaskLater(Bukkit.getPluginManager().getPlugin("OurStory"), i / 20); // Slight delay for each arrow
