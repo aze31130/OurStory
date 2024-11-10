@@ -43,10 +43,14 @@ public class Main extends JavaPlugin {
 		/*
 		 * Registers all events
 		 */
+		Bukkit.getPluginManager().registerEvents(new onBossDeath(), this);
+		Bukkit.getPluginManager().registerEvents(new onBossHit(), this);
 		Bukkit.getPluginManager().registerEvents(new onEntityDeath(), this);
 		Bukkit.getPluginManager().registerEvents(new onEntityHit(), this);
+		Bukkit.getPluginManager().registerEvents(new onFinalDamage(), this);
 		Bukkit.getPluginManager().registerEvents(new onItemConsume(), this);
 		Bukkit.getPluginManager().registerEvents(new onMineAmethyst(), this);
+		Bukkit.getPluginManager().registerEvents(new onMineDeepslate(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerDeath(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerInteract(), this);
 		Bukkit.getPluginManager().registerEvents(new onPlayerJoin(), this);
@@ -96,6 +100,8 @@ public class Main extends JavaPlugin {
 	public void onDisable() {
 		Bukkit.getConsoleSender().sendMessage("Disabling Ourstory...");
 
-		// Save inventory, player state, anything the plugin is manipulating
+		// Stop Exporter server
+
+		// Stops everything the plugin instanciated
 	}
 }

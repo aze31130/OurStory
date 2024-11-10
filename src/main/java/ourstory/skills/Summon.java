@@ -1,9 +1,11 @@
 package ourstory.skills;
 
+import java.util.List;
 import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Zombie;
@@ -14,8 +16,9 @@ import ourstory.storage.Storage;
 import ourstory.utils.EnchantItem;
 import ourstory.utils.PlayerUtils;
 
-public class Summon {
-	public static void summonMinions() {
+public class Summon implements Skills {
+	@Override
+	public void cast(Entity caster, List<Entity> targets) {
 		Storage s = Storage.getInstance();
 		Monster boss = s.bossInstance.monster.entity;
 
