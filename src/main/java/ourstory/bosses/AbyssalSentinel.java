@@ -35,22 +35,22 @@ public class AbyssalSentinel extends Boss implements Runnable {
 			Difficulty.EASY, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 800.0,
 					Attribute.GENERIC_MOVEMENT_SPEED, 0.1,
-					Attribute.GENERIC_ATTACK_DAMAGE, 5.0,
+					Attribute.GENERIC_ATTACK_DAMAGE, 12.0,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.NORMAL, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 1900.0,
 					Attribute.GENERIC_MOVEMENT_SPEED, 0.2,
-					Attribute.GENERIC_ATTACK_DAMAGE, 11.0,
+					Attribute.GENERIC_ATTACK_DAMAGE, 20.0,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.HARD, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 3500.0,
 					Attribute.GENERIC_MOVEMENT_SPEED, 0.3,
-					Attribute.GENERIC_ATTACK_DAMAGE, 21.0,
+					Attribute.GENERIC_ATTACK_DAMAGE, 25.0,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.CHAOS, Map.of(
 					Attribute.GENERIC_MAX_HEALTH, 8000.0,
 					Attribute.GENERIC_MOVEMENT_SPEED, 0.4,
-					Attribute.GENERIC_ATTACK_DAMAGE, 45.0,
+					Attribute.GENERIC_ATTACK_DAMAGE, 35.0,
 					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0));
 
 	private Map<Difficulty, List<LootEntry>> loots = Map.of(
@@ -58,7 +58,7 @@ public class AbyssalSentinel extends Boss implements Runnable {
 					new LootEntry(new ItemStack(Material.GOLDEN_APPLE), 5, 60.0),
 					new LootEntry(new ItemStack(Material.GOLDEN_CARROT), 15, 65.0),
 					new LootEntry(new ItemStack(Material.TOTEM_OF_UNDYING), 2, 25.0),
-					new LootEntry(new ItemStack(Material.NETHERITE_INGOT), 3, 15.0)),
+					new LootEntry(new ItemStack(Material.DIAMOND), 15, 15.0)),
 			Difficulty.NORMAL, List.of(
 					new LootEntry(new ItemStack(Material.SPAWNER), 1, 5.0),
 					new LootEntry(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), 1, 20.0),
@@ -68,7 +68,7 @@ public class AbyssalSentinel extends Boss implements Runnable {
 					new LootEntry(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), 3, 30.0),
 					new LootEntry(new ItemStack(Material.TOTEM_OF_UNDYING), 3, 30.0),
 					new LootEntry(new ItemStack(Material.GOLDEN_CARROT), 15, 65.0),
-					new LootEntry(new ItemStack(Material.NETHERITE_INGOT), 5, 15.0)),
+					new LootEntry(new ItemStack(Material.NETHERITE_INGOT), 2, 15.0)),
 			Difficulty.CHAOS, List.of(
 					new LootEntry(new ItemStack(Material.SPAWNER), 1, 50.0),
 					new LootEntry(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), 5, 60.0),
@@ -257,7 +257,7 @@ public class AbyssalSentinel extends Boss implements Runnable {
 			event.getEntity().getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, bossDeath.getX() + i, bossDeath.getY(), bossDeath.getZ() + i, 50);
 		}
 
-		event.getEntity().sendMessage("Aaaaaa you killed me !");
+		Bukkit.broadcast(Component.text(this.name + " is dead !"));
 
 		for (Map.Entry<Player, Double> entry : s.bossInstance.damage.entrySet())
 			Bukkit.broadcast(Component.text(entry.getKey().getName() + " dealt " + String.format("%.2f", entry.getValue()) + " damage"));

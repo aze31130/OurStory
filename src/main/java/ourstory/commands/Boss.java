@@ -34,11 +34,11 @@ public class Boss implements BasicCommand {
 		// Teleport player to the arena
 		World arena = Bukkit.getWorld("world");
 		Player p = (Player) sender.getSender();
-		p.teleport(arena.getSpawnLocation());
+		// p.teleport(arena.getSpawnLocation());
 
 		switch (bossName) {
 			case "AbyssalSentinel":
-				boss = new AbyssalSentinel(difficulty, arena.getSpawnLocation().set(35, 64, -55), arena);
+				boss = new AbyssalSentinel(difficulty, arena.getSpawnLocation().set(0, 66, -201), arena);
 				boss.onSpawn();
 				break;
 
