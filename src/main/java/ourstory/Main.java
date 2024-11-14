@@ -3,14 +3,43 @@ package ourstory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import ourstory.commands.*;
-import ourstory.events.*;
-import ourstory.recipes.*;
+import ourstory.commands.Boss;
+import ourstory.commands.Chall;
+import ourstory.commands.Count;
+import ourstory.commands.RankUp;
+import ourstory.commands.Reset;
+import ourstory.commands.Skin;
+import ourstory.commands.Split;
+import ourstory.commands.Test;
+import ourstory.events.onBossDeath;
+import ourstory.events.onBossHit;
+import ourstory.events.onEntityDeath;
+import ourstory.events.onEntityHit;
+import ourstory.events.onFinalDamage;
+import ourstory.events.onItemConsume;
+import ourstory.events.onMineAmethyst;
+import ourstory.events.onMineDeepslate;
+import ourstory.events.onPlayerDeath;
+import ourstory.events.onPlayerInteract;
+import ourstory.events.onPlayerJoin;
+import ourstory.events.onPlayerPlace;
+import ourstory.events.onPlayerSit;
+import ourstory.events.onPlayerTips;
+import ourstory.events.onSpawnerDrop;
+import ourstory.events.onTeleport;
+import ourstory.events.onTridentHit;
+import ourstory.events.onXpPickup;
+import ourstory.events.onZombieDeath;
+import ourstory.recipes.CraftingTable;
+import ourstory.recipes.Furnace;
+import ourstory.recipes.StoneCutter;
 
 public class Main extends JavaPlugin {
 
@@ -58,6 +87,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new onPlayerSit(), this);
 		Bukkit.getPluginManager().registerEvents(new onSpawnerDrop(), this);
 		Bukkit.getPluginManager().registerEvents(new onTeleport(), this);
+		Bukkit.getPluginManager().registerEvents(new onTridentHit(), this);
 		Bukkit.getPluginManager().registerEvents(new onXpPickup(), this);
 		Bukkit.getPluginManager().registerEvents(new onZombieDeath(), this);
 
