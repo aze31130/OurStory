@@ -48,6 +48,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new onEntityDeath(), this);
 		Bukkit.getPluginManager().registerEvents(new onEntityHit(), this);
 		Bukkit.getPluginManager().registerEvents(new onFinalDamage(), this);
+		Bukkit.getPluginManager().registerEvents(new onHeadDrop(), this);
 		Bukkit.getPluginManager().registerEvents(new onItemConsume(), this);
 		Bukkit.getPluginManager().registerEvents(new onMineAmethyst(), this);
 		Bukkit.getPluginManager().registerEvents(new onMineDeepslate(), this);
