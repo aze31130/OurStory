@@ -59,6 +59,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new onPlayerSit(), this);
 		Bukkit.getPluginManager().registerEvents(new onSpawnerDrop(), this);
 		Bukkit.getPluginManager().registerEvents(new onTeleport(), this);
+		Bukkit.getPluginManager().registerEvents(new onTridentHit(), this);
 		Bukkit.getPluginManager().registerEvents(new onXpPickup(), this);
 		Bukkit.getPluginManager().registerEvents(new onZombieDeath(), this);
 
