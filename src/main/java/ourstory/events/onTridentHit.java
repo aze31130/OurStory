@@ -82,8 +82,15 @@ public class onTridentHit implements Listener {
 
 		Entity target = event.getEntity();
 
+		event.setCancelled(true);
 		// Fire the lightning
 		target.getWorld().strikeLightning(event.getEntity().getLocation());
 		target.getWorld().playSound(event.getEntity().getLocation(), Sound.ITEM_TRIDENT_THUNDER, 1000, 1);
+		new BukkitRunnable() {
+	        	@Override
+		        public void run() {
+		            target.damage(event.getDamage(), damager);
+		        }
+		    }.runTask(this);
 	}
 }
