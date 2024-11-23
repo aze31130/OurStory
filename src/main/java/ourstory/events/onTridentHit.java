@@ -62,7 +62,7 @@ public class onTridentHit implements Listener {
 		Player player = (Player) trident.getShooter();
 
 		if (hitBlock.getType() == Material.LIGHTNING_ROD) {
-			player.getWorld().strikeLightning(event.getEntity().getLocation());
+			player.getWorld().strikeLightning(event.getEntity().getLocation()).setCausingPlayer(player);
 			player.getWorld().playSound(event.getEntity().getLocation(), Sound.ITEM_TRIDENT_THUNDER, 1000, 1);
 		}
 	}
@@ -73,14 +73,13 @@ public class onTridentHit implements Listener {
 	@EventHandler
 	public void onTridentHitEntity(EntityDamageByEntityEvent event) {
 		Entity damager = event.getDamager();
+		Entity target = event.getEntity();
 
 		if (!(damager instanceof Trident))
 			return;
 
 		if (!damager.getPersistentDataContainer().has(wipeTrident, PersistentDataType.INTEGER))
 			return;
-
-		Entity target = event.getEntity();
 
 		// Fire the lightning
 		target.getWorld().strikeLightning(event.getEntity().getLocation()).setCausingPlayer((Player) ((Projectile) damager).getShooter());
