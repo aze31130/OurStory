@@ -38,7 +38,7 @@ public class Boss implements BasicCommand {
 
 		switch (bossName) {
 			case "AbyssalSentinel":
-				boss = new AbyssalSentinel(difficulty, arena.getSpawnLocation().set(0, 66, -201), arena);
+				boss = new AbyssalSentinel(difficulty, arena.getSpawnLocation().set(0, 100, 0), arena);
 				boss.onSpawn();
 				break;
 

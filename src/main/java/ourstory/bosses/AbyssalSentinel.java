@@ -11,6 +11,8 @@ import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
@@ -97,8 +99,7 @@ public class AbyssalSentinel extends Boss implements Runnable {
 	public AbyssalSentinel(Difficulty difficulty, Location l, World w) {
 		super("Abyssal Sentinel", difficulty);
 
-		// Define boss health
-		this.entity = (Monster) w.spawnEntity(l, EntityType.WARDEN);
+		this.entity = (Monster) w.spawnEntity(l, EntityType.ZOMBIE);
 
 		EntityEquipment equipment = entity.getEquipment();
 		ItemStack[] armor = {
@@ -127,6 +128,13 @@ public class AbyssalSentinel extends Boss implements Runnable {
 
 		// Set entity to max life
 		entity.setHealth(attributes.get(difficulty).get(Attribute.GENERIC_MAX_HEALTH));
+
+		// Define HealthBar
+		this.healthBar = Bukkit.createBossBar(this.name, BarColor.PURPLE, BarStyle.SOLID);
+		this.healthBar.setVisible(true);
+
+		double progress = entity.getHealth() / entity.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getValue();
+		this.healthBar.setProgress(progress);
 	}
 
 	public void onSpawn() {
@@ -212,6 +220,13 @@ public class AbyssalSentinel extends Boss implements Runnable {
 		// Increase party damage
 		s.bossInstance.damage.put(p, s.bossInstance.damage.get(p) + event.getDamage());
 
+		// Add player to bossbar list
+		this.healthBar.addPlayer(p);
+
+		// Update bossbar
+		double progress = entity.getHealth() / entity.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getValue();
+		this.healthBar.setProgress(progress);
+
 		// Check phase
 		Double maxHealth = attributes.get(difficulty).get(Attribute.GENERIC_MAX_HEALTH);
 		Double currentHealth = boss.getHealth();
@@ -261,6 +276,9 @@ public class AbyssalSentinel extends Boss implements Runnable {
 
 		for (Map.Entry<Player, Double> entry : s.bossInstance.damage.entrySet())
 			Bukkit.broadcast(Component.text(entry.getKey().getName() + " dealt " + String.format("%.2f", entry.getValue()) + " damage"));
+
+		// Remove health bar
+		this.healthBar.removeAll();
 
 		generateDrops(event, loots);
 	}

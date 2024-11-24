@@ -3,6 +3,7 @@ package ourstory.bosses;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Monster;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -15,6 +16,7 @@ public abstract class Boss {
 	public String name;
 	public int phase;
 	public Difficulty difficulty;
+	public BossBar healthBar;
 
 	public Boss(String name, Difficulty difficulty) {
 		this.name = name;
