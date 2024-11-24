@@ -21,7 +21,7 @@ public class Annihilation implements Skills {
 		new BukkitRunnable() {
 			double radiusIncrease = 0.5;
 			double startRadius = 0.5;
-			double endRadius = 30;
+			double endRadius = 20;
 
 			@Override
 			public void run() {
@@ -37,12 +37,12 @@ public class Annihilation implements Skills {
 				for (Entity entity : nearbyEntities) {
 					// Push the entity
 					Vector direction = entity.getLocation().toVector().subtract(loc.toVector()).normalize();
-					entity.setVelocity(direction.multiply(0.5));
+					entity.setVelocity(direction.multiply(0.7));
 
 					// Damage if player
 					if (entity instanceof Player) {
 						Player player = (Player) entity;
-						player.damage(10.0);
+						player.damage(7.0);
 					}
 				}
 			}
