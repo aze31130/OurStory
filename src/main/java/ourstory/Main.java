@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import io.papermc.paper.command.brigadier.Commands;
@@ -47,26 +48,17 @@ public class Main extends JavaPlugin {
 		/*
 		 * Registers all events
 		 */
-		Bukkit.getPluginManager().registerEvents(new onBossDeath(), this);
-		Bukkit.getPluginManager().registerEvents(new onBossHit(), this);
-		Bukkit.getPluginManager().registerEvents(new onDummyHit(), this);
-		Bukkit.getPluginManager().registerEvents(new onEntityDeath(), this);
-		Bukkit.getPluginManager().registerEvents(new onEntityHit(), this);
-		Bukkit.getPluginManager().registerEvents(new onFinalDamage(), this);
-		Bukkit.getPluginManager().registerEvents(new onHeadDrop(), this);
-		Bukkit.getPluginManager().registerEvents(new onItemConsume(), this);
-		Bukkit.getPluginManager().registerEvents(new onMineAmethyst(), this);
-		Bukkit.getPluginManager().registerEvents(new onMineDeepslate(), this);
-		Bukkit.getPluginManager().registerEvents(new onPlayerDeath(), this);
-		Bukkit.getPluginManager().registerEvents(new onPlayerInteract(), this);
-		Bukkit.getPluginManager().registerEvents(new onPlayerJoin(), this);
-		Bukkit.getPluginManager().registerEvents(new onPlayerPlace(), this);
-		Bukkit.getPluginManager().registerEvents(new onPlayerSit(), this);
-		Bukkit.getPluginManager().registerEvents(new onSpawnerDrop(), this);
-		Bukkit.getPluginManager().registerEvents(new onTeleport(), this);
-		Bukkit.getPluginManager().registerEvents(new onTridentHit(), this);
-		Bukkit.getPluginManager().registerEvents(new onXpPickup(), this);
-		Bukkit.getPluginManager().registerEvents(new onZombieDeath(), this);
+		Listener[] eventsToRegister = {
+				new onBossDeath(), new onBossHit(), new onDummyHit(), new onEntityDeath(),
+				new onEntityHit(), new onFinalDamage(), new onHeadDrop(), new onItemConsume(),
+				new onMineAmethyst(), new onMineDeepslate(), new onPhoenixDeath(), new onPlayerDeath(),
+				new onPlayerInteract(), new onPlayerJoin(), new onPlayerPlace(), new onPlayerSit(),
+				new onSpawnerDrop(), new onTeleport(), new onTridentHit(), new onXpPickup(),
+				new onZombieDeath()
+		};
+
+		for (Listener event : eventsToRegister)
+			Bukkit.getPluginManager().registerEvents(event, this);
 
 		// Registers all commands
 		var manager = this.getLifecycleManager();
