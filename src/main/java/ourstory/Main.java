@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import io.papermc.paper.command.brigadier.Commands;
@@ -15,6 +16,7 @@ import ourstory.recipes.*;
 public class Main extends JavaPlugin {
 
 	public static final String namespace = "ourstory";
+	public static FileConfiguration config;
 	public static List<String> deathMessagesFr, deathMessagesEn, tipMessages;
 	public static List<CustomSkin> skins = new ArrayList<>();
 
@@ -24,6 +26,8 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		Bukkit.getConsoleSender().sendMessage("Loading Ourstory...");
+
+		Main.config = getConfig();
 
 		// Load custom messages
 		deathMessagesFr = getConfig().getStringList("deathMessages.fr");

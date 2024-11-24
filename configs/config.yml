@@ -1,3 +1,147 @@
+bosses:
+  Abyssal_Sentinel:
+    monster: ZOMBIE
+    weapon:
+      material: NETHERITE_SWORD
+      enchantments:
+        SHARPNESS: 7
+    armor:
+      - material: GOLDEN_BOOTS
+        enchantments:
+          THORNS: 3
+      - material: DIAMOND_LEGGINGS
+        enchantments: {}
+      - material: CHAINMAIL_CHESTPLATE
+        enchantments:
+          THORNS: 1
+      - material: CHAINMAIL_HELMET
+        enchantments: {}
+    attributes:
+      EASY:
+        GENERIC_MAX_HEALTH: 800.0
+        GENERIC_MOVEMENT_SPEED: 0.2
+        GENERIC_ATTACK_DAMAGE: 12.0
+        GENERIC_KNOCKBACK_RESISTANCE: 1.0
+      NORMAL:
+        GENERIC_MAX_HEALTH: 2000.0
+        GENERIC_MOVEMENT_SPEED: 0.3
+        GENERIC_ATTACK_DAMAGE: 20.0
+        GENERIC_KNOCKBACK_RESISTANCE: 1.0
+      HARD:
+        GENERIC_MAX_HEALTH: 4000.0
+        GENERIC_MOVEMENT_SPEED: 0.4
+        GENERIC_ATTACK_DAMAGE: 25.0
+        GENERIC_KNOCKBACK_RESISTANCE: 1.0
+      CHAOS:
+        GENERIC_MAX_HEALTH: 8000.0
+        GENERIC_MOVEMENT_SPEED: 0.4
+        GENERIC_ATTACK_DAMAGE: 35.0
+        GENERIC_KNOCKBACK_RESISTANCE: 1.0
+    loots:
+      EASY:
+        - item: GOLDEN_APPLE
+          amount: 5
+          chance: 60.0
+        - item: GOLDEN_CARROT
+          amount: 15
+          chance: 65.0
+        - item: TOTEM_OF_UNDYING
+          amount: 2
+          chance: 25.0
+        - item: DIAMOND
+          amount: 15
+          chance: 15.0
+      NORMAL:
+        - item: SPAWNER
+          amount: 1
+          chance: 5.0
+        - item: ENCHANTED_GOLDEN_APPLE
+          amount: 1
+          chance: 20.0
+        - item: NETHER_STAR
+          amount: 2
+          chance: 30.0
+      HARD:
+        - item: SPAWNER
+          amount: 1
+          chance: 25.0
+        - item: ENCHANTED_GOLDEN_APPLE
+          amount: 3
+          chance: 30.0
+        - item: TOTEM_OF_UNDYING
+          amount: 3
+          chance: 30.0
+        - item: GOLDEN_CARROT
+          amount: 15
+          chance: 65.0
+        - item: NETHERITE_INGOT
+          amount: 2
+          chance: 15.0
+      CHAOS:
+        - item: SPAWNER
+          amount: 1
+          chance: 50.0
+        - item: ENCHANTED_GOLDEN_APPLE
+          amount: 5
+          chance: 60.0
+        - item: NETHERITE_UPGRADE_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: DUNE_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: COAST_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: WILD_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: WARD_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: EYE_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: VEX_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: TIDE_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: RIB_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: RAISER_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: HOST_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: FLOW_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+        - item: BOLT_ARMOR_TRIM_SMITHING_TEMPLATE
+          amount: 1
+          chance: 10.0
+
 deathMessages:
   en:
     - "[player] died !"

@@ -22,6 +22,9 @@ public abstract class Boss {
 		this.name = name;
 		this.phase = 1;
 		this.difficulty = difficulty;
+
+		// Load attributes from yaml
+		// TODO
 	}
 
 	public abstract void onSpawn();
