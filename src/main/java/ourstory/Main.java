@@ -49,6 +49,7 @@ public class Main extends JavaPlugin {
 		 */
 		Bukkit.getPluginManager().registerEvents(new onBossDeath(), this);
 		Bukkit.getPluginManager().registerEvents(new onBossHit(), this);
+		Bukkit.getPluginManager().registerEvents(new onDummyHit(), this);
 		Bukkit.getPluginManager().registerEvents(new onEntityDeath(), this);
 		Bukkit.getPluginManager().registerEvents(new onEntityHit(), this);
 		Bukkit.getPluginManager().registerEvents(new onFinalDamage(), this);
@@ -73,6 +74,7 @@ public class Main extends JavaPlugin {
 			final Commands commands = event.registrar();
 
 			commands.register("boss", "WIP", new Boss());
+			commands.register("dummy", "Spawns a dummy to test DPS", new Dummy());
 			commands.register("reset", "Resets the repair cost of your items", new Reset());
 			commands.register("test", "Test command", new Test());
 			commands.register("skin", "Change the skin of your current weapon", new Skin());
