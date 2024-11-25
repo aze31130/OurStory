@@ -2,6 +2,7 @@ package ourstory.events;
 
 import java.util.Map;
 
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import ourstory.utils.EnchantItem;
 
 public class onDummyHit implements Listener {
 
@@ -33,10 +35,19 @@ public class onDummyHit implements Listener {
 
 		double base_damage = event.getDamage();
 		ItemStack itemInHand = ((Player) event.getDamager()).getInventory().getItemInMainHand();
+
+		// Ajout d'un moyen de suppression d'un dummy
+		if (itemInHand.getType().equals(Material.COD) && event.getDamager().isOp())
+			event.getEntity().remove();
+
+		// Ajout des dégâts pour chaque enchants présent sur le dummy et la meta data
 		for (String str : EnchantmentsSensitivity.keySet()) {
 			if (!event.getEntity().getMetadata(str).isEmpty())
 				base_damage += 2.5 * (itemInHand.containsEnchantment(EnchantmentsSensitivity.get(str)) ? itemInHand.getEnchantmentLevel(EnchantmentsSensitivity.get(str)) : 0);
 		}
+
+		// Gestion de final_damage
+		base_damage *= 1 + (0.05 * EnchantItem.getEnchantAmount(itemInHand, "final_damage"));
 
 		Player p = (Player) event.getDamager();
 		p.sendMessage(Component.text(event.getEntity().getCustomName() + " : ").append(Component.text(String.format("%.2f", base_damage)).color(NamedTextColor.RED)));
