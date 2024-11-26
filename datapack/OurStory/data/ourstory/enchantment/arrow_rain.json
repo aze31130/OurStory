@@ -1,0 +1,25 @@
+{
+	"description": "Arrow Rain",
+	"supported_items": [
+		"minecraft:enchanted_book",
+		"minecraft:book"
+	],
+	"primary_items": [
+		"minecraft:enchanted_book",
+		"minecraft:book"
+	],
+	"weight": 1,
+	"max_level": 6,
+	"min_cost": {
+		"base": 5,
+		"per_level_above_first": 5
+	},
+	"max_cost": {
+		"base": 15,
+		"per_level_above_first": 3
+	},
+	"anvil_cost": 6,
+	"slots": [
+		"mainhand"
+	]
+}
