@@ -1,11 +1,11 @@
 package ourstory.commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -26,10 +26,10 @@ public class Dummy implements BasicCommand {
 	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
 
 	private final Map<String, String> DummyName = Map.of(
-			"Normal", "Classic ",
-			"Undead", "Undead ",
-			"Spider", "Crawling ",
-			"Marin", "Aquatic ");
+			"Normal", "Classic",
+			"Undead", "Undead",
+			"Spider", "Crawling",
+			"Marin", "Aquatic");
 
 	private final Map<String, String> DummyTag = Map.of(
 			"Undead", "sensitive_smite",
@@ -51,40 +51,33 @@ public class Dummy implements BasicCommand {
 
 		ArmorStand dummy = (ArmorStand) w.spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
 
-		String base_name = "";
-		if (args.length > 0) {
-			for (String argus : args) {
-				if (DummyName.containsKey(argus))
-					base_name += DummyName.get(argus);
-				if (DummyTag.containsKey(argus))
-					dummy.setMetadata(DummyTag.get(argus), new FixedMetadataValue(p, true));
-			}
+		Set<String> baseName = new HashSet<String>();
+
+		for (String argus : args) {
+			if (DummyName.containsKey(argus))
+				baseName.add(DummyName.get(argus));
+			if (DummyTag.containsKey(argus))
+				dummy.setMetadata(DummyTag.get(argus), new FixedMetadataValue(p, true));
 		}
-		if (base_name.isEmpty())
-			base_name = "Normal ";
+
+		if (baseName.isEmpty())
+			baseName.add("Classic");
 
 		// Don't let duplicate name be there and sort them like : Undead Crawling Aquatic Dummy. Moreover,
 		// remove Classic if another one is there
-		String[] words = base_name.split("\\s+");
-		base_name = Arrays.stream(words)
-				.filter(word -> !(word.equals("Classic") && words.length > 1))
-				.distinct()
+		String finalName = new ArrayList<>(baseName).stream()
+				.filter(word -> !(word.equals("Classic") && baseName.size() > 1))
 				.sorted(Comparator.reverseOrder())
 				.collect(Collectors.joining(" "));
-		dummy.customName(Component.text(base_name + " Dummy"));
+
+		dummy.customName(Component.text(finalName + " Dummy"));
 		dummy.setCustomNameVisible(true);
 
 		dummy.setMetadata("isDummy", new FixedMetadataValue(p, true));
-
 	}
 
 	@Override
 	public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
-		List<String> suggestions = new ArrayList<>();
-		suggestions.add("Normal");
-		suggestions.add("Undead");
-		suggestions.add("Spider");
-		suggestions.add("Marin");
-		return suggestions;
+		return DummyName.keySet();
 	}
 }

@@ -50,6 +50,6 @@ public class onDummyHit implements Listener {
 		base_damage *= 1 + (0.05 * EnchantItem.getEnchantAmount(itemInHand, "final_damage"));
 
 		Player p = (Player) event.getDamager();
-		p.sendMessage(Component.text(event.getEntity().getCustomName() + " : ").append(Component.text(String.format("%.2f", base_damage)).color(NamedTextColor.RED)));
+		p.sendMessage(Component.text(event.getEntity().getName() + " : ").append(Component.text(String.format("%.2f", base_damage)).color(NamedTextColor.RED)));
 	}
 }
