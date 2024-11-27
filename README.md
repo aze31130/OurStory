@@ -4,11 +4,14 @@ Ourstory is a private minecraft server between long time friends. This plugin ai
 
 ## All gameplay features
 Custom Enchants
+
+=======
   - Phoenix (1 => 10) (Base : 4)
   - Final Damage (1 => 10) (Base : 3)
   - Leech (1 => 10) (Base : 2)
   - XP Hunter (1 => 1) (Base : 1)
   - Arrow Rain (1 => 10) (Base : 6)
+  - Vulnerability Seeker (1 => 1) (Base : 1)
 
 Boss
   - TODO
