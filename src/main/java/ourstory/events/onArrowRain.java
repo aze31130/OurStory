@@ -28,8 +28,8 @@ import ourstory.utils.EnchantItem;
  */
 public class onArrowRain implements Listener {
 
-	private final NamespacedKey BowEnchantSaver = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "BowEnchantSaver");
-	private final NamespacedKey BowForceSaver = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "BowForceSaver");
+	private final NamespacedKey bowEnchantSaver = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "bowEnchantSaver");
+	private final NamespacedKey bowForceSaver = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "bowForceSaver");
 	private final HashMap<UUID, Integer> currentActiveArrows = new HashMap();
 	private final int maxGeneratingArrowsPerPlayer = 10;
 
@@ -41,22 +41,22 @@ public class onArrowRain implements Listener {
 		if (EnchantItem.getEnchantAmount(e.getBow(), "arrow_rain") == 0)
 			return;
 
-		e.getProjectile().getPersistentDataContainer().set(BowEnchantSaver, PersistentDataType.INTEGER, EnchantItem.getEnchantAmount(e.getBow(), "arrow_rain"));
-		e.getProjectile().getPersistentDataContainer().set(BowForceSaver, PersistentDataType.FLOAT, e.getForce());
+		e.getProjectile().getPersistentDataContainer().set(bowEnchantSaver, PersistentDataType.INTEGER, EnchantItem.getEnchantAmount(e.getBow(), "arrow_rain"));
+		e.getProjectile().getPersistentDataContainer().set(bowForceSaver, PersistentDataType.FLOAT, e.getForce());
 	}
 
 	@EventHandler
 	public void arrowRain(ProjectileHitEvent event) throws IllegalAccessException {
 
-		if (!event.getEntity().getPersistentDataContainer().has(BowEnchantSaver, PersistentDataType.INTEGER))
+		if (!event.getEntity().getPersistentDataContainer().has(bowEnchantSaver, PersistentDataType.INTEGER))
 			return;
 
-		Arrow arroworigin = (Arrow) event.getEntity();
-		LivingEntity player = (LivingEntity) arroworigin.getShooter();
+		Arrow arrowOrigin = (Arrow) event.getEntity();
+		LivingEntity player = (LivingEntity) arrowOrigin.getShooter();
 		UUID playerId = player.getUniqueId();
 
-		int enchantLevel = arroworigin.getPersistentDataContainer().get(BowEnchantSaver, PersistentDataType.INTEGER);
-		float force = arroworigin.getPersistentDataContainer().get(BowForceSaver, PersistentDataType.FLOAT);
+		int enchantLevel = arrowOrigin.getPersistentDataContainer().get(bowEnchantSaver, PersistentDataType.INTEGER);
+		float force = arrowOrigin.getPersistentDataContainer().get(bowForceSaver, PersistentDataType.FLOAT);
 
 		Entity hitty = event.getHitEntity();
 		if (hitty == null)
@@ -77,16 +77,16 @@ public class onArrowRain implements Listener {
 					this.cancel();
 					return;
 				}
-				Location entityloc = event.getHitEntity().getLocation().add(0, 8, 0);
-				while (!entityloc.getBlock().isPassable())
-					entityloc.add(0, 1, 0);
-				Arrow arrow = player.getWorld().spawnArrow(entityloc, new Vector(0, -1, 0), force, 0);
-				arrow.setBasePotionType((arroworigin).getBasePotionType());
+				Location entityLoc = event.getHitEntity().getLocation().add(0, 8, 0);
+				while (!entityLoc.getBlock().isPassable())
+					entityLoc.add(0, 1, 0);
+				Arrow arrow = player.getWorld().spawnArrow(entityLoc, new Vector(0, -1, 0), force, 0);
+				arrow.setBasePotionType((arrowOrigin).getBasePotionType());
 				arrow.setLifetimeTicks(1160); // Default maxTime : 1200. i.e arrows will last 2 seconds ON THE GROUND
 				arrow.setShooter(player);
-				arrow.setDamage((arroworigin).getDamage());
-				arrow.setWeapon((arroworigin).getWeapon());
-				arrow.setCritical((arroworigin).isCritical());
+				arrow.setDamage((arrowOrigin).getDamage());
+				arrow.setWeapon((arrowOrigin).getWeapon());
+				arrow.setCritical((arrowOrigin).isCritical());
 				arrow.setHitSound(Sound.BLOCK_END_PORTAL_FRAME_FILL);
 				arrow.setGlowing(true);
 				arrow.setPickupStatus(PickupStatus.DISALLOWED);
