@@ -54,7 +54,7 @@ public class Main extends JavaPlugin {
 				new onMineAmethyst(), new onMineDeepslate(), new onPhoenixDeath(), new onPlayerDeath(),
 				new onPlayerInteract(), new onPlayerJoin(), new onPlayerPlace(), new onPlayerSit(),
 				new onSpawnerDrop(), new onTeleport(), new onTridentHit(), new onXpPickup(),
-				new onZombieDeath()
+				new onZombieDeath(), new onArrowRain()
 		};
 
 		for (Listener event : eventsToRegister)
