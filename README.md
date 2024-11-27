@@ -8,6 +8,7 @@ Custom Enchants
   - Final Damage (1 => 10)
   - Leech (1 => 10)
   - XP Hunter (1 => 1)
+  - Vulnerability Seeker (1 => 1)
 
 Boss
   - TODO
