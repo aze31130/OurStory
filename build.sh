@@ -2,10 +2,11 @@
 set -e
 
 TARGET_DIR="./target"
-PLUGIN_DIR="$HOME/Documents/TestServer/plugins"
 DATAPACK_SRC="./datapack/OurStory"
-DATAPACK_DEST="$HOME/Documents/TestServer/world/datapacks/OurStory"
 SERVER_DIR="$HOME/Documents/TestServer"
+
+PLUGIN_DIR="$SERVER_DIR/plugins"
+DATAPACK_DEST="$SERVER_DIR/world/datapacks/OurStory"
 
 # Build the project
 mvn package

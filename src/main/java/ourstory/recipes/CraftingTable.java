@@ -61,7 +61,10 @@ public class CraftingTable {
 						" N ", "NMN", " N ", Map.of('M', Material.MACE, 'N', Material.NETHER_STAR)),
 
 				new CustomRecipeCraftingTable("wither_crossbow", "Wither's Ultimate Crossbow", new ItemStack(Material.CROSSBOW, 1),
-						" N ", "NCN", " N ", Map.of('C', Material.CROSSBOW, 'N', Material.NETHER_STAR)));
+						" N ", "NCN", " N ", Map.of('C', Material.CROSSBOW, 'N', Material.NETHER_STAR)),
+
+				new CustomRecipeCraftingTable("wither_fishing_rod", "Wither's Ultimate Fishing Rod", new ItemStack(Material.FISHING_ROD, 1),
+						"  S", " SF", "S N", Map.of('S', Material.STICK, 'F', Material.STRING, 'N', Material.NETHER_STAR)));
 
 		for (CustomRecipeCraftingTable r : recipes) {
 			ItemStack recipeResult = new ItemStack(r.result());

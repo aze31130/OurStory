@@ -8,13 +8,13 @@ import org.bukkit.entity.Player;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import ourstory.bosses.Difficulty;
-import ourstory.bosses.Shadowblade;
+import ourstory.bosses.AbyssalSentinel;
 import ourstory.storage.BossInstance;
 import ourstory.storage.Storage;
 import ourstory.utils.Permissions;
 
 public class Boss implements BasicCommand {
-	private final List<String> bossNames = List.of("Shadowblade");
+	private final List<String> bossNames = List.of("AbyssalSentinel");
 
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {
@@ -32,13 +32,13 @@ public class Boss implements BasicCommand {
 		ourstory.bosses.Boss boss = null;
 
 		// Teleport player to the arena
-		World arena = Bukkit.getWorld("arena");
+		World arena = Bukkit.getWorld("world");
 		Player p = (Player) sender.getSender();
-		p.teleport(arena.getSpawnLocation());
+		// p.teleport(arena.getSpawnLocation());
 
 		switch (bossName) {
-			case "Shadowblade":
-				boss = new Shadowblade(difficulty, arena.getSpawnLocation().set(-20, 2, 0), arena);
+			case "AbyssalSentinel":
+				boss = new AbyssalSentinel(difficulty, arena.getSpawnLocation().set(0, 100, 0), arena);
 				boss.onSpawn();
 				break;
 
@@ -60,7 +60,7 @@ public class Boss implements BasicCommand {
 		if (args.length == 0)
 			return bossNames;
 
-		if (args.length == 1)
+		if (args.length >= 1)
 			return Difficulty.getNames();
 
 		return Collections.emptyList();

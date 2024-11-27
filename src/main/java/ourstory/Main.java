@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import io.papermc.paper.command.brigadier.Commands;
@@ -15,6 +17,7 @@ import ourstory.recipes.*;
 public class Main extends JavaPlugin {
 
 	public static final String namespace = "ourstory";
+	public static FileConfiguration config;
 	public static List<String> deathMessagesFr, deathMessagesEn, tipMessages;
 	public static List<CustomSkin> skins = new ArrayList<>();
 
@@ -24,6 +27,8 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		Bukkit.getConsoleSender().sendMessage("Loading Ourstory...");
+
+		Main.config = getConfig();
 
 		// Load custom messages
 		deathMessagesFr = getConfig().getStringList("deathMessages.fr");
@@ -43,19 +48,17 @@ public class Main extends JavaPlugin {
 		/*
 		 * Registers all events
 		 */
-		Bukkit.getPluginManager().registerEvents(new onEntityDeath(), this);
-		Bukkit.getPluginManager().registerEvents(new onEntityHit(), this);
-		Bukkit.getPluginManager().registerEvents(new onItemConsume(), this);
-		Bukkit.getPluginManager().registerEvents(new onMineAmethyst(), this);
-		Bukkit.getPluginManager().registerEvents(new onPlayerDeath(), this);
-		Bukkit.getPluginManager().registerEvents(new onPlayerInteract(), this);
-		Bukkit.getPluginManager().registerEvents(new onPlayerJoin(), this);
-		Bukkit.getPluginManager().registerEvents(new onPlayerPlace(), this);
-		Bukkit.getPluginManager().registerEvents(new onPlayerSit(), this);
-		Bukkit.getPluginManager().registerEvents(new onSpawnerDrop(), this);
-		Bukkit.getPluginManager().registerEvents(new onTeleport(), this);
-		Bukkit.getPluginManager().registerEvents(new onXpPickup(), this);
-		Bukkit.getPluginManager().registerEvents(new onZombieDeath(), this);
+		Listener[] eventsToRegister = {
+				new onBossDeath(), new onBossHit(), new onDummyHit(), new onEntityDeath(),
+				new onEntityHit(), new onFinalDamage(), new onHeadDrop(), new onItemConsume(),
+				new onMineAmethyst(), new onMineDeepslate(), new onPhoenixDeath(), new onPlayerDeath(),
+				new onPlayerInteract(), new onPlayerJoin(), new onPlayerPlace(), new onPlayerSit(),
+				new onSpawnerDrop(), new onTeleport(), new onTridentHit(), new onXpPickup(),
+				new onZombieDeath()
+		};
+
+		for (Listener event : eventsToRegister)
+			Bukkit.getPluginManager().registerEvents(event, this);
 
 		// Registers all commands
 		var manager = this.getLifecycleManager();
@@ -63,7 +66,9 @@ public class Main extends JavaPlugin {
 			final Commands commands = event.registrar();
 
 			commands.register("boss", "WIP", new Boss());
+			commands.register("dummy", "Spawns a dummy to test DPS", new Dummy());
 			commands.register("reset", "Resets the repair cost of your items", new Reset());
+			commands.register("test", "Test command", new Test());
 			commands.register("skin", "Change the skin of your current weapon", new Skin());
 			commands.register("split", "Splits the enchants on your books", new Split());
 			commands.register("rankup", "Increases your rank", new RankUp());
@@ -96,6 +101,8 @@ public class Main extends JavaPlugin {
 	public void onDisable() {
 		Bukkit.getConsoleSender().sendMessage("Disabling Ourstory...");
 
-		// Save inventory, player state, anything the plugin is manipulating
+		// Stop Exporter server
+
+		// Stops everything the plugin instanciated
 	}
 }

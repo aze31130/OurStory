@@ -7,12 +7,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.ItemStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import ourstory.Main;
 import ourstory.utils.DeathMessage;
-import ourstory.utils.EnchantItem;
 
 public class onPlayerDeath implements Listener {
 
@@ -24,7 +22,7 @@ public class onPlayerDeath implements Listener {
 		int rng = random.nextInt(Main.deathMessagesEn.size());
 
 		for (Player p : Bukkit.getOnlinePlayers())
-			p.sendMessage(Component.text(DeathMessage.getRandomDeathMessage(p.locale(), p, rng)).color(NamedTextColor.DARK_RED));
+			p.sendMessage(Component.text(DeathMessage.getRandomDeathMessage(p.locale(), player, rng)).color(NamedTextColor.DARK_RED));
 
 		// Whisper to player his death location
 		player.sendMessage(Component.text(
@@ -37,20 +35,5 @@ public class onPlayerDeath implements Listener {
 		// Death sound
 		for (Player OnlinePlayer : Bukkit.getOnlinePlayers())
 			OnlinePlayer.playSound(OnlinePlayer.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1000, 1);
-
-		// Test for Phoenix enchant
-		ItemStack[] armorContents = player.getInventory().getArmorContents();
-
-		int totalPhoenixLevel = 0;
-
-		for (ItemStack armor : armorContents)
-			totalPhoenixLevel += EnchantItem.getEnchantAmount(armor, "phoenix");
-
-		if (random.nextInt(0, 101) < (totalPhoenixLevel * 2.5)) {
-			player.sendMessage(Component.text("You got blessed by the Phoenix enchant ! Your inventory has been safeguarded !").color(NamedTextColor.GREEN));
-			event.setKeepInventory(true);
-			event.setDroppedExp(0);
-			event.getDrops().clear();
-		}
 	}
 }
