@@ -30,7 +30,7 @@ public class onArrowRain implements Listener {
 
 	private final NamespacedKey BowEnchantSaver = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "BowEnchantSaver");
 	private final NamespacedKey BowForceSaver = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "BowForceSaver");
-	private final HashMap<UUID, Integer> current_active_arrows = new HashMap();
+	private final HashMap<UUID, Integer> currentActiveArrows = new HashMap();
 	private final int maxGeneratingArrowsPerPlayer = 10;
 
 
@@ -53,27 +53,27 @@ public class onArrowRain implements Listener {
 
 		Arrow arroworigin = (Arrow) event.getEntity();
 		LivingEntity player = (LivingEntity) arroworigin.getShooter();
-		UUID player_id = player.getUniqueId();
+		UUID playerId = player.getUniqueId();
 
-		int enchant_level = arroworigin.getPersistentDataContainer().get(BowEnchantSaver, PersistentDataType.INTEGER);
+		int enchantLevel = arroworigin.getPersistentDataContainer().get(BowEnchantSaver, PersistentDataType.INTEGER);
 		float force = arroworigin.getPersistentDataContainer().get(BowForceSaver, PersistentDataType.FLOAT);
 
 		Entity hitty = event.getHitEntity();
 		if (hitty == null)
 			return;
 
-		if (!current_active_arrows.containsKey(player_id))
-			current_active_arrows.put(player_id, 0);
-		if (current_active_arrows.get(player_id) >= maxGeneratingArrowsPerPlayer)
+		if (!currentActiveArrows.containsKey(playerId))
+			currentActiveArrows.put(playerId, 0);
+		if (currentActiveArrows.get(playerId) >= maxGeneratingArrowsPerPlayer)
 			return;
-		current_active_arrows.replace(player_id, current_active_arrows.get(player_id) + 1);
+		currentActiveArrows.replace(playerId, currentActiveArrows.get(playerId) + 1);
 		new BukkitRunnable() {
 			int counter = 0;
 
 			@Override
 			public void run() {
-				if (counter >= enchant_level) {
-					current_active_arrows.replace(player_id, current_active_arrows.get(player_id) - 1);
+				if (counter >= enchantLevel) {
+					currentActiveArrows.replace(playerId, currentActiveArrows.get(playerId) - 1);
 					this.cancel();
 					return;
 				}
