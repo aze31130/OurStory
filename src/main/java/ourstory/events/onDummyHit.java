@@ -1,6 +1,7 @@
 package ourstory.events;
 
 import java.util.Map;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
@@ -63,7 +64,7 @@ public class onDummyHit implements Listener {
 
 		event.setCancelled(true);
 
-		double base_damage = event.getDamage();
+		double baseDamage = event.getDamage();
 		Player p = (Player) event.getDamager();
 		ItemStack itemInHand = p.getInventory().getItemInMainHand();
 
@@ -74,11 +75,11 @@ public class onDummyHit implements Listener {
 		// Ajout des dégâts pour chaque enchants présent sur le dummy et la meta data
 		for (String str : EnchantmentsSensitivity.keySet())
 			if (!event.getEntity().getMetadata(str).isEmpty())
-				base_damage += 2.5 * (itemInHand.containsEnchantment(EnchantmentsSensitivity.get(str)) ? itemInHand.getEnchantmentLevel(EnchantmentsSensitivity.get(str)) : 0);
+				baseDamage += 2.5 * (itemInHand.containsEnchantment(EnchantmentsSensitivity.get(str)) ? itemInHand.getEnchantmentLevel(EnchantmentsSensitivity.get(str)) : 0);
 
 		// Gestion de final_damage
-		base_damage *= 1 + (0.05 * EnchantItem.getEnchantAmount(itemInHand, "final_damage"));
+		baseDamage *= 1 + (0.05 * EnchantItem.getEnchantAmount(itemInHand, "final_damage"));
 
-		p.sendMessage(Component.text(event.getEntity().getName() + " : ").append(Component.text(String.format("%.2f", base_damage)).color(NamedTextColor.RED)));
+		p.sendMessage(Component.text(event.getEntity().getName() + " : ").append(Component.text(String.format("%.2f", baseDamage)).color(NamedTextColor.RED)));
 	}
 }
