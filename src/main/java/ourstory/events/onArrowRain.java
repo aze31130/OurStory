@@ -16,7 +16,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -28,17 +30,20 @@ import ourstory.utils.EnchantItem;
  */
 public class onArrowRain implements Listener {
 
-	private final NamespacedKey bowEnchantSaver = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "bowEnchantSaver");
-	private final NamespacedKey bowForceSaver = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "bowForceSaver");
-	private final HashMap<UUID, Integer> currentActiveArrows = new HashMap();
+	private final Plugin plugin = Bukkit.getPluginManager().getPlugin("OurStory");
+	private final NamespacedKey bowEnchantSaver = new NamespacedKey(plugin, "bowEnchantSaver");
+	private final NamespacedKey bowForceSaver = new NamespacedKey(plugin, "bowForceSaver");
+	private final HashMap<UUID, Integer> currentActiveArrows = new HashMap<UUID, Integer>();
 	private final int maxGeneratingArrowsPerPlayer = 10;
-
+	private final int arrowDespawnRate = 1200;
+	private final int arrowLifeTime = 40;
 
 	@EventHandler
 	public void onLaunch(EntityShootBowEvent e) {
-		if (e.getBow().getType() != Material.BOW)
+		ItemStack bow = e.getBow();
+		if (bow.getType() != Material.BOW)
 			return;
-		if (EnchantItem.getEnchantAmount(e.getBow(), "arrow_rain") == 0)
+		if (EnchantItem.getEnchantAmount(bow, "arrow_rain") == 0)
 			return;
 
 		e.getProjectile().getPersistentDataContainer().set(bowEnchantSaver, PersistentDataType.INTEGER, EnchantItem.getEnchantAmount(e.getBow(), "arrow_rain"));
@@ -46,8 +51,7 @@ public class onArrowRain implements Listener {
 	}
 
 	@EventHandler
-	public void arrowRain(ProjectileHitEvent event) throws IllegalAccessException {
-
+	public void arrowRain(ProjectileHitEvent event) {
 		if (!event.getEntity().getPersistentDataContainer().has(bowEnchantSaver, PersistentDataType.INTEGER))
 			return;
 
@@ -82,7 +86,7 @@ public class onArrowRain implements Listener {
 					entityLoc.add(0, 1, 0);
 				Arrow arrow = player.getWorld().spawnArrow(entityLoc, new Vector(0, -1, 0), force, 0);
 				arrow.setBasePotionType((arrowOrigin).getBasePotionType());
-				arrow.setLifetimeTicks(1160); // Default maxTime : 1200. i.e arrows will last 2 seconds ON THE GROUND
+				arrow.setLifetimeTicks(arrowDespawnRate - arrowLifeTime);
 				arrow.setShooter(player);
 				arrow.setDamage((arrowOrigin).getDamage());
 				arrow.setWeapon((arrowOrigin).getWeapon());
@@ -93,6 +97,6 @@ public class onArrowRain implements Listener {
 				arrow.setPierceLevel(127);
 				counter++;
 			}
-		}.runTaskTimer(Bukkit.getPluginManager().getPlugin("Ourstory"), 20L, 20L);
+		}.runTaskTimer(plugin, 20, 20);
 	}
 }
