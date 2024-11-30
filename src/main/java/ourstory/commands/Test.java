@@ -1,8 +1,9 @@
 package ourstory.commands;
 
+import java.util.Arrays;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import ourstory.skills.Annihilation;
+import ourstory.skills.LaserMatrix;
 import ourstory.utils.Permissions;
 
 public class Test implements BasicCommand {
@@ -11,7 +12,8 @@ public class Test implements BasicCommand {
 		if (!Permissions.checkPermissions(sender.getSender(), "ourstory.test"))
 			return;
 
-		Annihilation an = new Annihilation();
-		an.cast(sender.getExecutor(), null);
+		LaserMatrix an = new LaserMatrix();
+
+		an.cast(sender.getExecutor(), Arrays.asList(sender.getExecutor()));
 	}
 }

@@ -1,5 +1,6 @@
 package ourstory.bosses;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -8,6 +9,7 @@ import org.bukkit.entity.Monster;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import ourstory.skills.Skills;
 
 public abstract class Boss {
 	public Thread skills;
@@ -17,6 +19,8 @@ public abstract class Boss {
 	public int phase;
 	public Difficulty difficulty;
 	public BossBar healthBar;
+
+	public List<Skills> capabilites = new ArrayList<>();
 
 	public Boss(String name, Difficulty difficulty) {
 		this.name = name;
