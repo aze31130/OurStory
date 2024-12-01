@@ -7,10 +7,14 @@ import org.bukkit.Particle;
 import org.bukkit.Particle.DustTransition;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 
 public class LaserMatrix implements Skills {
+
+	final Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
+
 	@Override
 	public void cast(Entity caster, List<Entity> targets) {
 		int laserAmount = 10;
@@ -50,7 +54,7 @@ public class LaserMatrix implements Skills {
 				currentAngle += rotationSpeed * orientation;
 				ticks++;
 			}
-		}.runTaskTimer(Bukkit.getPluginManager().getPlugin("OurStory"), 0, 1); // Schedule task, runs every tick (1 tick = 1/20 second)
+		}.runTaskTimer(p, 0, 1); // Schedule task, runs every tick (1 tick = 1/20 second)
 	}
 
 	// Helper method to draw a laser

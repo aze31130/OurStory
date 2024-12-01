@@ -3,7 +3,7 @@ package ourstory.commands;
 import java.util.Arrays;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import ourstory.skills.LaserMatrix;
+import ourstory.skills.LaserExplosion;
 import ourstory.utils.Permissions;
 
 public class Test implements BasicCommand {
@@ -12,7 +12,7 @@ public class Test implements BasicCommand {
 		if (!Permissions.checkPermissions(sender.getSender(), "ourstory.test"))
 			return;
 
-		LaserMatrix an = new LaserMatrix();
+		LaserExplosion an = new LaserExplosion();
 
 		an.cast(sender.getExecutor(), Arrays.asList(sender.getExecutor()));
 	}
