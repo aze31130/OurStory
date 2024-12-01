@@ -3,11 +3,13 @@ package ourstory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import ourstory.commands.*;
@@ -60,20 +62,27 @@ public class Main extends JavaPlugin {
 		for (Listener event : eventsToRegister)
 			Bukkit.getPluginManager().registerEvents(event, this);
 
-		// Registers all commands
+		/*
+		 * Registers all commands
+		 */
+		Map<String, BasicCommand> commandsToRegister = Map.of(
+				"boss", new Boss(),
+				"dummy", new Dummy(),
+				"reset", new Reset(),
+				"test", new Test(),
+				"skin", new Skin(),
+				"split", new Split(),
+				"rankup", new RankUp(),
+				"count", new Count(),
+				"chall", new Chall(),
+				"cast", new Cast());
+
 		var manager = this.getLifecycleManager();
 		manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
 			final Commands commands = event.registrar();
 
-			commands.register("boss", "WIP", new Boss());
-			commands.register("dummy", "Spawns a dummy to test DPS", new Dummy());
-			commands.register("reset", "Resets the repair cost of your items", new Reset());
-			commands.register("test", "Test command", new Test());
-			commands.register("skin", "Change the skin of your current weapon", new Skin());
-			commands.register("split", "Splits the enchants on your books", new Split());
-			commands.register("rankup", "Increases your rank", new RankUp());
-			commands.register("count", "Count items in your inventory", new Count());
-			commands.register("chall", "Display the chosen advancement", new Chall());
+			for (Entry<String, BasicCommand> command : commandsToRegister.entrySet())
+				commands.register(command.getKey(), command.getValue());
 		});
 
 		// Registers custom recipe

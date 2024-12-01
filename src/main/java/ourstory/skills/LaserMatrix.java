@@ -74,6 +74,9 @@ public class LaserMatrix implements Skills {
 
 			// Damage targeted entities
 			for (Entity target : targets) {
+				if (!(target instanceof LivingEntity))
+					continue;
+
 				if (particleLocation.distance(target.getLocation()) <= 1.0) {
 					LivingEntity livingTarget = (LivingEntity) target;
 					livingTarget.damage(40.0, caster);
