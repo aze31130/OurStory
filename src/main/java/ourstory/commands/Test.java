@@ -1,10 +1,7 @@
 package ourstory.commands;
 
-import java.util.Arrays;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import ourstory.skills.LaserExplosion;
-import ourstory.skills.LaserMatrix;
 import ourstory.utils.Permissions;
 
 public class Test implements BasicCommand {

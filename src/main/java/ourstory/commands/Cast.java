@@ -5,10 +5,7 @@ import java.util.Map;
 import org.bukkit.entity.Player;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import ourstory.skills.Annihilation;
-import ourstory.skills.LaserExplosion;
-import ourstory.skills.LaserMatrix;
-import ourstory.skills.Skills;
+import ourstory.skills.*;
 import ourstory.utils.Permissions;
 
 public class Cast implements BasicCommand {
@@ -16,7 +13,10 @@ public class Cast implements BasicCommand {
 	private final Map<String, Skills> skills = Map.of(
 			"Annihilation", new Annihilation(),
 			"LaserMatrix", new LaserMatrix(),
-			"LaserExplosion", new LaserExplosion());
+			"LaserExplosion", new LaserExplosion(),
+			"ArrowWall", new ArrowWall(),
+			"Summon", new Summon(),
+			"Wave", new Wave());
 
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {

@@ -7,28 +7,20 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Monster;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import ourstory.storage.Storage;
 import ourstory.utils.EnchantItem;
-import ourstory.utils.PlayerUtils;
 
 public class Summon implements Skills {
 	@Override
 	public void cast(Entity caster, List<Entity> targets) {
-		Storage s = Storage.getInstance();
-		Monster boss = s.bossInstance.monster.entity;
-
-		PlayerUtils.broadcastToPlayers(s.bossInstance.players, "Go Minions, show no mercy !");
-
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 15; i++) {
 			new BukkitRunnable() {
 				@Override
 				public void run() {
-					Zombie minion = (Zombie) boss.getWorld().spawnEntity(boss.getLocation(), EntityType.ZOMBIE);
+					Zombie minion = (Zombie) caster.getWorld().spawnEntity(caster.getLocation(), EntityType.ZOMBIE);
 
 					EntityEquipment equipment = minion.getEquipment();
 					ItemStack[] armor = {
