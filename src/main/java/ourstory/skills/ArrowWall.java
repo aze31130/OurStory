@@ -1,7 +1,6 @@
 package ourstory.skills;
 
 import java.util.List;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -35,7 +34,7 @@ public class ArrowWall implements Skills {
 					arrow.setLifetimeTicks(1000);
 					// arrow.setShooter(caster); // Set the boss as the shooter (optional)
 				}
-			}.runTaskLater(Bukkit.getPluginManager().getPlugin("OurStory"), i / 20); // Slight delay for each arrow
+			}.runTaskLater(plugin, i / 20); // Slight delay for each arrow
 		}
 	}
 }

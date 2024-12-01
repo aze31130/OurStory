@@ -1,7 +1,6 @@
 package ourstory.skills;
 
 import java.util.List;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -46,7 +45,7 @@ public class Annihilation implements Skills {
 					}
 				}
 			}
-		}.runTaskTimer(Bukkit.getPluginManager().getPlugin("OurStory"), 0, 1);
+		}.runTaskTimer(plugin, 0, 1);
 	}
 
 	private static void playCircleEffect(Entity caster, Location loc, double radius) {

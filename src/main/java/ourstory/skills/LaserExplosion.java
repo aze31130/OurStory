@@ -5,14 +5,11 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import java.util.List;
 
 public class LaserExplosion implements Skills {
-
-	final Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
 
 	@Override
 	public void cast(Entity caster, List<Entity> targets) {
@@ -31,7 +28,7 @@ public class LaserExplosion implements Skills {
 	}
 
 	private void spawnLaser(Location startLocation, Vector direction, double range, double speed, double damage, Entity caster, List<Entity> targets) {
-		Bukkit.getScheduler().runTaskTimer(p, new Runnable() {
+		Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
 			Location currentLocation = startLocation.clone();
 			double traveledDistance = 0;
 

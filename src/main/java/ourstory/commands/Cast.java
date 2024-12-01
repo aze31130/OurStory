@@ -16,7 +16,8 @@ public class Cast implements BasicCommand {
 			"LaserExplosion", new LaserExplosion(),
 			"ArrowWall", new ArrowWall(),
 			"Summon", new Summon(),
-			"Wave", new Wave());
+			"Wave", new Wave(),
+			"WitherRage", new WitherRage());
 
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {

@@ -2,7 +2,6 @@ package ourstory.skills;
 
 import java.util.List;
 import java.util.Map;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -34,7 +33,7 @@ public class Summon implements Skills {
 
 					minion.setBaby();
 				}
-			}.runTaskLater(Bukkit.getPluginManager().getPlugin("OurStory"), i * 2);
+			}.runTaskLater(plugin, i * 2);
 		}
 	}
 }
