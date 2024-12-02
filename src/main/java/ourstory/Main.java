@@ -51,7 +51,7 @@ public class Main extends JavaPlugin {
 		 * Registers all events
 		 */
 		Listener[] eventsToRegister = {
-				new onArrowRain(), new onBossDeath(), new onBossHit(), new onDummyHit(), new onEntityDeath(),
+				new onReachEquip(), new onArrowRain(), new onBossDeath(), new onBossHit(), new onDummyHit(), new onEntityDeath(),
 				new onEntityHit(), new onFinalDamage(), new onHeadDrop(), new onItemConsume(),
 				new onMineAmethyst(), new onMineDeepslate(), new onPhoenixDeath(), new onPlayerDeath(),
 				new onPlayerInteract(), new onPlayerJoin(), new onPlayerPlace(), new onPlayerSit(),
