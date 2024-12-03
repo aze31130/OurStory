@@ -11,7 +11,7 @@ import org.bukkit.Particle;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -31,11 +31,11 @@ public class RavenousVortex implements Skills {
 			double effectDuration = 50;
 			List<Location> nearbyEntitiesLocation = caster.getNearbyEntities(effectRange, 2, effectRange)
 					.stream()
-					.filter(entity -> entity instanceof LivingEntity)
+					.filter(entity -> entity instanceof Player)
 					.map(entity -> entity.getLocation())
 					.collect(Collectors.toList());
-			HashSet<LivingEntity> oldAffectedEntities = new HashSet<>();
-			HashSet<LivingEntity> oldFallDownEntities = new HashSet<>();
+			HashSet<Player> oldAffectedEntities = new HashSet<>();
+			HashSet<Player> oldFallDownEntities = new HashSet<>();
 
 			@Override
 			public void run() {
@@ -46,26 +46,26 @@ public class RavenousVortex implements Skills {
 					return;
 				}
 				effectDuration--;
-				HashSet<LivingEntity> newlyAffectedEntities = new HashSet<>();
-				HashSet<LivingEntity> newlyFallDownEntities = new HashSet<>();
+				HashSet<Player> newlyAffectedEntities = new HashSet<>();
+				HashSet<Player> newlyFallDownEntities = new HashSet<>();
 
 				for (Location effectLocation : nearbyEntitiesLocation) {
-					handleEffect(oldAffectedEntities, newlyAffectedEntities, -1, 0.5, Particle.FLAME, effectLocation, 1);
-					handleEffect(oldFallDownEntities, newlyFallDownEntities, 99, 2.5, Particle.GLOW, effectLocation.clone().add(new Location(effectLocation.getWorld(), 0, 17.5, 0)), 1);
-					playCircleEffect(effectLocation.clone().add(new Location(effectLocation.getWorld(), 0, 17.5, 0)), effectGravityRadius * 1.5, Particle.GLOW);
-					playCircleEffect(effectLocation.clone().add(new Location(effectLocation.getWorld(), 0, 20, 0)), effectGravityRadius * 2, Particle.GLOW);
+					handleEffect(oldAffectedEntities, newlyAffectedEntities, -1, 0.6, Particle.FLAME, effectLocation, 1);
+					handleEffect(oldFallDownEntities, newlyFallDownEntities, 99, 3, Particle.GLOW, effectLocation.clone().add(new Location(effectLocation.getWorld(), 0, 23, 0)), 1);
+					playCircleEffect(effectLocation.clone().add(new Location(effectLocation.getWorld(), 0, 23, 0)), effectGravityRadius * 1.5, Particle.GLOW);
+					playCircleEffect(effectLocation.clone().add(new Location(effectLocation.getWorld(), 0, 26, 0)), effectGravityRadius * 2, Particle.GLOW);
 				}
 			}
 		}.runTaskTimer(plugin, 0, 1);
 	}
 
-	public static void handleEffect(HashSet<LivingEntity> oldSet, HashSet<LivingEntity> newSet, int strength, double radiusheight, Particle part, Location loc, double radius_mult) {
+	public static void handleEffect(HashSet<Player> oldSet, HashSet<Player> newSet, int strength, double radiusheight, Particle part, Location loc, double radius_mult) {
 		newSet.addAll(loc.getNearbyEntities(effectGravityRadius, radiusheight, effectGravityRadius)
 				.stream()
-				.filter(entity -> entity instanceof LivingEntity)
-				.map(entity -> (LivingEntity) entity)
+				.filter(entity -> entity instanceof Player)
+				.map(entity -> (Player) entity)
 				.collect(Collectors.toCollection(HashSet::new)));
-		HashSet<LivingEntity> difference = new HashSet<>(oldSet);
+		HashSet<Player> difference = new HashSet<>(oldSet);
 		difference.removeAll(newSet);
 		difference.forEach(entity -> {
 			removeEffect(entity);
@@ -78,18 +78,18 @@ public class RavenousVortex implements Skills {
 		playCircleEffect(loc.clone().add(0, -radiusheight, 0), effectGravityRadius * radius_mult, part);
 	}
 
-	public static void clearEffect(HashSet<LivingEntity> oldSet) {
+	public static void clearEffect(HashSet<Player> oldSet) {
 		oldSet.forEach(entity -> {
 			removeEffect(entity);
 		});
 	}
 
-	public static void removeEffect(LivingEntity entity) {
+	public static void removeEffect(Player entity) {
 		if (entity.getAttribute(Attribute.GENERIC_GRAVITY) != null)
 			entity.getAttribute(Attribute.GENERIC_GRAVITY).removeModifier(GravityKey);
 	}
 
-	public static void applyEffect(LivingEntity entity, int strength) {
+	public static void applyEffect(Player entity, int strength) {
 		removeEffect(entity);
 
 		AttributeModifier buff = new AttributeModifier(GravityKey, strength, AttributeModifier.Operation.ADD_NUMBER);
