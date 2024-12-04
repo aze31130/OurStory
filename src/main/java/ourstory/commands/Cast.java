@@ -17,7 +17,8 @@ public class Cast implements BasicCommand {
 			"ArrowWall", new ArrowWall(),
 			"Summon", new Summon(),
 			"Wave", new Wave(),
-			"WitherRage", new WitherRage());
+			"WitherRage", new WitherRage(),
+			"Growth", new Growth());
 
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {
