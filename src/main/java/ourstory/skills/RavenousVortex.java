@@ -20,7 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 public class RavenousVortex implements Skills {
 
-	static NamespacedKey GravityKey = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "boss_ravenouos_vortex");
+	static NamespacedKey GravityKey = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "boss_ravenous_vortex");
 	static double effectRange = 10;
 	static double effectGravityRadius = 2;
 
