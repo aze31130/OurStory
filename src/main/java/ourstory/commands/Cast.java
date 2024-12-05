@@ -18,6 +18,7 @@ public class Cast implements BasicCommand {
 			"Summon", new Summon(),
 			"Wave", new Wave(),
 			"WitherRage", new WitherRage(),
+			"Growth", new Growth());
 			"RavenousVortex", new RavenousVortex());
 
 	@Override
