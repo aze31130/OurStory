@@ -19,6 +19,7 @@ public class Cast implements BasicCommand {
 			"Wave", new Wave(),
 			"WitherRage", new WitherRage(),
 			"Growth", new Growth());
+			"RavenousVortex", new RavenousVortex());
 
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {
