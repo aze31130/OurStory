@@ -18,7 +18,6 @@ import ourstory.utils.EnchantItem;
  * @author aurel
  */
 public class onReachEquip implements Listener {
-
 	@EventHandler
 	public void onPlayerChangeArmor(PlayerArmorChangeEvent event) {
 		Player player = event.getPlayer();
@@ -33,12 +32,12 @@ public class onReachEquip implements Listener {
 		applyReachModifier(player, totalReachLevels);
 	}
 
-	private void applyReachModifier(Player player, double ReachLevel) {
+	private void applyReachModifier(Player player, int reachLevel) {
 		NamespacedKey ReachKey = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "reach_bonus");
 		if (player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE) != null)
 			player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE).removeModifier(ReachKey);
 
-		AttributeModifier buff = new AttributeModifier(ReachKey, ReachLevel, AttributeModifier.Operation.ADD_NUMBER);
+		AttributeModifier buff = new AttributeModifier(ReachKey, reachLevel, AttributeModifier.Operation.ADD_NUMBER);
 		player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE).addModifier(buff);
 	}
 }
