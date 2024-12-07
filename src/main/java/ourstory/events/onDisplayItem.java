@@ -31,7 +31,7 @@ public class onDisplayItem implements Listener {
 
 		Player player = event.getPlayer();
 		ItemStack mainHandItem = player.getInventory().getItemInMainHand();
-		HoverEvent<ShowItem> mainItemOver = mainHandItem.asHoverEvent();
+		HoverEvent<ShowItem> he = mainHandItem.asHoverEvent();
 
 		if (mainHandItem == null || mainHandItem.getType().isAir())
 			return;
@@ -39,12 +39,12 @@ public class onDisplayItem implements Listener {
 		String itemName = mainHandItem.getItemMeta().hasDisplayName()
 				? PlainTextComponentSerializer.plainText().serialize(mainHandItem.getItemMeta().displayName())
 				: mainHandItem.getType().name();
-		TextComponent result = Component.text(itemName, NamedTextColor.AQUA, TextDecoration.BOLD, TextDecoration.ITALIC).hoverEvent(mainItemOver);
-
-		Bukkit.getConsoleSender().sendMessage("Aaaa");
+		TextComponent result = Component.text(itemName, NamedTextColor.AQUA, TextDecoration.BOLD, TextDecoration.ITALIC).hoverEvent(he);
 
 		for (Audience audience : Bukkit.getOnlinePlayers())
 			audience.sendMessage(event.renderer().render(player, player.displayName(), result, audience));
-		event.setCancelled(true);
+
+		event.message(result);
+		// event.setCancelled(true);
 	}
 }
