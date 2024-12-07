@@ -11,7 +11,7 @@ public class ArrowWall implements Skills {
 
 	@Override
 	public void cast(Entity caster, List<Entity> targets) {
-		Location bossLocation = caster.getLocation().add(0, 3, 0); // Spawn arrows 3 blocks above boss
+		Location bossLocation = caster.getLocation().add(0, 5, 0); // Spawn arrows 5 blocks above boss
 
 		for (int i = 0; i < 800; i++) {
 			new BukkitRunnable() {
@@ -31,7 +31,7 @@ public class ArrowWall implements Skills {
 
 					// Spawn the arrow at the boss's location with the calculated direction
 					Arrow arrow = caster.getWorld().spawnArrow(bossLocation, direction, 2, 0);
-					arrow.setLifetimeTicks(1000);
+					arrow.setLifetimeTicks(1100);
 					// arrow.setShooter(caster); // Set the boss as the shooter (optional)
 				}
 			}.runTaskLater(plugin, i / 20); // Slight delay for each arrow
