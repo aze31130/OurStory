@@ -1,14 +1,17 @@
 package ourstory.skills;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
-import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -17,97 +20,80 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 public class RavenousVortex implements Skills {
 
-	private final static NamespacedKey GravityKey = new NamespacedKey(plugin, "boss_ravenous_vortex");
-	private final static double targetRadius = 2;
-	private final static double gravityUplift = -1;
-	private final static double gravityDownlift = 99;
-	private final static long skillDuration = 10;
-	private final static long skillActivationDelay = 50;
+	final static NamespacedKey GravityKey = new NamespacedKey(plugin, "boss_ravenous_vortex");
+	final static double effectRange = 10;
+	final static double effectGravityRadius = 2;
+	final static double skillDuration = 40;
 
 	@Override
 	public void cast(Entity caster, List<Entity> targets) {
-		List<Location> targetLocations = new ArrayList<>();
+		List<Location> targetsLocation = new ArrayList<>();
 
-		// Copies locations where the skill will apply
-		for (Entity target : targets) {
-			Location targetLocation = target.getLocation().clone();
-			targetLocations.add(targetLocation);
-		}
+		for (Entity target : targets)
+			targetsLocation.add(target.getLocation().clone());
 
-		// Play flame effect as a warning for players
 		new BukkitRunnable() {
-			long timer = skillActivationDelay;
+			double effectDuration = skillDuration;
+			HashSet<Player> oldAffectedEntities = new HashSet<>();
+			HashSet<Player> oldFallDownEntities = new HashSet<>();
 
 			@Override
 			public void run() {
-				if (timer <= 0) {
+				if (effectDuration <= 0) {
+					clearEffect(oldAffectedEntities);
+					clearEffect(oldFallDownEntities);
 					this.cancel();
 					return;
 				}
-				// Spawns circles where the skill will apply
-				for (Location location : targetLocations)
-					playCircleEffect(location, targetRadius, Particle.FLAME);
+				effectDuration--;
+				HashSet<Player> newlyAffectedEntities = new HashSet<>();
+				HashSet<Player> newlyFallDownEntities = new HashSet<>();
 
-				timer--;
+				for (Location location : targetsLocation) {
+
+					handleEffect(oldAffectedEntities, newlyAffectedEntities, -1, 0.6, Particle.FLAME, location, 1);
+					handleEffect(oldFallDownEntities, newlyFallDownEntities, 99, 3, Particle.GLOW, location.clone().add(new Location(location.getWorld(), 0, 23, 0)), 1);
+					playCircleEffect(location.clone().add(new Location(location.getWorld(), 0, 23, 0)), effectGravityRadius * 1.5, Particle.GLOW);
+					playCircleEffect(location.clone().add(new Location(location.getWorld(), 0, 26, 0)), effectGravityRadius * 2, Particle.GLOW);
+				}
 			}
 		}.runTaskTimer(plugin, 0, 1);
-
-		// Executed later to let the player run outside the circle
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				/*
-				 * At this point, we can get all entity that didn't dodge the skill.
-				 */
-				List<Entity> realTargets = new ArrayList<>();
-
-				for (Location targetLocation : targetLocations)
-					realTargets.addAll(targetLocation.getNearbyEntities(targetRadius, 3, targetRadius));
-
-				// Schedule uplift
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-						for (Entity e : realTargets)
-							applyGravity(e, gravityUplift);
-
-					}
-				}.runTaskLater(plugin, 0);
-
-				// Schedule downlift
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-						for (Entity e : realTargets)
-							applyGravity(e, gravityDownlift);
-					}
-				}.runTaskLater(plugin, skillDuration);
-
-
-				// Schedule removal of the gravity effect
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-						for (Entity e : realTargets)
-							clearGravity(e);
-					}
-				}.runTaskLater(plugin, skillDuration * 2);
-			}
-		}.runTaskLater(plugin, skillActivationDelay);
 	}
 
-	private static void applyGravity(Entity target, double strength) {
-		clearGravity(target);
-
-		AttributeModifier gravityModifier = new AttributeModifier(GravityKey, strength, AttributeModifier.Operation.ADD_NUMBER);
-		((Attributable) target).getAttribute(Attribute.GENERIC_GRAVITY).addModifier(gravityModifier);
-
-		playCircleEffect(target.getLocation(), targetRadius * 2, Particle.GLOW);
+	public static void handleEffect(HashSet<Player> oldSet, HashSet<Player> newSet, int strength, double radiusheight, Particle part, Location loc, double radius_mult) {
+		newSet.addAll(loc.getNearbyEntities(RavenousVortex.effectGravityRadius, radiusheight, RavenousVortex.effectGravityRadius)
+				.stream()
+				.filter(entity -> entity instanceof Player)
+				.map(entity -> (Player) entity)
+				.collect(Collectors.toCollection(HashSet::new)));
+		HashSet<Player> difference = new HashSet<>(oldSet);
+		difference.removeAll(newSet);
+		difference.forEach(entity -> {
+			clearEffect(entity);
+		});
+		oldSet.clear();
+		oldSet.addAll(newSet);
+		newSet.forEach(entity -> {
+			applyEffect(entity, strength);
+		});
+		playCircleEffect(loc, effectGravityRadius * radius_mult, part);
 	}
 
-	private static void clearGravity(Entity target) {
-		if (((Attributable) target).getAttribute(Attribute.GENERIC_GRAVITY) != null)
-			((Attributable) target).getAttribute(Attribute.GENERIC_GRAVITY).removeModifier(GravityKey);
+	public static void clearEffect(Collection<Player> oldSet) {
+		for (Player p : oldSet)
+			clearEffect(p);
+	}
+
+	public static void clearEffect(Player entity) {
+		if (entity.getAttribute(Attribute.GENERIC_GRAVITY) != null)
+			entity.getAttribute(Attribute.GENERIC_GRAVITY).removeModifier(GravityKey);
+	}
+
+	public static void applyEffect(Player entity, int strength) {
+		clearEffect(entity);
+
+		AttributeModifier buff = new AttributeModifier(GravityKey, strength, AttributeModifier.Operation.ADD_NUMBER);
+		entity.getAttribute(Attribute.GENERIC_GRAVITY).addModifier(buff);
 	}
 
 	private static void playCircleEffect(Location loc, double radius, Particle particle) {
