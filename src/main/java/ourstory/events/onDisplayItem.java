@@ -8,13 +8,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.event.HoverEvent.ShowItem;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 public class onDisplayItem implements Listener {
@@ -36,15 +33,16 @@ public class onDisplayItem implements Listener {
 		if (mainHandItem == null || mainHandItem.getType().isAir())
 			return;
 
-		String itemName = mainHandItem.getItemMeta().hasDisplayName()
-				? PlainTextComponentSerializer.plainText().serialize(mainHandItem.getItemMeta().displayName())
-				: mainHandItem.getType().name();
-		TextComponent result = Component.text(itemName, NamedTextColor.AQUA, TextDecoration.BOLD, TextDecoration.ITALIC).hoverEvent(he);
+		Component itemName = mainHandItem.getItemMeta().hasDisplayName()
+				? mainHandItem.getItemMeta().displayName()
+				: Component.text(mainHandItem.getType().name());
 
-		for (Audience audience : Bukkit.getOnlinePlayers())
-			audience.sendMessage(event.renderer().render(player, player.displayName(), result, audience));
+		TextComponent result = Component.text(player.getName() + " shared ").append(itemName).hoverEvent(he);
 
-		event.message(result);
-		// event.setCancelled(true);
+		for (Player p : Bukkit.getOnlinePlayers())
+			p.sendMessage(result);
+
+		// Cancel the message containing the trigger word
+		event.setCancelled(true);
 	}
 }
