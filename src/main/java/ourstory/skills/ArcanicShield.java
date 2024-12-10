@@ -15,15 +15,15 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.BoundingBox;
 
 /**
  *
  * @author aurel
  */
 public class ArcanicShield implements Skills {
-	final double preShieldTimer = 40; // 2 sec
-	final double shieldTimer = 100; // 5 sec
-
+	final double preShieldTimer = 40;
+	final double shieldTimer = 100;
 	final int preShieldParticleCount = 20;
 	final int particleCount = 70;
 
@@ -32,7 +32,7 @@ public class ArcanicShield implements Skills {
 	 * supérieur
 	 */
 	final int damageThresholdPerStrengthLevel = 20;
-	final int strengthTimerBase = 200; // 10 sec
+	final int strengthTimerBase = 200;
 
 
 	@Override
@@ -42,8 +42,9 @@ public class ArcanicShield implements Skills {
 			boolean isListenerRegistered = false;
 			float takenDamage = 0;
 			double currentTimer = 0;
-			double sphereRadius =
-					(Math.sqrt((Math.pow(caster.getBoundingBox().getWidthX(), 2)) + (Math.pow(caster.getBoundingBox().getWidthZ(), 2)) + (Math.pow(caster.getBoundingBox().getHeight(), 2)))) / 2;
+
+			BoundingBox bb = caster.getBoundingBox();
+			double sphereRadius = (Math.sqrt((Math.pow(bb.getWidthX(), 2)) + (Math.pow(bb.getWidthZ(), 2)) + (Math.pow(bb.getHeight(), 2)))) / 2;
 
 			final Listener damageListener = new Listener() {
 				@EventHandler
@@ -51,7 +52,9 @@ public class ArcanicShield implements Skills {
 					if (event.getEntity().equals(caster)) {
 						double damage = event.getFinalDamage();
 						takenDamage += damage;
-						event.setCancelled(true); // Bloquer les dégâts
+
+						// Cancel damage
+						event.setCancelled(true);
 					}
 				}
 			};
@@ -98,5 +101,3 @@ public class ArcanicShield implements Skills {
 		}
 	}
 }
-
-// Particle.CHERRY_LEAVES
