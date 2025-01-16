@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -85,15 +86,15 @@ public class RavenousVortex implements Skills {
 	}
 
 	public static void clearEffect(Player entity) {
-		if (entity.getAttribute(Attribute.GENERIC_GRAVITY) != null)
-			entity.getAttribute(Attribute.GENERIC_GRAVITY).removeModifier(GravityKey);
+		if (entity.getAttribute(Attribute.GRAVITY) != null)
+			entity.getAttribute(Attribute.GRAVITY).removeModifier(GravityKey);
 	}
 
 	public static void applyEffect(Player entity, int strength) {
 		clearEffect(entity);
 
 		AttributeModifier buff = new AttributeModifier(GravityKey, strength, AttributeModifier.Operation.ADD_NUMBER);
-		entity.getAttribute(Attribute.GENERIC_GRAVITY).addModifier(buff);
+		entity.getAttribute(Attribute.GRAVITY).addModifier(buff);
 	}
 
 	private static void playCircleEffect(Location loc, double radius, Particle particle) {

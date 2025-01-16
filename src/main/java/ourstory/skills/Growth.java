@@ -49,14 +49,14 @@ public class Growth implements Skills {
 	}
 
 	public static void removeEffect(LivingEntity entity) {
-		if (entity.getAttribute(Attribute.GENERIC_SCALE) != null)
-			entity.getAttribute(Attribute.GENERIC_SCALE).removeModifier(GrowthKey);
+		if (entity.getAttribute(Attribute.SCALE) != null)
+			entity.getAttribute(Attribute.SCALE).removeModifier(GrowthKey);
 	}
 
 	public static void applyEffect(LivingEntity entity, double strength) {
 		removeEffect(entity);
 
 		AttributeModifier buff = new AttributeModifier(GrowthKey, strength - 1, AttributeModifier.Operation.MULTIPLY_SCALAR_1);
-		entity.getAttribute(Attribute.GENERIC_SCALE).addModifier(buff);
+		entity.getAttribute(Attribute.SCALE).addModifier(buff);
 	}
 }
