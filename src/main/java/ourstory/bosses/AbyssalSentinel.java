@@ -43,22 +43,22 @@ public class AbyssalSentinel extends Boss implements Runnable {
 					Attribute.MAX_HEALTH, 800.0,
 					Attribute.MOVEMENT_SPEED, 0.1,
 					Attribute.ATTACK_DAMAGE, 12.0,
-					Attribute.EXPLOSION_KNOCKBACK_RESISTANCE, 1.0),
+					Attribute.KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.NORMAL, Map.of(
 					Attribute.MAX_HEALTH, 1900.0,
 					Attribute.MOVEMENT_SPEED, 0.2,
 					Attribute.ATTACK_DAMAGE, 20.0,
-					Attribute.EXPLOSION_KNOCKBACK_RESISTANCE, 1.0),
+					Attribute.KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.HARD, Map.of(
 					Attribute.MAX_HEALTH, 3500.0,
 					Attribute.MOVEMENT_SPEED, 0.3,
 					Attribute.ATTACK_DAMAGE, 25.0,
-					Attribute.EXPLOSION_KNOCKBACK_RESISTANCE, 1.0),
+					Attribute.KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.CHAOS, Map.of(
 					Attribute.MAX_HEALTH, 8000.0,
 					Attribute.MOVEMENT_SPEED, 0.4,
 					Attribute.ATTACK_DAMAGE, 35.0,
-					Attribute.EXPLOSION_KNOCKBACK_RESISTANCE, 1.0));
+					Attribute.KNOCKBACK_RESISTANCE, 1.0));
 
 	private final Map<Difficulty, List<LootEntry>> loots = Map.of(
 			Difficulty.EASY, List.of(
