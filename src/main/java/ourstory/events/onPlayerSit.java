@@ -62,7 +62,7 @@ public class onPlayerSit implements Listener {
 
 	private void configurePig(Pig pig) {
 		// movement speed to 0 to block carrot on a stick item effect
-		pig.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+		pig.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0);
 		pig.setSaddle(true);
 		pig.setInvulnerable(true);
 		pig.setGravity(false);

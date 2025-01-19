@@ -34,10 +34,10 @@ public class onReachEquip implements Listener {
 
 	private void applyReachModifier(Player player, int reachLevel) {
 		NamespacedKey ReachKey = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "reach_bonus");
-		if (player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE) != null)
-			player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE).removeModifier(ReachKey);
+		if (player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE) != null)
+			player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE).removeModifier(ReachKey);
 
 		AttributeModifier buff = new AttributeModifier(ReachKey, reachLevel, AttributeModifier.Operation.ADD_NUMBER);
-		player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE).addModifier(buff);
+		player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE).addModifier(buff);
 	}
 }

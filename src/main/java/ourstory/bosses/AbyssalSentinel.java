@@ -35,25 +35,25 @@ public class AbyssalSentinel extends Boss implements Runnable {
 
 	private Map<Difficulty, Map<Attribute, Double>> attributes = Map.of(
 			Difficulty.EASY, Map.of(
-					Attribute.GENERIC_MAX_HEALTH, 800.0,
-					Attribute.GENERIC_MOVEMENT_SPEED, 0.1,
-					Attribute.GENERIC_ATTACK_DAMAGE, 12.0,
-					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0),
+					Attribute.MAX_HEALTH, 800.0,
+					Attribute.MOVEMENT_SPEED, 0.1,
+					Attribute.ATTACK_DAMAGE, 12.0,
+					Attribute.KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.NORMAL, Map.of(
-					Attribute.GENERIC_MAX_HEALTH, 1900.0,
-					Attribute.GENERIC_MOVEMENT_SPEED, 0.2,
-					Attribute.GENERIC_ATTACK_DAMAGE, 20.0,
-					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0),
+					Attribute.MAX_HEALTH, 1900.0,
+					Attribute.MOVEMENT_SPEED, 0.2,
+					Attribute.ATTACK_DAMAGE, 20.0,
+					Attribute.KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.HARD, Map.of(
-					Attribute.GENERIC_MAX_HEALTH, 3500.0,
-					Attribute.GENERIC_MOVEMENT_SPEED, 0.3,
-					Attribute.GENERIC_ATTACK_DAMAGE, 25.0,
-					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0),
+					Attribute.MAX_HEALTH, 3500.0,
+					Attribute.MOVEMENT_SPEED, 0.3,
+					Attribute.ATTACK_DAMAGE, 25.0,
+					Attribute.KNOCKBACK_RESISTANCE, 1.0),
 			Difficulty.CHAOS, Map.of(
-					Attribute.GENERIC_MAX_HEALTH, 8000.0,
-					Attribute.GENERIC_MOVEMENT_SPEED, 0.4,
-					Attribute.GENERIC_ATTACK_DAMAGE, 35.0,
-					Attribute.GENERIC_KNOCKBACK_RESISTANCE, 1.0));
+					Attribute.MAX_HEALTH, 8000.0,
+					Attribute.MOVEMENT_SPEED, 0.4,
+					Attribute.ATTACK_DAMAGE, 35.0,
+					Attribute.KNOCKBACK_RESISTANCE, 1.0));
 
 	private Map<Difficulty, List<LootEntry>> loots = Map.of(
 			Difficulty.EASY, List.of(
@@ -127,13 +127,13 @@ public class AbyssalSentinel extends Boss implements Runnable {
 		}
 
 		// Set entity to max life
-		entity.setHealth(attributes.get(difficulty).get(Attribute.GENERIC_MAX_HEALTH));
+		entity.setHealth(attributes.get(difficulty).get(Attribute.MAX_HEALTH));
 
 		// Define HealthBar
 		this.healthBar = Bukkit.createBossBar(this.name, BarColor.PURPLE, BarStyle.SOLID);
 		this.healthBar.setVisible(true);
 
-		double progress = entity.getHealth() / entity.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getValue();
+		double progress = entity.getHealth() / entity.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH).getValue();
 		this.healthBar.setProgress(progress);
 	}
 
@@ -224,11 +224,11 @@ public class AbyssalSentinel extends Boss implements Runnable {
 		this.healthBar.addPlayer(p);
 
 		// Update bossbar
-		double progress = entity.getHealth() / entity.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getValue();
+		double progress = entity.getHealth() / entity.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH).getValue();
 		this.healthBar.setProgress(progress);
 
 		// Check phase
-		Double maxHealth = attributes.get(difficulty).get(Attribute.GENERIC_MAX_HEALTH);
+		Double maxHealth = attributes.get(difficulty).get(Attribute.MAX_HEALTH);
 		Double currentHealth = boss.getHealth();
 
 		Double healthPercent = (currentHealth * 100) / maxHealth;
