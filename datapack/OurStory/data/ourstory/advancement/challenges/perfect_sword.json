@@ -1,0 +1,21 @@
+{
+	"display": {
+		"icon": {
+			"id": "minecraft:netherite_sword"
+		},
+		"title": {"translate":"The dream sword"},
+		"description": {"translate":"Craft the perfect sword"},
+		"frame": "challenge",
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "ourstory:challenges/root",
+	"criteria": {
+		"requirement": {
+			"trigger": "minecraft:impossible"
+		}
+	},
+	"rewards": {
+		"experience": 100
+	}
+}

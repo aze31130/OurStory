@@ -1,15 +1,15 @@
 {
 	"display": {
 		"icon": {
-			"id": "minecraft:diamond_axe"
+			"id": "minecraft:bow"
 		},
-		"title": {"translate":"Hard Boss Slayer"},
-		"description": {"translate":"Slay a boss in Hard mode"},
+		"title": {"translate":"The dream bow"},
+		"description": {"translate":"Craft the perfect bow"},
 		"frame": "challenge",
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "ourstory:boss_killer",
+	"parent": "ourstory:challenges/root",
 	"criteria": {
 		"requirement": {
 			"trigger": "minecraft:impossible"
