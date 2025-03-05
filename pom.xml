@@ -49,17 +49,12 @@
 	</dependencies>
 
 	<build>
+		<finalName>Ourstory</finalName>
 		<resources>
 			<resource>
 				<directory>configs</directory>
 				<includes>
-					<include>plugin.yml</include>
-				</includes>
-			</resource>
-			<resource>
-				<directory>configs</directory>
-				<includes>
-					<include>config.yml</include>
+					<include>*.yml</include>
 				</includes>
 			</resource>
 		</resources>
