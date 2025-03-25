@@ -1,6 +1,5 @@
 package ourstory.events;
 
-import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -9,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import ourstory.Main;
 import ourstory.utils.DeathMessage;
 
 public class onPlayerDeath implements Listener {
@@ -18,11 +16,8 @@ public class onPlayerDeath implements Listener {
 	public void playerDeath(PlayerDeathEvent event) {
 		Player player = event.getPlayer();
 
-		Random random = new Random();
-		int rng = random.nextInt(Main.deathMessagesEn.size());
-
 		for (Player p : Bukkit.getOnlinePlayers())
-			p.sendMessage(Component.text(DeathMessage.getRandomDeathMessage(p.locale(), player, rng)).color(NamedTextColor.DARK_RED));
+			p.sendMessage(Component.text(DeathMessage.getRandomDeathMessage(p.locale(), player)).color(NamedTextColor.DARK_RED));
 
 		// Whisper to player his death location
 		player.sendMessage(Component.text(

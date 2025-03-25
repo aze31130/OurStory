@@ -2,6 +2,7 @@ package ourstory.events;
 
 import java.util.Random;
 import org.bukkit.Bukkit;
+import org.json.JSONArray;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import ourstory.Main;
@@ -12,9 +13,11 @@ public class onPlayerTips {
 		if (Bukkit.getOnlinePlayers().size() == 0)
 			return;
 
-		Random rng = new Random();
-		int randomIndex = rng.nextInt(Main.tipMessages.size());
+		JSONArray tipsMessages = Main.messages.getJSONArray("tips");
 
-		Bukkit.broadcast(Component.text("[Tip] " + Main.tipMessages.get(randomIndex)).color(NamedTextColor.GREEN));
+		Random rng = new Random();
+		int randomIndex = rng.nextInt(tipsMessages.length());
+
+		Bukkit.broadcast(Component.text("[Tip] " + tipsMessages.getString(randomIndex)).color(NamedTextColor.GREEN));
 	}
 }
