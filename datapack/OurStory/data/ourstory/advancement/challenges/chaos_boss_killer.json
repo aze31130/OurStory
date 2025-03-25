@@ -1,15 +1,15 @@
 {
 	"display": {
 		"icon": {
-			"id": "minecraft:iron_axe"
+			"id": "minecraft:netherite_axe"
 		},
-		"title": {"translate":"Normal Boss Killer"},
-		"description": {"translate":"Kill your first normal boss"},
+		"title": {"translate":"Slay a chaos boss"},
+		"description": {"translate":"Vanquish a chaos boss"},
 		"frame": "challenge",
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "ourstory:root",
+	"parent": "ourstory:challenges/root",
 	"criteria": {
 		"requirement": {
 			"trigger": "minecraft:impossible"

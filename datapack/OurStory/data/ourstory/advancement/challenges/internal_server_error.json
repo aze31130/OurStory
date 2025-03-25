@@ -1,0 +1,49 @@
+{
+	"display": {
+		"icon": {
+			"id": "minecraft:diamond_sword"
+		},
+		"title": {"translate":"Internal Server Error"},
+		"description": {"color":"#75E1FF","translate":"Deal ?? hearts of damage in a single blow without using a Mace"},
+		"announce_to_chat": true,
+		"frame": "challenge"
+	},
+	"parent": "ourstory:challenges/stack_overflow",		
+	"criteria": {
+		"overkill": {
+			"trigger": "minecraft:player_hurt_entity",
+			"conditions": {
+				"damage": {
+					"dealt": {
+						"min": 128.0,
+						"max": 999.0
+					},
+					"type": {
+						"tags": [
+							{
+								"id": "minecraft:player_attack",
+								"expected": true
+							}
+						]
+					}
+				},
+				"player": [
+					{
+						"condition": "minecraft:inverted",
+						"term": {
+							"condition": "minecraft:entity_properties",
+							"entity": "this",
+							"predicate": {
+								"equipment": {
+									"mainhand": {
+										"items": "minecraft:mace"
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	}
+}

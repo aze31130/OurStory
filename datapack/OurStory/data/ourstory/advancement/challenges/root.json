@@ -1,10 +1,10 @@
 {
 	"display": {
 		"icon": {
-			"item": "minecraft:structure_block"
+			"id": "minecraft:end_crystal"
 		},
 		"title": {"translate":"OurStory Challenges"},
-		"description": {"translate":"Fight beyond the real endgame"},
+		"description": {"color":"#FFCCAA","translate":"Fight beyond the real endgame"},
 		"background": "minecraft:textures/block/crying_obsidian.png",
 		"show_toast": false,
 		"announce_to_chat": false,

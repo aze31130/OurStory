@@ -28,6 +28,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20250107</version> 
+		</dependency>
+
+		<dependency>
 			<groupId>io.papermc.paper</groupId>
 			<artifactId>paper-api</artifactId>
 			<version>1.21.4-R0.1-SNAPSHOT</version>
@@ -43,17 +49,12 @@
 	</dependencies>
 
 	<build>
+		<finalName>Ourstory</finalName>
 		<resources>
 			<resource>
 				<directory>configs</directory>
 				<includes>
-					<include>plugin.yml</include>
-				</includes>
-			</resource>
-			<resource>
-				<directory>configs</directory>
-				<includes>
-					<include>config.yml</include>
+					<include>*.yml</include>
 				</includes>
 			</resource>
 		</resources>

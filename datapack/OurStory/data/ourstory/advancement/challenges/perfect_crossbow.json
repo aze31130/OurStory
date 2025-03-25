@@ -1,0 +1,21 @@
+{
+	"display": {
+		"icon": {
+			"id": "minecraft:crossbow"
+		},
+		"title": {"translate":"The dream crossbow"},
+		"description": {"translate":"Craft the perfect crossbow"},
+		"frame": "challenge",
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "ourstory:challenges/root",
+	"criteria": {
+		"requirement": {
+			"trigger": "minecraft:impossible"
+		}
+	},
+	"rewards": {
+		"experience": 100
+	}
+}
