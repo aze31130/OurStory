@@ -1,5 +1,6 @@
 package ourstory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,35 +10,40 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.json.JSONObject;
+import com.google.gson.Gson;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import ourstory.commands.*;
 import ourstory.events.*;
 import ourstory.recipes.*;
+import ourstory.utils.FileUtils;
+import ourstory.guilds.Guild;
 
 public class Main extends JavaPlugin {
 
 	public static final String namespace = "ourstory";
-	public static FileConfiguration config;
-	public static List<String> deathMessagesFr, deathMessagesEn, tipMessages;
-	public static List<CustomSkin> skins = new ArrayList<>();
+	public static File configFolder;
+	// public static List<Guild> guilds = FileUtils.loadGuilds("./guilds.json");
+	// public static JSONObject messages = FileUtils.loadJsonObject("./messages.json");
+	public static List<Guild> guilds = new ArrayList<>();
+	public static JSONObject messages = new JSONObject();
 
-	public record CustomSkin(int id, String name, int price) {
-	}
+	public static FileConfiguration config;
 
 	@Override
 	public void onEnable() {
 		Bukkit.getConsoleSender().sendMessage("Loading Ourstory...");
+		configFolder = getDataFolder();
 
 		Main.config = getConfig();
 
-		// Load custom messages
-		deathMessagesFr = getConfig().getStringList("deathMessages.fr");
-		deathMessagesEn = getConfig().getStringList("deathMessages.en");
-		tipMessages = getConfig().getStringList("tipMessages");
 
-		loadSkins();
+		FileUtils.writeRawFile("test.json", "hello world");
+		String output = FileUtils.readRawFile("test.json");
+
+		Bukkit.getConsoleSender().sendMessage("DEBUG " + output);
 
 		// Register task for running the periodic tip broadcast
 		new BukkitRunnable() {
@@ -45,7 +51,7 @@ public class Main extends JavaPlugin {
 			public void run() {
 				onPlayerTips.playerTips();
 			}
-		}.runTaskTimer(this, 0L, 72000L);
+		}.runTaskTimer(this, 0L, 96000L);
 
 		/*
 		 * Registers all events
@@ -69,7 +75,6 @@ public class Main extends JavaPlugin {
 				"dummy", new Dummy(),
 				"reset", new Reset(),
 				"test", new Test(),
-				"skin", new Skin(),
 				"split", new Split(),
 				"rankup", new RankUp(),
 				"count", new Count(),
@@ -95,21 +100,14 @@ public class Main extends JavaPlugin {
 		// this.saveConfig();
 	}
 
-	private void loadSkins() {
-		for (Map<?, ?> map : getConfig().getMapList("skins")) {
-			int id = (int) map.get("id");
-			String name = (String) map.get("name");
-			int price = (int) map.get("price");
-
-			skins.add(new CustomSkin(id, name, price));
-		}
-	}
-
 	@Override
 	public void onDisable() {
 		Bukkit.getConsoleSender().sendMessage("Disabling Ourstory...");
 
 		// Stop Exporter server
+
+		// Saves all guilds
+		// TODO
 
 		// Stops everything the plugin instanciated
 	}

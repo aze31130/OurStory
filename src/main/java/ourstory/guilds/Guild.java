@@ -1,26 +1,31 @@
 package ourstory.guilds;
 
-import java.util.List;
 import java.util.UUID;
 import org.json.JSONObject;
 
 public class Guild {
-	public int id;
+	public UUID id;
 	public String name;
-	public long money;
-	public List<UUID> members;
+	public long bank;
+	// public List<UUID> members; TODO
 
-	public Guild(int id, String name, long money) {
+	public Guild(UUID id, String name, long bank) {
 		this.id = id;
 		this.name = name;
-		this.money = money;
+		this.bank = bank;
+	}
+
+	public Guild(JSONObject obj) {
+		this(UUID.fromString(obj.getString("uuid")),
+				obj.getString("name"),
+				obj.getLong("bank"));
 	}
 
 	public JSONObject toJson() {
 		JSONObject guild = new JSONObject()
 				.put("id", id)
 				.put("name", name)
-				.put("money", money);
+				.put("bank", bank);
 
 		return guild;
 	}
