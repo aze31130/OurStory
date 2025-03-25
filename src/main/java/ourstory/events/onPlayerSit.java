@@ -26,8 +26,8 @@ import org.bukkit.potion.PotionEffectType;
 
 public class onPlayerSit implements Listener {
 
-	private static String CHAIR_ENTITY_TAG = "chair";
-	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
+	private static final String CHAIR_ENTITY_TAG = "chair";
+	private final Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
 
 	@EventHandler()
 	public void playerSit(PlayerInteractEvent event) {
@@ -78,8 +78,7 @@ public class onPlayerSit implements Listener {
 			if (bisected.getHalf().equals(Bisected.Half.BOTTOM))
 				return true;
 		}
-		if (block instanceof Slab) {
-			Slab slab = (Slab) block;
+		if (block instanceof Slab slab) {
 			if (slab.getType().equals(Slab.Type.BOTTOM))
 				return true;
 		}
@@ -94,29 +93,22 @@ public class onPlayerSit implements Listener {
 		loc.setY(loc.getY() - 0.45);
 		loc.setZ(loc.getZ() + 0.5);
 
-		if (blockData instanceof Directional) {
-			BlockFace facing = ((Directional) blockData).getFacing();
+		if (blockData instanceof Directional directional) {
+			BlockFace facing = directional.getFacing();
 			switch (facing) {
-				case SOUTH:
-					loc.setYaw(180);
-					break;
-				case WEST:
-					loc.setYaw(270);
-					break;
-				case EAST:
-					loc.setYaw(90);
-					break;
-				case NORTH:
-					loc.setYaw(0);
-					break;
-				default:
+				case SOUTH -> loc.setYaw(180);
+				case WEST -> loc.setYaw(270);
+				case EAST -> loc.setYaw(90);
+				case NORTH -> loc.setYaw(0);
+				default -> {
+				}
 			}
 		} else {
 			loc.setYaw(player.getLocation().getYaw() + 180);
 		}
 
-		if (blockData instanceof Stairs) {
-			Stairs.Shape shape = ((Stairs) blockData).getShape();
+		if (blockData instanceof Stairs stairs) {
+			Stairs.Shape shape = stairs.getShape();
 			if (shape == Stairs.Shape.INNER_RIGHT || shape == Stairs.Shape.OUTER_RIGHT) {
 				loc.setYaw(loc.getYaw() + 45);
 			} else if (shape == Stairs.Shape.INNER_LEFT || shape == Stairs.Shape.OUTER_LEFT) {
