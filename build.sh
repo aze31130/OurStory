@@ -12,7 +12,7 @@ DATAPACK_DEST="$SERVER_DIR/world/datapacks/OurStory"
 mvn package
 
 # Copy plugin into test server
-cp "$TARGET_DIR"/*.jar "$PLUGIN_DIR/"
+cp "$TARGET_DIR"/Ourstory.jar "$PLUGIN_DIR/"
 
 # Updates old Remove the old datapack and replace it with the new one
 rm -vrf "$DATAPACK_DEST"
