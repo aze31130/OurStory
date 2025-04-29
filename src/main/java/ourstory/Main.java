@@ -11,14 +11,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.JSONObject;
-import com.google.gson.Gson;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import ourstory.commands.*;
 import ourstory.events.*;
 import ourstory.recipes.*;
-import ourstory.utils.FileUtils;
 import ourstory.guilds.Guild;
 
 public class Main extends JavaPlugin {
@@ -38,12 +36,6 @@ public class Main extends JavaPlugin {
 		configFolder = getDataFolder();
 
 		Main.config = getConfig();
-
-
-		FileUtils.writeRawFile("test.json", "hello world");
-		String output = FileUtils.readRawFile("test.json");
-
-		Bukkit.getConsoleSender().sendMessage("DEBUG " + output);
 
 		// Register task for running the periodic tip broadcast
 		new BukkitRunnable() {
