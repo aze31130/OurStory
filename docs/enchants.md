@@ -6,7 +6,7 @@
 - **Applies To:** All armor slots
 - **Drop Source:**
   - Enchant table
-  - Villager Trade
+  - Villager Trade (max level in trade: 4)
 - **Effect Per Total Level:** 
   - Level 1: 2.5% (2.5 * 1) chance to keep your inventory on death
   - Level 2: 5%   (2.5 * 2) chance to keep your inventory on death
@@ -21,7 +21,7 @@
 - **Applies To:** All items
 - **Drop Source:**
   - Enchant table
-  - Villager Trade
+  - Villager Trade (max level in trade: 3)
 - **Effect Per Total Level:** 
   - Level 1: Adds 5%  (5 * 1) of your physical damage each hit.
   - Level 2: Adds 10% (5 * 2) of your physical damage each hit.
@@ -36,7 +36,7 @@
 - **Applies To:** All items
 - **Drop Source:**
   - Enchant table
-  - Villager Trade
+  - Villager Trade (max level in trade: 2)
 - **Effect Per Total Level:** 
   - Level 1: Heals 0.5 heath (0.5 * 1) on any entity kill
   - Level 2: Heals 1.0 heath (0.5 * 2) on any entity kill
@@ -51,7 +51,7 @@
 - **Applies To:** All armor slots
 - **Drop Source:**
   - Enchant table
-  - Villager Trade
+  - Villager Trade (max level in trade: 1)
 - **Effect Per Total Level:** 
   - Level 1: Increase obtained exp by 25%  (25 * 1) on any exp acquired
   - Level 2: Increase obtained exp by 50%  (25 * 2) on any exp acquired
@@ -64,7 +64,7 @@
 - **Applies To:** Bow only
 - **Drop Source:**
   - Enchant table
-  - Villager Trade
+  - Villager Trade (max level in trade: 6)
 - **Effect Per Total Level:** 
   - Level 1: Spawns 1 arrow  (1 * 1) on top of the hitted entity
   - Level 2: Spawns 2 arrows (1 * 2) on top of the hitted entity
@@ -78,7 +78,7 @@
 - **Max Level:** 1 per item (1 in total)
 - **Applies To:** Spyglass only
 - **Drop Source:**
-  - Villager Trade
+  - Villager Trade (max level in trade: 1)
 - **Effect Per Total Level:** 
   - Level 1: Applies Slowness and Weakness for 60 seconds
 
