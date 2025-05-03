@@ -80,4 +80,16 @@
 - **Drop Source:**
   - Villager Trade
 - **Effect Per Total Level:** 
-  - Level 1: Applies Slowness and Weakness for 60 seconds 
+  - Level 1: Applies Slowness and Weakness for 60 seconds
+
+## Reach
+- **Description:** Increase your build distance reach
+- **Max Level:** 1 per item (4 in total)
+- **Applies To:** All armor slots
+- **Drop Source:**
+  - Enchant table
+- **Effect Per Total Level:** 
+  - Level 1: Increase your block interaction distance by 1 block
+  - Level 2: Increase your block interaction distance by 2 blocks
+  - Level 3: Increase your block interaction distance by 3 blocks
+  - Level 4: Increase your block interaction distance by 4 blocks
