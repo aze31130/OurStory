@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,17 +24,21 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
+
 import net.kyori.adventure.text.Component;
-import ourstory.skills.*;
+import ourstory.skills.Annihilation;
+import ourstory.skills.ArrowWall;
+import ourstory.skills.Summon;
+import ourstory.skills.WitherRage;
 import ourstory.storage.Storage;
 import ourstory.utils.EnchantItem;
 import ourstory.utils.TimeUtils;
 
 public class AbyssalSentinel extends Boss implements Runnable {
 
-	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
+	private final Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
 
-	private Map<Difficulty, Map<Attribute, Double>> attributes = Map.of(
+	private final Map<Difficulty, Map<Attribute, Double>> attributes = Map.of(
 			Difficulty.EASY, Map.of(
 					Attribute.MAX_HEALTH, 800.0,
 					Attribute.MOVEMENT_SPEED, 0.1,
@@ -55,7 +60,7 @@ public class AbyssalSentinel extends Boss implements Runnable {
 					Attribute.ATTACK_DAMAGE, 35.0,
 					Attribute.KNOCKBACK_RESISTANCE, 1.0));
 
-	private Map<Difficulty, List<LootEntry>> loots = Map.of(
+	private final Map<Difficulty, List<LootEntry>> loots = Map.of(
 			Difficulty.EASY, List.of(
 					new LootEntry(new ItemStack(Material.GOLDEN_APPLE), 5, 60.0),
 					new LootEntry(new ItemStack(Material.GOLDEN_CARROT), 15, 65.0),
@@ -137,6 +142,7 @@ public class AbyssalSentinel extends Boss implements Runnable {
 		this.healthBar.setProgress(progress);
 	}
 
+	@Override
 	public void onSpawn() {
 		/*
 		 * Some dialogue / effects here
@@ -212,6 +218,7 @@ public class AbyssalSentinel extends Boss implements Runnable {
 	/*
 	 * Method used for phase transitions
 	 */
+	@Override
 	public void onHit(EntityDamageByEntityEvent event) {
 		Monster boss = (Monster) event.getEntity();
 		Player p = (Player) event.getDamager();
@@ -254,6 +261,7 @@ public class AbyssalSentinel extends Boss implements Runnable {
 	}
 
 
+	@Override
 	public void onDeath(EntityDeathEvent event) {
 		// Stop skill loop
 		this.skills.interrupt();

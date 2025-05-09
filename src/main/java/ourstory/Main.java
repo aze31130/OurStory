@@ -52,7 +52,7 @@ public class Main extends JavaPlugin {
 				new onArrowRain(), new onBossDeath(), new onBossHit(), new onDisplayItem(), new onDummyHit(), new onEntityDeath(),
 				new onEntityHit(), new onFinalDamage(), new onHeadDrop(), new onItemConsume(), new onMineAmethyst(),
 				new onMineDeepslate(), new onPhoenixDeath(), new onPlayerDeath(), new onPlayerInteract(), new onPlayerJoin(),
-				new onPlayerPlace(), new onPlayerSit(), new onReachEquip(), new onSpawnerDrop(), new onTeleport(),
+				new onPlayerPlace(), new onPlayerSit(), new onReachEquip(), new onShieldBoing(), new onSpawnerDrop(), new onTeleport(),
 				new onTridentHit(), new onXpPickup(), new onZombieDeath(), new onVulnerabilitySeeker()
 		};
 
