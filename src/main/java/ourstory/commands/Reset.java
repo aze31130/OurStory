@@ -12,13 +12,11 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.permission.Permission;
 import ourstory.utils.EnchantItem;
 import ourstory.utils.Permissions;
 
 public class Reset implements BasicCommand {
 
-	public Permission permissions = Bukkit.getServer().getServicesManager().getRegistration(Permission.class).getProvider();
 	public Economy economy = Bukkit.getServer().getServicesManager().getRegistration(Economy.class).getProvider();
 
 	@Override
