@@ -43,7 +43,7 @@ public class Main extends JavaPlugin {
 			public void run() {
 				onPlayerTips.playerTips();
 			}
-		}.runTaskTimer(this, 0L, 96000L);
+		}.runTaskTimer(this, 0L, 120000L);
 
 		/*
 		 * Registers all events
@@ -99,7 +99,6 @@ public class Main extends JavaPlugin {
 		// Stop Exporter server
 
 		// Saves all guilds
-		// TODO
 
 		// Stops everything the plugin instanciated
 	}
