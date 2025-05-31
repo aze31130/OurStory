@@ -1,10 +1,10 @@
 {
 	"display": {
 		"icon": {
-			"id": "minecraft:diamond_axe"
+			"id": "minecraft:sugar"
 		},
-		"title": {"translate":"Hard Boss Slayer"},
-		"description": {"translate":"Slay a boss in Hard mode"},
+		"title": {"translate":"In a Blink of an Eye"},
+		"description": {"translate":"Kill a boss within 5 minutes."},
 		"frame": "challenge",
 		"announce_to_chat": true,
 		"hidden": false
@@ -16,6 +16,6 @@
 		}
 	},
 	"rewards": {
-		"experience": 100
+		"experience": 5000
 	}
 }

@@ -3,8 +3,8 @@
 		"icon": {
 			"id": "minecraft:iron_axe"
 		},
-		"title": {"translate":"Normal Boss Killer"},
-		"description": {"translate":"Kill your first normal boss"},
+		"title": {"translate":"Easy, So Easy"},
+		"description": {"translate":"Kill your first boss"},
 		"frame": "challenge",
 		"announce_to_chat": true,
 		"hidden": false
@@ -16,6 +16,6 @@
 		}
 	},
 	"rewards": {
-		"experience": 100
+		"experience": 1500
 	}
 }

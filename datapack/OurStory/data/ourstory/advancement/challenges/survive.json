@@ -1,10 +1,10 @@
 {
 	"display": {
 		"icon": {
-			"id": "minecraft:netherite_axe"
+			"id": "minecraft:totem_of_undying"
 		},
-		"title": {"translate":"Slay a chaos boss"},
-		"description": {"translate":"Vanquish a chaos boss"},
+		"title": {"translate":"I will Survive"},
+		"description": {"translate":"Kill a boss without dying."},
 		"frame": "challenge",
 		"announce_to_chat": true,
 		"hidden": false
@@ -16,6 +16,6 @@
 		}
 	},
 	"rewards": {
-		"experience": 100
+		"experience": 3000
 	}
 }
