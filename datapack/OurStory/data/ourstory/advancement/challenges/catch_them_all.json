@@ -1,0 +1,21 @@
+{
+	"display": {
+		"icon": {
+			"id": "minecraft:egg"
+		},
+		"title": {"translate":"Gotta Catch 'Em All!"},
+		"description": {"translate":"Catch Your First Monster Egg"},
+		"frame": "challenge",
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "ourstory:challenges/root",
+	"criteria": {
+		"requirement": {
+			"trigger": "minecraft:impossible"
+		}
+	},
+	"rewards": {
+		"experience": 1500
+	}
+}
