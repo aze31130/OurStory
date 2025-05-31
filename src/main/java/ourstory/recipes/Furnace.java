@@ -10,13 +10,18 @@ import org.bukkit.inventory.ItemStack;
 import ourstory.Main;
 
 public class Furnace {
-	private record CustomRecipeFurnace(String recipeName, Material source, ItemStack result, float exp, int cookTime) {
+	private record CustomRecipeFurnace(
+			String recipeName,
+			Material source,
+			ItemStack result,
+			float exp,
+			int cookTime) {
 	}
 
-	public static void createCustomRecipes() {
-		List<CustomRecipeFurnace> recipes = Arrays.asList(
-				new CustomRecipeFurnace("rotten_leather", Material.ROTTEN_FLESH, new ItemStack(Material.LEATHER, 1), 1, 200));
+	private static final List<CustomRecipeFurnace> recipes = Arrays.asList(
+			new CustomRecipeFurnace("rotten_leather", Material.ROTTEN_FLESH, new ItemStack(Material.LEATHER, 1), 1, 200));
 
+	public static void createCustomRecipes() {
 		for (CustomRecipeFurnace r : recipes) {
 			FurnaceRecipe recipe = new FurnaceRecipe(new NamespacedKey(Main.namespace, r.recipeName()), r.result(), r.source(), r.exp(), r.cookTime());
 
