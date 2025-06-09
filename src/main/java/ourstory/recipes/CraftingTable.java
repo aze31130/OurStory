@@ -101,7 +101,7 @@ public class CraftingTable {
 					" T ", " P ", "   ", Map.of('T', () -> new ItemStack(Material.TURTLE_EGG), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false),
 
 			new CustomRecipeCraftingTable("haste_potion", "Potion of Haste", () -> CraftingTable.createPotion(PotionEffectType.HASTE, 9600, 2),
-					" G ", " P ", "   ", Map.of('G', () -> new ItemStack(Material.GOLD_INGOT), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false));
+					" G ", " P ", "   ", Map.of('G', () -> new ItemStack(Material.GOLD_BLOCK), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false));
 
 	private static ItemStack createFirework(int power) {
 		ItemStack result = new ItemStack(Material.FIREWORK_ROCKET);
