@@ -54,7 +54,7 @@
 			<resource>
 				<directory>configs</directory>
 				<includes>
-					<include>*.yml</include>
+					<include>plugin.yml</include>
 				</includes>
 			</resource>
 		</resources>
