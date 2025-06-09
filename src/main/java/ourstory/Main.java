@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,25 +16,21 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import ourstory.commands.*;
 import ourstory.events.*;
 import ourstory.recipes.*;
+import ourstory.utils.FileUtils;
 import ourstory.guilds.Guild;
 
 public class Main extends JavaPlugin {
 
 	public static final String namespace = "ourstory";
-	public static File configFolder;
-	// public static List<Guild> guilds = FileUtils.loadGuilds("./guilds.json");
-	// public static JSONObject messages = FileUtils.loadJsonObject("./messages.json");
-	public static List<Guild> guilds = new ArrayList<>();
-	public static JSONObject messages = new JSONObject();
+	public static File configDir = new File(System.getProperty("user.dir") + "/plugins/Ourstory");
 
-	public static FileConfiguration config;
+	// public static List<Guild> guilds = FileUtils.loadGuilds("./guilds.json");
+	public static JSONObject messages = FileUtils.loadJsonObject("messages.json");
+	public static List<Guild> guilds = new ArrayList<>();
 
 	@Override
 	public void onEnable() {
 		Bukkit.getConsoleSender().sendMessage("Loading Ourstory...");
-		configFolder = getDataFolder();
-
-		Main.config = getConfig();
 
 		// Register task for running the periodic tip broadcast
 		new BukkitRunnable() {
@@ -43,7 +38,7 @@ public class Main extends JavaPlugin {
 			public void run() {
 				onPlayerTips.playerTips();
 			}
-		}.runTaskTimer(this, 0L, 120000L);
+		}.runTaskTimer(this, 0L, 200000L);
 
 		/*
 		 * Registers all events
@@ -85,21 +80,31 @@ public class Main extends JavaPlugin {
 		CraftingTable.createCustomRecipes();
 		StoneCutter.createCustomRecipes();
 		Furnace.createCustomRecipes();
-
-		// this.getConfig().addDefault("messages.nopermission", "You do not have the permission to perform
-		// this command");
-		// this.getConfig().options().copyDefaults(true);
-		// this.saveConfig();
 	}
 
 	@Override
 	public void onDisable() {
 		Bukkit.getConsoleSender().sendMessage("Disabling Ourstory...");
 
-		// Stop Exporter server
-
-		// Saves all guilds
-
-		// Stops everything the plugin instanciated
+		// Stop Exporter server, saves guilds
 	}
 }
+
+// soundeffect
+/*
+ * 
+ * /playsound minecraft:entity.dragon_fireball.explode voice aze31130 ~ ~ ~ 1000 1
+ * 
+ * Hit: /playsound minecraft:entity.ender_dragon.hurt voice aze31130 ~ ~ ~ 1000 1
+ * 
+ * Ambiant: /playsound minecraft:entity.blaze.ambient voice aze31130 ~ ~ ~ 1000 0.5 /playsound
+ * minecraft:entity.wither.death voice aze31130 ~ ~ ~ 1000 0.5
+ * 
+ * /playsound minecraft:entity.wither.shoot voice aze31130 ~ ~ ~ 1000 1
+ * 
+ * 
+ * 
+ * Skill: /playsound minecraft:entity.wither.spawn voice aze31130 ~ ~ ~ 1000 0 +
+ * 
+ * Tick : /playsound minecraft:entity.experience_orb.pickup voice aze31130 ~ ~ ~ 1000 1
+ */

@@ -14,7 +14,6 @@ import ourstory.guilds.Guild;
 import org.json.JSONArray;
 
 public class FileUtils {
-
 	/*
 	 * This private constructor hides the implicit public one
 	 */
@@ -31,10 +30,6 @@ public class FileUtils {
 			guilds.add(new Guild(array.getJSONObject(i)));
 
 		return guilds;
-	}
-
-	public static JSONObject loadMessages(String messagesFile) {
-		return null;
 	}
 
 	public static JSONArray loadJsonArray(String filename) {
@@ -60,10 +55,10 @@ public class FileUtils {
 	}
 
 	public static String readRawFile(String filename) {
-		if (!Main.configFolder.exists())
-			Main.configFolder.mkdir();
+		if (!Main.configDir.exists())
+			Main.configDir.mkdir();
 
-		File f = new File(Main.configFolder, filename);
+		File f = new File(Main.configDir, filename);
 		try {
 			return new String(Files.readAllBytes(f.toPath()), StandardCharsets.UTF_8);
 		} catch (IOException e) {
@@ -73,10 +68,10 @@ public class FileUtils {
 	}
 
 	public static void writeRawFile(String filename, String content) {
-		if (!Main.configFolder.exists())
-			Main.configFolder.mkdir();
+		if (!Main.configDir.exists())
+			Main.configDir.mkdir();
 
-		File f = new File(Main.configFolder, filename);
+		File f = new File(Main.configDir, filename);
 
 		try {
 			FileWriter writer = new FileWriter(f.getAbsolutePath());

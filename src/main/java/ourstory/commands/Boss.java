@@ -7,27 +7,25 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import ourstory.bosses.Difficulty;
-import ourstory.bosses.AbyssalSentinel;
+import ourstory.bosses.Talven;
 import ourstory.storage.BossInstance;
 import ourstory.storage.Storage;
 import ourstory.utils.Permissions;
 
 public class Boss implements BasicCommand {
-	private final List<String> bossNames = List.of("AbyssalSentinel");
+	private final List<String> bossNames = List.of("Talven");
 
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {
 		if (!Permissions.checkPermissions(sender.getSender(), "ourstory.boss"))
 			return;
 
-		if (args.length < 2) {
-			sender.getSender().sendMessage("You need to provide a boss name and a difficulty !");
+		if (args.length < 1) {
+			sender.getSender().sendMessage("You need to provide a boss name !");
 			return;
 		}
 
 		String bossName = args[0];
-		Difficulty difficulty = Difficulty.valueOf(args[1]);
 
 		ourstory.bosses.Boss boss = null;
 
@@ -38,7 +36,7 @@ public class Boss implements BasicCommand {
 
 		switch (bossName) {
 			case "AbyssalSentinel":
-				boss = new AbyssalSentinel(difficulty, arena.getSpawnLocation().set(0, 100, 0), arena);
+				boss = new Talven(arena.getSpawnLocation().set(0, 100, 0), arena);
 				boss.onSpawn();
 				break;
 
@@ -59,9 +57,6 @@ public class Boss implements BasicCommand {
 	public List<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
 		if (args.length == 0)
 			return bossNames;
-
-		if (args.length >= 1)
-			return Difficulty.getNames();
 
 		return Collections.emptyList();
 	}

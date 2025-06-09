@@ -29,75 +29,31 @@ import ourstory.storage.Storage;
 import ourstory.utils.EnchantItem;
 import ourstory.utils.TimeUtils;
 
-public class AbyssalSentinel extends Boss implements Runnable {
+public class Talven extends Boss implements Runnable {
 
 	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
 
-	private Map<Difficulty, Map<Attribute, Double>> attributes = Map.of(
-			Difficulty.EASY, Map.of(
-					Attribute.MAX_HEALTH, 800.0,
-					Attribute.MOVEMENT_SPEED, 0.1,
-					Attribute.ATTACK_DAMAGE, 12.0,
-					Attribute.KNOCKBACK_RESISTANCE, 1.0),
-			Difficulty.NORMAL, Map.of(
-					Attribute.MAX_HEALTH, 1900.0,
-					Attribute.MOVEMENT_SPEED, 0.2,
-					Attribute.ATTACK_DAMAGE, 20.0,
-					Attribute.KNOCKBACK_RESISTANCE, 1.0),
-			Difficulty.HARD, Map.of(
-					Attribute.MAX_HEALTH, 3500.0,
-					Attribute.MOVEMENT_SPEED, 0.3,
-					Attribute.ATTACK_DAMAGE, 25.0,
-					Attribute.KNOCKBACK_RESISTANCE, 1.0),
-			Difficulty.CHAOS, Map.of(
-					Attribute.MAX_HEALTH, 8000.0,
-					Attribute.MOVEMENT_SPEED, 0.4,
-					Attribute.ATTACK_DAMAGE, 35.0,
-					Attribute.KNOCKBACK_RESISTANCE, 1.0));
+	private Map<Attribute, Double> attributes = Map.of(
+			Attribute.MAX_HEALTH, 8000.0,
+			Attribute.MOVEMENT_SPEED, 0.4,
+			Attribute.ATTACK_DAMAGE, 35.0,
+			Attribute.KNOCKBACK_RESISTANCE, 1.0);
 
-	private Map<Difficulty, List<LootEntry>> loots = Map.of(
-			Difficulty.EASY, List.of(
-					new LootEntry(new ItemStack(Material.GOLDEN_APPLE), 5, 60.0),
-					new LootEntry(new ItemStack(Material.GOLDEN_CARROT), 15, 65.0),
-					new LootEntry(new ItemStack(Material.TOTEM_OF_UNDYING), 2, 25.0),
-					new LootEntry(new ItemStack(Material.DIAMOND), 15, 15.0)),
-			Difficulty.NORMAL, List.of(
-					new LootEntry(new ItemStack(Material.SPAWNER), 1, 5.0),
-					new LootEntry(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), 1, 20.0),
-					new LootEntry(new ItemStack(Material.NETHER_STAR), 2, 30.0)),
-			Difficulty.HARD, List.of(
-					new LootEntry(new ItemStack(Material.SPAWNER), 1, 25.0),
-					new LootEntry(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), 3, 30.0),
-					new LootEntry(new ItemStack(Material.TOTEM_OF_UNDYING), 3, 30.0),
-					new LootEntry(new ItemStack(Material.GOLDEN_CARROT), 15, 65.0),
-					new LootEntry(new ItemStack(Material.NETHERITE_INGOT), 2, 15.0)),
-			Difficulty.CHAOS, List.of(
-					new LootEntry(new ItemStack(Material.SPAWNER), 1, 50.0),
-					new LootEntry(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), 5, 60.0),
-					new LootEntry(new ItemStack(Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.COAST_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.WILD_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.WARD_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.EYE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.VEX_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.RIB_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.FLOW_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0),
-					new LootEntry(new ItemStack(Material.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0)));
+	private List<LootEntry> loots = List.of(
+			new LootEntry(new ItemStack(Material.GOLDEN_APPLE), 5, 60.0),
+			new LootEntry(new ItemStack(Material.DIAMOND), 15, 15.0),
+			new LootEntry(new ItemStack(Material.NETHER_STAR), 2, 30.0),
+			new LootEntry(new ItemStack(Material.TOTEM_OF_UNDYING), 3, 30.0),
+			new LootEntry(new ItemStack(Material.GOLDEN_CARROT), 15, 65.0),
+			new LootEntry(new ItemStack(Material.NETHERITE_INGOT), 2, 15.0),
+			new LootEntry(new ItemStack(Material.SPAWNER), 1, 50.0),
+			new LootEntry(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), 5, 60.0),
+			new LootEntry(new ItemStack(Material.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 10.0));
 
 	public Thread skills = new Thread(this);
 
-	public AbyssalSentinel(Difficulty difficulty, Location l, World w) {
-		super("Abyssal Sentinel", difficulty);
+	public Talven(Location l, World w) {
+		super("Abyssal Sentinel");
 
 		this.entity = (Monster) w.spawnEntity(l, EntityType.ZOMBIE);
 
@@ -115,19 +71,18 @@ public class AbyssalSentinel extends Boss implements Runnable {
 		entity.setCustomNameVisible(true);
 
 		entity.setMetadata("isBoss", new FixedMetadataValue(p, true));
-		entity.setMetadata("difficulty", new FixedMetadataValue(p, difficulty.name()));
 
 		entity.setGlowing(true);
 		entity.setAggressive(true);
 
 		// Apply attributes modifiers
-		for (Map.Entry<Attribute, Double> entry : attributes.get(difficulty).entrySet()) {
+		for (Map.Entry<Attribute, Double> entry : attributes.entrySet()) {
 			AttributeInstance a = entity.getAttribute(entry.getKey());
 			a.setBaseValue(entry.getValue());
 		}
 
 		// Set entity to max life
-		entity.setHealth(attributes.get(difficulty).get(Attribute.MAX_HEALTH));
+		entity.setHealth(attributes.get(Attribute.MAX_HEALTH));
 
 		// Define HealthBar
 		this.healthBar = Bukkit.createBossBar(this.name, BarColor.PURPLE, BarStyle.SOLID);
@@ -195,10 +150,8 @@ public class AbyssalSentinel extends Boss implements Runnable {
 				su.cast(entity, null);
 			}
 
-			if (this.difficulty.level > Difficulty.NORMAL.level) {
-				WitherRage wr = new WitherRage();
-				wr.cast(entity, null);
-			}
+			WitherRage wr = new WitherRage();
+			wr.cast(entity, null);
 
 			try {
 				Thread.sleep(15000);
@@ -228,7 +181,7 @@ public class AbyssalSentinel extends Boss implements Runnable {
 		this.healthBar.setProgress(progress);
 
 		// Check phase
-		Double maxHealth = attributes.get(difficulty).get(Attribute.MAX_HEALTH);
+		Double maxHealth = attributes.get(Attribute.MAX_HEALTH);
 		Double currentHealth = boss.getHealth();
 
 		Double healthPercent = (currentHealth * 100) / maxHealth;
@@ -239,12 +192,12 @@ public class AbyssalSentinel extends Boss implements Runnable {
 			phase = 2;
 		}
 
-		if (healthPercent < 20 && difficulty.equals(Difficulty.HARD) && phase == 2) {
+		if (healthPercent < 20 && phase == 2) {
 			// Summon special skill
 			phase = 3;
 		}
 
-		if (healthPercent < 20 && difficulty.equals(Difficulty.CHAOS) && phase == 2) {
+		if (healthPercent < 20 && phase == 2) {
 			// Summon special skill
 			Annihilation an = new Annihilation();
 			an.cast(boss, null);
