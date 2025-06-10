@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import ourstory.bosses.Instance;
 import ourstory.commands.*;
 import ourstory.events.*;
 import ourstory.recipes.*;
@@ -20,13 +21,13 @@ import ourstory.utils.FileUtils;
 import ourstory.guilds.Guild;
 
 public class Main extends JavaPlugin {
-
 	public static final String namespace = "ourstory";
 	public static File configDir = new File(System.getProperty("user.dir") + "/plugins/Ourstory");
 
 	// public static List<Guild> guilds = FileUtils.loadGuilds("./guilds.json");
 	public static JSONObject messages = FileUtils.loadJsonObject("messages.json");
 	public static List<Guild> guilds = new ArrayList<>();
+	public static List<Instance> runningInstances = new ArrayList<>();
 
 	@Override
 	public void onEnable() {

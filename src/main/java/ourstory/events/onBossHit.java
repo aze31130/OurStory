@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import ourstory.storage.Storage;
+import ourstory.Main;
 
 public class onBossHit implements Listener {
 	@EventHandler
@@ -14,9 +14,7 @@ public class onBossHit implements Listener {
 			return;
 
 		// Call onHit method for boss monsters
-		if (entity.getEntity().getMetadata("isBoss").size() > 0) {
-			Storage s = Storage.getInstance();
-			s.bossInstance.monster.onHit(entity);
-		}
+		if (!entity.getEntity().getMetadata("isBoss").isEmpty())
+			Main.runningInstances.get(0).boss.onHit(entity);
 	}
 }

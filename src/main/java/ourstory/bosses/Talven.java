@@ -25,7 +25,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import net.kyori.adventure.text.Component;
 import ourstory.skills.*;
-import ourstory.storage.Storage;
 import ourstory.utils.EnchantItem;
 import ourstory.utils.TimeUtils;
 
@@ -108,7 +107,6 @@ public class Talven extends Boss implements Runnable {
 	@Override
 	public void run() {
 		Random r = new Random();
-		Storage s = Storage.getInstance();
 
 		// Waiting time for boss skills
 		try {
@@ -126,17 +124,17 @@ public class Talven extends Boss implements Runnable {
 			TimeUtils.displayTimeWarning();
 			Date currentDate = new Date();
 
-			if (currentDate.after(s.bossInstance.finished)) {
-				// Kill the boss
-				this.entity.setHealth(0);
+			// if (currentDate.after(s.bossInstance.finished)) {
+			// Kill the boss
+			this.entity.setHealth(0);
 
-				// TP back player
-				// TODO
+			// TP back player
+			// TODO
 
-				// Message
-				for (Player p : s.bossInstance.players)
-					p.sendMessage("Too late, the ran out of time !");
-			}
+			// Message
+			// for (Player p : s.bossInstance.players)
+			// p.sendMessage("Too late, the ran out of time !");
+			// }
 
 			int rng = r.nextInt(100);
 
@@ -168,10 +166,9 @@ public class Talven extends Boss implements Runnable {
 	public void onHit(EntityDamageByEntityEvent event) {
 		Monster boss = (Monster) event.getEntity();
 		Player p = (Player) event.getDamager();
-		Storage s = Storage.getInstance();
 
 		// Increase party damage
-		s.bossInstance.damage.put(p, s.bossInstance.damage.get(p) + event.getDamage());
+		// s.bossInstance.damage.put(p, s.bossInstance.damage.get(p) + event.getDamage());
 
 		// Add player to bossbar list
 		this.healthBar.addPlayer(p);
@@ -216,8 +213,7 @@ public class Talven extends Boss implements Runnable {
 
 		}
 
-		Storage s = Storage.getInstance();
-		s.bossInstance.isFinished = true;
+		// s.bossInstance.isFinished = true;
 
 		// Death animation
 		Location bossDeath = event.getEntity().getLocation();
@@ -227,8 +223,9 @@ public class Talven extends Boss implements Runnable {
 
 		Bukkit.broadcast(Component.text(this.name + " is dead !"));
 
-		for (Map.Entry<Player, Double> entry : s.bossInstance.damage.entrySet())
-			Bukkit.broadcast(Component.text(entry.getKey().getName() + " dealt " + String.format("%.2f", entry.getValue()) + " damage"));
+		// for (Map.Entry<Player, Double> entry : s.bossInstance.damage.entrySet())
+		// Bukkit.broadcast(Component.text(entry.getKey().getName() + " dealt " + String.format("%.2f",
+		// entry.getValue()) + " damage"));
 
 		// Remove health bar
 		this.healthBar.removeAll();

@@ -23,9 +23,6 @@ public abstract class Boss {
 	public Boss(String name) {
 		this.name = name;
 		this.phase = 1;
-
-		// Load attributes from yaml
-		// TODO
 	}
 
 	public abstract void onSpawn();
