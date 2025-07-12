@@ -21,8 +21,6 @@ public class ArrowWall implements Skills {
 					double theta = Math.random() * 2 * Math.PI; // Angle around the Y-axis
 					double phi = Math.random() * Math.PI; // Angle from the Y-axis down
 
-
-
 					// Convert spherical coordinates to Cartesian (X, Y, Z)
 					double x = Math.sin(phi) * Math.cos(theta);
 					double y = Math.cos(phi);

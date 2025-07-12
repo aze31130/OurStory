@@ -14,4 +14,9 @@ public interface Skills {
 	 * spell
 	 */
 	public void cast(Entity caster, List<Entity> targets);
+	/*
+	 * Sound example minecraft:entity.dragon_fireball.explode minecraft:entity.blaze.ambient
+	 * minecraft:entity.wither.death minecraft:entity.wither.shoot minecraft:entity.wither.spawn
+	 * minecraft:entity.experience_orb.pickup
+	 */
 }
