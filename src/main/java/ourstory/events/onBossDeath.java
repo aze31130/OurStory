@@ -15,6 +15,6 @@ public class onBossDeath implements Listener {
 
 		// Call onHit method for boss monsters
 		if (!entity.getEntity().getMetadata("isBoss").isEmpty())
-			Main.runningInstances.get(0).boss.onDeath(entity);
+			Main.runningInstance.boss.onDeath(entity);
 	}
 }

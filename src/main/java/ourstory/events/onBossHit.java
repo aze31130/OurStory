@@ -15,6 +15,6 @@ public class onBossHit implements Listener {
 
 		// Call onHit method for boss monsters
 		if (!entity.getEntity().getMetadata("isBoss").isEmpty())
-			Main.runningInstances.get(0).boss.onHit(entity);
+			Main.runningInstance.boss.onHit(entity);
 	}
 }

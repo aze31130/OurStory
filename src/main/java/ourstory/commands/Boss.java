@@ -1,11 +1,14 @@
 package ourstory.commands;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import org.bukkit.entity.Player;
 import ourstory.Main;
 import ourstory.bosses.Instance;
+import ourstory.bosses.Talven;
 import ourstory.utils.Permissions;
 
 public class Boss implements BasicCommand {
@@ -24,11 +27,11 @@ public class Boss implements BasicCommand {
 		String bossName = args[0];
 
 		ourstory.bosses.Boss boss = null;
-
+		// arena.getSpawnLocation().set(0, 100, 0)
 		switch (bossName) {
-			case "AbyssalSentinel":
-				// boss = new Talven(arena.getSpawnLocation().set(0, 100, 0), arena);
-				// boss.onSpawn();
+			case "Talven":
+				boss = new Talven(sender.getLocation());
+				boss.onSpawn();
 				break;
 
 			default:
@@ -37,9 +40,11 @@ public class Boss implements BasicCommand {
 		}
 
 		// Register boss instance
-		Instance instance = new Instance(boss, null, 10, 5, "world");
+		List<Player> players = new ArrayList<>();
+		players.add((Player) sender.getSender());
+		Instance instance = new Instance(boss, players, 10, 5, "world");
 
-		Main.runningInstances.add(instance);
+		Main.runningInstance = instance;
 	}
 
 	/*
@@ -50,6 +55,10 @@ public class Boss implements BasicCommand {
 		if (args.length == 0)
 			return availableBoss;
 
-		return Collections.emptyList();
+		String input = args[0].toLowerCase();
+
+		return availableBoss.stream()
+				.filter(boss -> boss.toLowerCase().startsWith(input))
+				.collect(Collectors.toList());
 	}
 }

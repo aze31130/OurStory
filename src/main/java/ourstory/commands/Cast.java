@@ -15,7 +15,7 @@ public class Cast implements BasicCommand {
 			"LaserMatrix", new LaserMatrix(),
 			"LaserExplosion", new LaserExplosion(),
 			"ArrowWall", new ArrowWall(),
-			"Summon", new Summon(),
+			"Test", new SummonWithers(),
 			"Wave", new Wave(),
 			"WitherRage", new WitherRage(),
 			"Growth", new Growth(),

@@ -27,7 +27,7 @@ public class Main extends JavaPlugin {
 	// public static List<Guild> guilds = FileUtils.loadGuilds("./guilds.json");
 	public static JSONObject messages = FileUtils.loadJsonObject("messages.json");
 	public static List<Guild> guilds = new ArrayList<>();
-	public static List<Instance> runningInstances = new ArrayList<>();
+	public static Instance runningInstance;
 
 	@Override
 	public void onEnable() {
@@ -39,7 +39,7 @@ public class Main extends JavaPlugin {
 			public void run() {
 				onPlayerTips.playerTips();
 			}
-		}.runTaskTimer(this, 0L, 200000L);
+		}.runTaskTimer(this, 0L, 400000L);
 
 		/*
 		 * Registers all events
@@ -90,22 +90,3 @@ public class Main extends JavaPlugin {
 		// Stop Exporter server, saves guilds
 	}
 }
-
-// soundeffect
-/*
- * 
- * /playsound minecraft:entity.dragon_fireball.explode voice aze31130 ~ ~ ~ 1000 1
- * 
- * Hit: /playsound minecraft:entity.ender_dragon.hurt voice aze31130 ~ ~ ~ 1000 1
- * 
- * Ambiant: /playsound minecraft:entity.blaze.ambient voice aze31130 ~ ~ ~ 1000 0.5 /playsound
- * minecraft:entity.wither.death voice aze31130 ~ ~ ~ 1000 0.5
- * 
- * /playsound minecraft:entity.wither.shoot voice aze31130 ~ ~ ~ 1000 1
- * 
- * 
- * 
- * Skill: /playsound minecraft:entity.wither.spawn voice aze31130 ~ ~ ~ 1000 0 +
- * 
- * Tick : /playsound minecraft:entity.experience_orb.pickup voice aze31130 ~ ~ ~ 1000 1
- */
