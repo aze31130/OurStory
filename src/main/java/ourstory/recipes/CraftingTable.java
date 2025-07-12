@@ -88,20 +88,26 @@ public class CraftingTable {
 			new CustomRecipeCraftingTable("super_firework_9", "Mega Firework Rocket", () -> CraftingTable.createFirework(9),
 					"GGG", "GPG", "GGG", Map.of('P', () -> new ItemStack(Material.PAPER), 'G', () -> new ItemStack(Material.GUNPOWDER)), false),
 
-			new CustomRecipeCraftingTable("saturation_potion", "Potion of Saturation", () -> CraftingTable.createPotion(PotionEffectType.SATURATION, 20, 20),
+			new CustomRecipeCraftingTable("saturation_potion", "Potion of Saturation", () -> CraftingTable.createPotion(PotionEffectType.SATURATION, 20, 15),
 					" C ", " P ", "   ", Map.of('C', () -> new ItemStack(Material.CAKE), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false),
 
 			new CustomRecipeCraftingTable("dolphin_potion", "Potion of Dolphin Grace", () -> CraftingTable.createPotion(PotionEffectType.DOLPHINS_GRACE, 9600, 0),
-					" T ", " P ", "   ", Map.of('T', () -> new ItemStack(Material.TROPICAL_FISH), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false),
+					" T ", "TPT", " T ", Map.of('T', () -> new ItemStack(Material.TROPICAL_FISH), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false),
 
 			new CustomRecipeCraftingTable("absorption_potion", "Potion of Absorption", () -> CraftingTable.createPotion(PotionEffectType.ABSORPTION, 6000, 3),
-					" G ", " P ", "   ", Map.of('G', () -> new ItemStack(Material.GOLDEN_APPLE), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false),
+					" G ", "GPG", " G ", Map.of('G', () -> new ItemStack(Material.GOLDEN_APPLE), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false),
 
 			new CustomRecipeCraftingTable("resistance_potion", "Potion of Resistance", () -> CraftingTable.createPotion(PotionEffectType.RESISTANCE, 6000, 0),
-					" T ", " P ", "   ", Map.of('T', () -> new ItemStack(Material.TURTLE_EGG), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false),
+					" T ", "TPT", " T ", Map.of('T', () -> new ItemStack(Material.TURTLE_EGG), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false),
 
-			new CustomRecipeCraftingTable("haste_potion", "Potion of Haste", () -> CraftingTable.createPotion(PotionEffectType.HASTE, 9600, 2),
-					" G ", " P ", "   ", Map.of('G', () -> new ItemStack(Material.GOLD_BLOCK), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false));
+			new CustomRecipeCraftingTable("haste_potion_1", "Potion of Haste", () -> CraftingTable.createPotion(PotionEffectType.HASTE, 6000, 0),
+					" G ", " P ", "   ", Map.of('G', () -> new ItemStack(Material.GOLD_BLOCK), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false),
+
+			new CustomRecipeCraftingTable("haste_potion_2", "Potion of Haste", () -> CraftingTable.createPotion(PotionEffectType.HASTE, 6000, 1),
+					" G ", " P ", " G ", Map.of('G', () -> new ItemStack(Material.GOLD_BLOCK), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false),
+
+			new CustomRecipeCraftingTable("haste_potion_3", "Potion of Haste", () -> CraftingTable.createPotion(PotionEffectType.HASTE, 9600, 2),
+					" G ", "GPG", " G ", Map.of('G', () -> new ItemStack(Material.GOLD_BLOCK), 'P', () -> CraftingTable.createPotion(PotionType.THICK)), false));
 
 	private static ItemStack createFirework(int power) {
 		ItemStack result = new ItemStack(Material.FIREWORK_ROCKET);
