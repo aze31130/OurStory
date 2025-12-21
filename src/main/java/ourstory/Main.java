@@ -49,7 +49,7 @@ public class Main extends JavaPlugin {
 				new onEntityHit(), new onFinalDamage(), new onHeadDrop(), new onItemConsume(), new onMineAmethyst(),
 				new onMineDeepslate(), new onPhoenixDeath(), new onPlayerDeath(), new onPlayerInteract(), new onPlayerJoin(),
 				new onPlayerPlace(), new onPlayerSit(), new onReachEquip(), new onSpawnerDrop(), new onTeleport(),
-				new onTridentHit(), new onXpPickup(), new onZombieDeath(), new onVulnerabilitySeeker()
+				new onTridentHit(), new onXpPickup(), new onZombieDeath(), new onVulnerabilitySeeker(), new onItemDrop(), new onBreakVeine()
 		};
 
 		for (Listener event : eventsToRegister)
@@ -67,6 +67,7 @@ public class Main extends JavaPlugin {
 				"rankup", new RankUp(),
 				"count", new Count(),
 				"chall", new Chall(),
+				"itemlock", new CancelDrop(),
 				"cast", new Cast());
 
 		var manager = this.getLifecycleManager();
