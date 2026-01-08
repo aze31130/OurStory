@@ -1,0 +1,25 @@
+{
+    "description": "Veine Miner",
+    "supported_items": [
+        "minecraft:enchanted_book",
+        "minecraft:book"
+    ],
+    "primary_items": [
+		"minecraft:enchanted_book",
+		"minecraft:book"
+	],
+    "weight": 4,
+    "max_level": 5,
+    "min_cost": {
+        "base": 20,
+        "per_level_above_first": 0
+    },
+    "max_cost": {
+        "base": 25,
+        "per_level_above_first": 0
+    },
+    "anvil_cost": 10,
+    "slots": [
+        "mainhand"
+    ]
+}
