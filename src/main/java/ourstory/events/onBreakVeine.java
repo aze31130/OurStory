@@ -14,8 +14,6 @@ import org.bukkit.entity.Player;
 
 public class onBreakVeine implements Listener {
 
-	// private final int MAX_BLOCKS = 20;
-	// private static final List<Integer> block_breaked = List.of(3, 5);
 	private static final List<Material> ALLOWED_BLOCKS = List.of(
 			Material.COAL_ORE,
 			Material.COPPER_ORE,
@@ -32,9 +30,7 @@ public class onBreakVeine implements Listener {
 			Material.DEEPSLATE_EMERALD_ORE);
 
 
-	private static void getBlockList(Block block,
-			Set<Block> visited, int maxBlocks, Material block_type) {
-
+	private static void getBlockList(Block block, Set<Block> visited, int maxBlocks, Material block_type) {
 		if (visited.size() >= maxBlocks)
 			return;
 
@@ -59,7 +55,6 @@ public class onBreakVeine implements Listener {
 
 	@EventHandler
 	public void BreakVeine(BlockBreakEvent event) {
-
 		Player player = event.getPlayer();
 		ItemStack item = player.getInventory().getItemInMainHand();
 		int totalVeineMinerLevel = EnchantItem.getEnchantAmount(item, "veine_miner");
@@ -73,8 +68,7 @@ public class onBreakVeine implements Listener {
 		Set<Block> block_list = new HashSet<>();
 		getBlockList(event.getBlock(), block_list, totalVeineMinerLevel * 2 + 1, event.getBlock().getType());
 
-		for (Block b : block_list) {
+		for (Block b : block_list)
 			b.breakNaturally(item);
-		}
 	}
 }

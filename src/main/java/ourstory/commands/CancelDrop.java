@@ -10,21 +10,14 @@ import org.bukkit.plugin.Plugin;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 
-import ourstory.utils.Permissions;
-
 public class CancelDrop implements BasicCommand {
 
 	private final Plugin plugin = Bukkit.getPluginManager().getPlugin("OurStory");
-	private final NamespacedKey ItemIsLocked = new NamespacedKey(plugin, "ItemIsLocked");
+	private final NamespacedKey ItemIsLocked = new NamespacedKey(plugin, "locked");
 
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {
-
 		Player player = (Player) sender.getSender();
-
-		if (!Permissions.checkPermissions(sender.getSender(), "ourstory.cast"))
-			return;
-
 		ItemStack item = player.getInventory().getItemInMainHand();
 		ItemMeta meta = item.getItemMeta();
 

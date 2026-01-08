@@ -12,7 +12,6 @@ import org.bukkit.plugin.Plugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
-
 /**
  *
  * @author NaNI7823
@@ -21,11 +20,10 @@ import net.kyori.adventure.text.format.NamedTextColor;
 public class onItemDrop implements Listener {
 
 	private final Plugin plugin = Bukkit.getPluginManager().getPlugin("OurStory");
-	private final NamespacedKey ItemIsLocked = new NamespacedKey(plugin, "ItemIsLocked");
+	private final NamespacedKey ItemIsLocked = new NamespacedKey(plugin, "locked");
 
 	@EventHandler
 	public void dropItem(PlayerDropItemEvent event) {
-
 		Player player = event.getPlayer();
 		Item item = event.getItemDrop();
 
