@@ -31,7 +31,7 @@ public class onItemDrop implements Listener {
 
 		if (isLocked) {
 			event.setCancelled(true);
-			player.sendActionBar(Component.text("You can't drop : " + event.getItemDrop().getName() + ", you've locked it already !").color(NamedTextColor.YELLOW));
+			player.sendActionBar(Component.text("You can't drop : " + event.getItemDrop().getName() + ", you've locked it !").color(NamedTextColor.YELLOW));
 		}
 	}
 }
