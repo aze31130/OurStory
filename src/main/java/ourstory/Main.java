@@ -61,10 +61,10 @@ public class Main extends JavaPlugin {
 		Map<String, BasicCommand> commandsToRegister = Map.of(
 				"boss", new Boss(),
 				"dummy", new Dummy(),
-				"reset", new Reset(),
+				// "reset", new Reset(),
 				"test", new Test(),
 				"split", new Split(),
-				"rankup", new RankUp(),
+				// "rankup", new RankUp(),
 				"count", new Count(),
 				"chall", new Chall(),
 				"itemlock", new CancelDrop(),
