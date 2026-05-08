@@ -12,18 +12,7 @@ public class onTeleport implements Listener {
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
 		TeleportCause cause = event.getCause();
 
-		switch (cause) {
-			case ENDER_PEARL:
-				event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
-				break;
-
-			case CHORUS_FRUIT:
-				event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 700, 0));
-				event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 600, 0));
-				break;
-
-			default:
-				break;
-		}
+		if (cause == TeleportCause.ENDER_PEARL)
+			event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
 	}
 }
