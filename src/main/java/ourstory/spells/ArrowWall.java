@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import java.util.List;
 import org.bukkit.Location;
@@ -10,7 +10,7 @@ import org.bukkit.util.Vector;
 public class ArrowWall implements Skills {
 
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 		Location bossLocation = caster.getLocation().add(0, 5, 0); // Spawn arrows 5 blocks above boss
 
 		for (int i = 0; i < 800; i++) {

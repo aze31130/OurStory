@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class Growth implements Skills {
 	double growthResetTime = 60; // 3 sec
 
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 		new BukkitRunnable() {
 			int timer = 0;
 

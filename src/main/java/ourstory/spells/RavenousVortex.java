@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,7 +26,7 @@ public class RavenousVortex implements Skills {
 	final static double skillDuration = 40;
 
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 		List<Location> targetsLocation = new ArrayList<>();
 
 		for (Entity target : targets)

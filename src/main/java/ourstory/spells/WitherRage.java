@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import java.util.List;
 import org.bukkit.Location;
@@ -12,7 +12,7 @@ import org.bukkit.util.Vector;
 public class WitherRage implements Skills {
 
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 		Entity target = targets.get(0);
 		target.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, target.getLocation(), 5);
 

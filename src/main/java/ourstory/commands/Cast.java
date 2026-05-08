@@ -5,7 +5,7 @@ import java.util.Map;
 import org.bukkit.entity.Player;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import ourstory.skills.*;
+import ourstory.spells.*;
 import ourstory.utils.Permissions;
 
 public class Cast implements BasicCommand {
@@ -38,7 +38,7 @@ public class Cast implements BasicCommand {
 			if (!skills.containsKey(s))
 				continue;
 
-			skills.get(s).cast(player, player.getNearbyEntities(50, 50, 50));
+			skills.get(s).cast(player, player.getNearbyEntities(50, 50, 50), 1);
 		}
 	}
 

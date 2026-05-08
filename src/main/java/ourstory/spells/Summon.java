@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +14,7 @@ import ourstory.utils.EnchantItem;
 
 public class Summon implements Skills {
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 		for (int i = 0; i < 15; i++) {
 			new BukkitRunnable() {
 				@Override

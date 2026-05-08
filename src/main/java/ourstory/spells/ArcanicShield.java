@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +36,7 @@ public class ArcanicShield implements Skills {
 
 
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 
 		new BukkitRunnable() {
 			boolean isListenerRegistered = false;

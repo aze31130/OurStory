@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import java.util.List;
 import org.bukkit.entity.Entity;
@@ -6,7 +6,7 @@ import org.bukkit.entity.Entity;
 public class Meteors implements Skills {
 
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'cast'");
 	}

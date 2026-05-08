@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import java.util.List;
 import org.bukkit.entity.Entity;
@@ -6,7 +6,7 @@ import org.bukkit.entity.Entity;
 public class Reinforce implements Skills {
 
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 		// PlayerUtils.broadcastToPlayers(s.bossInstance.players, "Feel my strengh");
 
 		// TODO Auto-generated method stub

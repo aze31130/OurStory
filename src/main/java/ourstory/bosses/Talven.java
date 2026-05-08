@@ -30,7 +30,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import net.kyori.adventure.text.Component;
-import ourstory.skills.*;
+import ourstory.spells.*;
 import ourstory.utils.EnchantItem;
 
 public class Talven extends Boss implements Runnable {
@@ -229,16 +229,16 @@ public class Talven extends Boss implements Runnable {
 
 			if (rng < 10) {
 				ArrowWall a = new ArrowWall();
-				a.cast(entity, null);
+				a.cast(entity, null, 1);
 			}
 
 			if (rng < 25) {
 				Summon su = new Summon();
-				su.cast(entity, null);
+				su.cast(entity, null, 1);
 			}
 
 			WitherRage wr = new WitherRage();
-			wr.cast(entity, null);
+			wr.cast(entity, null, 1);
 
 			try {
 				Thread.sleep(15000);
@@ -281,7 +281,7 @@ public class Talven extends Boss implements Runnable {
 
 		if (healthPercent < 55 && phase == 1) {
 			ArrowWall a = new ArrowWall();
-			a.cast(entity, null);
+			a.cast(entity, null, 1);
 			phase = 2;
 		}
 
@@ -293,7 +293,7 @@ public class Talven extends Boss implements Runnable {
 		if (healthPercent < 20 && phase == 2) {
 			// Summon special skill
 			Annihilation an = new Annihilation();
-			an.cast(boss, null);
+			an.cast(boss, null, 1);
 
 			phase = 3;
 		}

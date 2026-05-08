@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -9,7 +9,7 @@ public class SummonWithers implements Skills {
 	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
 
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 
 	}
 }

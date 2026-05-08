@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import java.util.List;
 import org.bukkit.Location;
@@ -13,7 +13,7 @@ import net.kyori.adventure.text.Component;
 
 public class SummonWarden implements Skills {
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 		Location summonPlace = caster.getLocation().add(caster.getLocation().getDirection().normalize().multiply(1.5)).add(0, 0.57, 0);
 		World world = summonPlace.getWorld();
 

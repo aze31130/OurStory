@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import java.util.List;
 import org.bukkit.Particle;
@@ -8,7 +8,7 @@ import org.bukkit.util.Vector;
 public class Wave implements Skills {
 
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 		for (Entity entity : targets) {
 			double x = entity.getLocation().getX() - caster.getLocation().getX();
 			double y = entity.getLocation().getY() - caster.getLocation().getY();

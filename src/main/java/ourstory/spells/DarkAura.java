@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import java.util.List;
 import org.bukkit.Color;
@@ -10,8 +10,11 @@ import org.bukkit.entity.Entity;
 public class DarkAura implements Skills {
 
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 		spawnDarkFaceEffect(caster.getLocation());
+
+		// animation()
+		// sort()
 	}
 
 	public void spawnDarkFaceEffect(Location loc) {

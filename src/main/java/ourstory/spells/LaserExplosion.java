@@ -1,4 +1,4 @@
-package ourstory.skills;
+package ourstory.spells;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -12,7 +12,7 @@ import java.util.List;
 public class LaserExplosion implements Skills {
 
 	@Override
-	public void cast(Entity caster, List<Entity> targets) {
+	public void cast(Entity caster, List<Entity> targets, int level) {
 		int laserAmount = 250;
 		double laserRange = 50;
 		double speed = 0.3;
