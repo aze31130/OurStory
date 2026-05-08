@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import ourstory.skills.Skills;
+import ourstory.spells.Skills;
 
 public abstract class Boss {
 	public Thread skills;
