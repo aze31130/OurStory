@@ -73,6 +73,9 @@ public class CraftingTable {
 			new CustomRecipeCraftingTable("wither_mace", "Wither's Ultimate Mace", () -> new ItemStack(Material.MACE, 1),
 					" N ", "NMN", " N ", Map.of('M', () -> new ItemStack(Material.MACE), 'N', () -> new ItemStack(Material.NETHER_STAR)), true),
 
+			new CustomRecipeCraftingTable("wither_spear", "Wither's Ultimate Spear", () -> new ItemStack(Material.DIAMOND_SPEAR, 1),
+					"  N", " S ", "S  ", Map.of('S', () -> new ItemStack(Material.STICK), 'N', () -> new ItemStack(Material.NETHER_STAR)), true),
+
 			new CustomRecipeCraftingTable("wither_crossbow", "Wither's Ultimate Crossbow", () -> new ItemStack(Material.CROSSBOW, 1),
 					" N ", "NCN", " N ", Map.of('C', () -> new ItemStack(Material.CROSSBOW), 'N', () -> new ItemStack(Material.NETHER_STAR)), true),
 
