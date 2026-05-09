@@ -14,9 +14,12 @@ import org.bukkit.util.Vector;
 import com.destroystokyo.paper.entity.ai.Goal;
 import com.destroystokyo.paper.entity.ai.GoalKey;
 import com.destroystokyo.paper.entity.ai.GoalType;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import io.papermc.paper.entity.LookAnchor;
 import net.kyori.adventure.text.Component;
 import ourstory.bosses.IBoss;
+import ourstory.spells.Spell;
 
 public final class ChargeClosestGoal implements Goal<Mob> {
 	private static final Integer COOLDOWN = 20 * 10;
@@ -26,14 +29,15 @@ public final class ChargeClosestGoal implements Goal<Mob> {
 	private Location lastTargetLoc;
 	private Location originalLoc;
 
+	private final ImmutableSet<Spell> spells;
 	/**
 	 * Last time (in server ticks) the behaviour has been triggered
 	 */
 	private Integer lastTickActivated;
 
-	public ChargeClosestGoal(final IBoss boss) {
+	public ChargeClosestGoal(final IBoss boss, final ImmutableSet<Spell> spells) {
 		this.boss = boss;
-		this.lastTickActivated = Bukkit.getCurrentTick();
+		this.spells = spells;
 	}
 
 	private Optional<Player> getClosest(Collection<Player> players) {
@@ -57,14 +61,27 @@ public final class ChargeClosestGoal implements Goal<Mob> {
 				LookAnchor.EYES);
 		lastTargetLoc = target.getLocation();
 		originalLoc = boss.getBossEntity().getLocation();
+		lastTickActivated = Bukkit.getCurrentTick();
 	}
 
 	@Override
 	public void tick() {
+		if (!("should spell stop")) {
+			// tick spell
+			return;
+		}
+		// stop du spell
+
+		// quand on tire un spell
+		// le spell s'exécute
+		// setup du spell
+
+
 		Bukkit.getServer().broadcast(Component.text(String.format("[ChargeGoal] - Charging!!!")));
 		boss.getBossEntity().lookAt(lastTargetLoc);
 		boss.getBossEntity().getPathfinder().moveTo(lastTargetLoc, 2);
-		boss.getBossEntity().getWorld().spawnParticle(Particle.ANGRY_VILLAGER, boss.getBossEntity().getLocation(), 10);
+		boss.getBossEntity().getWorld().spawnParticle(Particle.ANGRY_VILLAGER,
+				boss.getBossEntity().getLocation(), 10);
 	}
 
 	@Override

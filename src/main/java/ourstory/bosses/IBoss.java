@@ -1,9 +1,11 @@
 package ourstory.bosses;
 
+import java.util.Set;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import com.destroystokyo.paper.entity.ai.MobGoals;
 import com.google.common.collect.ImmutableList;
+import ourstory.spells.Spell;
 
 public interface IBoss {
 
@@ -22,4 +24,6 @@ public interface IBoss {
 	 * Entité qui représente le boss en jeu.
 	 */
 	Mob getBossEntity();
+
+	Set<Spell> getSpells(int phase);
 }
