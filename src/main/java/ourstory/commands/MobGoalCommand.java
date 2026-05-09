@@ -16,7 +16,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.bossbar.BossBar.Overlay;
 import net.kyori.adventure.text.Component;
-import ourstory.goal.ChargeGoal;
+import ourstory.goal.ChargeClosestGoal;
 import ourstory.goal.SleepGoal;
 
 public class MobGoalCommand implements BasicCommand {
@@ -35,8 +35,8 @@ public class MobGoalCommand implements BasicCommand {
 				loc.x() + RADIUS, loc.y() + RADIUS, loc.z() + RADIUS);
 		for (var entity : sender.getWorld().getNearbyEntities(bb, e -> e instanceof Cow)) {
 			Cow cow = (Cow) entity;
-			server.getMobGoals().addGoal(cow, 0, new SleepGoal(sender, cow));
-			server.getMobGoals().addGoal(cow, 1, new ChargeGoal(sender, cow));
+			server.getMobGoals().addGoal(cow, 0, new SleepGoal(cow));
+			server.getMobGoals().addGoal(cow, 1, new ChargeClosestGoal(sender, cow));
 		}
 	}
 }
