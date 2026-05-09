@@ -21,7 +21,7 @@ public class SleepGoal implements Goal<Mob> {
 
 	@Override
 	public boolean shouldActivate() {
-		return boss.getBossEntity().getHealth() > boss.getBossEntity().getAttribute(Attribute.MAX_HEALTH).getBaseValue() / 2.0f;
+		return true;
 	}
 
 	@Override
