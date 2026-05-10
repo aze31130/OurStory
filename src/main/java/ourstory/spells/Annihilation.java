@@ -17,6 +17,10 @@ public class Annihilation implements Spells {
 	 */
 	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
 
+	boolean shouldStop() {
+		return false;
+	}
+
 	@Override
 	public void cast(Entity caster, List<Entity> targets, int level) {
 		Location loc = caster.getLocation();
@@ -24,6 +28,28 @@ public class Annihilation implements Spells {
 		int pointCount = 6;
 		double radius = 20;
 		int totalSteps = 40;
+
+		// while true {
+		// logque métier
+
+		// break;
+		// }
+
+		// ===
+
+
+		// while true {
+		// logque métier
+		// logque métier
+
+		// setup
+
+		// tick
+
+		// stop
+
+		// break;
+		// }
 
 		for (int i = 0; i < pointCount; i++) {
 			double angle = 2 * Math.PI * i / pointCount;
