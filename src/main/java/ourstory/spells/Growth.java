@@ -14,49 +14,76 @@ import org.bukkit.scheduler.BukkitRunnable;
  *
  * @author aurel
  */
-public class Growth implements Spells {
-	static NamespacedKey GrowthKey = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "boss_scale_skill");
-	/*
-	 * Value need to be POSITIVE. 0 to 1 makes the entity shrink. 1 to ininite makes it grow
-	 */
-	double specificScale = 3;
-	double growthPreparationTime = 60; // 3 sec
-	double growthDuration = 400; // 20 sec
-	double growthResetTime = 60; // 3 sec
+public class Growth extends Spell {
+	public Growth(Entity caster, List<Entity> targets, int level) {
+		super(caster, targets, level);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
-	public void cast(Entity caster, List<Entity> targets, int level) {
-		new BukkitRunnable() {
-			int timer = 0;
-
-			@Override
-			public void run() {
-				timer++;
-				if (timer < growthPreparationTime) {
-					double percent = (double) timer / growthPreparationTime;
-					applyEffect((LivingEntity) caster, specificScale * percent + (1 - percent));
-				} else if (timer < growthPreparationTime + growthDuration) {
-					applyEffect((LivingEntity) caster, specificScale);
-				} else if (timer < growthPreparationTime + growthDuration + growthResetTime) {
-					double percent = ((double) timer - growthPreparationTime - growthDuration) / growthResetTime;
-					applyEffect((LivingEntity) caster, specificScale * (1. - percent) + percent);
-				} else {
-					removeEffect((LivingEntity) caster);
-					this.cancel();
-				}
-			}
-		}.runTaskTimer(plugin, 0, 1);
+	void setup() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setup'");
 	}
 
-	public static void removeEffect(LivingEntity entity) {
-		if (entity.getAttribute(Attribute.SCALE) != null)
-			entity.getAttribute(Attribute.SCALE).removeModifier(GrowthKey);
+	@Override
+	void tick() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'tick'");
 	}
 
-	public static void applyEffect(LivingEntity entity, double strength) {
-		removeEffect(entity);
-
-		AttributeModifier buff = new AttributeModifier(GrowthKey, strength - 1, AttributeModifier.Operation.MULTIPLY_SCALAR_1);
-		entity.getAttribute(Attribute.SCALE).addModifier(buff);
+	@Override
+	void stop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'stop'");
 	}
+
+	// static NamespacedKey GrowthKey = new
+	// NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "boss_scale_skill");
+	// /*
+	// * Value need to be POSITIVE. 0 to 1 makes the entity shrink. 1 to ininite makes it grow
+	// */
+	// double specificScale = 3;
+	// double growthPreparationTime = 60; // 3 sec
+	// double growthDuration = 400; // 20 sec
+	// double growthResetTime = 60; // 3 sec
+
+
+
+	// @Override
+	// public void cast(Entity caster, List<Entity> targets, int level) {
+	// new BukkitRunnable() {
+	// int timer = 0;
+
+	// @Override
+	// public void run() {
+	// timer++;
+	// if (timer < growthPreparationTime) {
+	// double percent = (double) timer / growthPreparationTime;
+	// applyEffect((LivingEntity) caster, specificScale * percent + (1 - percent));
+	// } else if (timer < growthPreparationTime + growthDuration) {
+	// applyEffect((LivingEntity) caster, specificScale);
+	// } else if (timer < growthPreparationTime + growthDuration + growthResetTime) {
+	// double percent = ((double) timer - growthPreparationTime - growthDuration) / growthResetTime;
+	// applyEffect((LivingEntity) caster, specificScale * (1. - percent) + percent);
+	// } else {
+	// removeEffect((LivingEntity) caster);
+	// this.cancel();
+	// }
+	// }
+	// }.runTaskTimer(plugin, 0, 1);
+	// }
+
+	// public static void removeEffect(LivingEntity entity) {
+	// if (entity.getAttribute(Attribute.SCALE) != null)
+	// entity.getAttribute(Attribute.SCALE).removeModifier(GrowthKey);
+	// }
+
+	// public static void applyEffect(LivingEntity entity, double strength) {
+	// removeEffect(entity);
+
+	// AttributeModifier buff = new AttributeModifier(GrowthKey, strength - 1,
+	// AttributeModifier.Operation.MULTIPLY_SCALAR_1);
+	// entity.getAttribute(Attribute.SCALE).addModifier(buff);
+	// }
 }

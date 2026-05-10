@@ -30,8 +30,8 @@ public class Boss implements BasicCommand {
 		// arena.getSpawnLocation().set(0, 100, 0)
 		switch (bossName) {
 			case "Talven":
-				boss = new Talven(sender.getLocation());
-				boss.onSpawn();
+				// boss = new Talven(sender.getLocation());
+				// boss.onSpawn();
 				break;
 
 			default:

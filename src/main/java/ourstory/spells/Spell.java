@@ -39,4 +39,12 @@ public abstract class Spell {
 	 * Le dernier tick. Si on veut faire un truc à la fin, avant de passer a un autre spell
 	 */
 	abstract void stop();
+	/*
+	 * The caster is the boss who casted the spell. The targets are all the entities targeted by the
+	 * spell
+	 * 
+	 * Sound example minecraft:entity.dragon_fireball.explode minecraft:entity.blaze.ambient
+	 * minecraft:entity.wither.death minecraft:entity.wither.shoot minecraft:entity.wither.spawn
+	 * minecraft:entity.experience_orb.pickup
+	 */
 }

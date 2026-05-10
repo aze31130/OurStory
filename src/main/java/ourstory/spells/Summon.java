@@ -12,28 +12,51 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import ourstory.utils.EnchantItem;
 
-public class Summon implements Spells {
-	@Override
-	public void cast(Entity caster, List<Entity> targets, int level) {
-		for (int i = 0; i < 15; i++) {
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					Zombie minion = (Zombie) caster.getWorld().spawnEntity(caster.getLocation(), EntityType.ZOMBIE);
+public class Summon extends Spell {
 
-					EntityEquipment equipment = minion.getEquipment();
-					ItemStack[] armor = {
-							EnchantItem.createEnchantedItem(Material.GOLDEN_BOOTS, Map.of(Enchantment.THORNS, 3)),
-							EnchantItem.createEnchantedItem(Material.GOLDEN_LEGGINGS, Map.of()),
-							EnchantItem.createEnchantedItem(Material.GOLDEN_CHESTPLATE, Map.of(Enchantment.THORNS, 1)),
-							EnchantItem.createEnchantedItem(Material.GOLDEN_HELMET, Map.of(Enchantment.THORNS, 3))
-					};
-
-					equipment.setArmorContents(armor);
-
-					minion.setBaby();
-				}
-			}.runTaskLater(plugin, i * 2);
-		}
+	public Summon(Entity caster, List<Entity> targets, int level) {
+		super(caster, targets, level);
+		// TODO Auto-generated constructor stub
 	}
+
+	@Override
+	void setup() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setup'");
+	}
+
+	@Override
+	void tick() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'tick'");
+	}
+
+	@Override
+	void stop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'stop'");
+	}
+	// @Override
+	// public void cast(Entity caster, List<Entity> targets, int level) {
+	// for (int i = 0; i < 15; i++) {
+	// new BukkitRunnable() {
+	// @Override
+	// public void run() {
+	// Zombie minion = (Zombie) caster.getWorld().spawnEntity(caster.getLocation(), EntityType.ZOMBIE);
+
+	// EntityEquipment equipment = minion.getEquipment();
+	// ItemStack[] armor = {
+	// EnchantItem.createEnchantedItem(Material.GOLDEN_BOOTS, Map.of(Enchantment.THORNS, 3)),
+	// EnchantItem.createEnchantedItem(Material.GOLDEN_LEGGINGS, Map.of()),
+	// EnchantItem.createEnchantedItem(Material.GOLDEN_CHESTPLATE, Map.of(Enchantment.THORNS, 1)),
+	// EnchantItem.createEnchantedItem(Material.GOLDEN_HELMET, Map.of(Enchantment.THORNS, 3))
+	// };
+
+	// equipment.setArmorContents(armor);
+
+	// minion.setBaby();
+	// }
+	// }.runTaskLater(plugin, i * 2);
+	// }
+	// }
 }

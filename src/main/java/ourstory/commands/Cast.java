@@ -10,17 +10,11 @@ import ourstory.utils.Permissions;
 
 public class Cast implements BasicCommand {
 
-	private final Map<String, Spells> skills = Map.of(
-			"Annihilation", new Annihilation(),
-			"LaserMatrix", new LaserMatrix(),
-			"LaserExplosion", new LaserExplosion(),
-			"ArrowWall", new ArrowWall(),
-			"Test", new SummonWithers(),
-			"Wave", new Wave(),
-			"WitherRage", new WitherRage(),
-			"Growth", new Growth(),
-			"RavenousVortex", new RavenousVortex(),
-			"ArcanicShield", new ArcanicShield());
+	private final Map<String, Spell> skills = Map.of(
+			"Annihilation", new Annihilation(null, null, 0),
+			"LaserMatrix", new LaserMatrix(null, null, 0),
+			"LaserExplosion", new LaserExplosion(null, null, 0),
+			"ArrowWall", new ArrowWall(null, null, 0));
 
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {
@@ -38,7 +32,7 @@ public class Cast implements BasicCommand {
 			if (!skills.containsKey(s))
 				continue;
 
-			skills.get(s).cast(player, player.getNearbyEntities(50, 50, 50), 1);
+			// skills.get(s).cast(player, player.getNearbyEntities(50, 50, 50), 1);
 		}
 	}
 
