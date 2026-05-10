@@ -14,7 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
  *
  * @author aurel
  */
-public class Growth implements Skills {
+public class Growth implements Spells {
 	static NamespacedKey GrowthKey = new NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "boss_scale_skill");
 	/*
 	 * Value need to be POSITIVE. 0 to 1 makes the entity shrink. 1 to ininite makes it grow

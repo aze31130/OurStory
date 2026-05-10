@@ -21,7 +21,7 @@ import org.bukkit.util.BoundingBox;
  *
  * @author aurel
  */
-public class ArcanicShield implements Skills {
+public class ArcanicShield implements Spells {
 	final double preShieldTimer = 40;
 	final double shieldTimer = 100;
 	final int preShieldParticleCount = 20;

@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
  *
  * @author aurel
  */
-public class RavenousVortex implements Skills {
+public class RavenousVortex implements Spells {
 
 	final static NamespacedKey GravityKey = new NamespacedKey(plugin, "boss_ravenous_vortex");
 	final static double effectRange = 10;

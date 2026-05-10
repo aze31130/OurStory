@@ -3,7 +3,7 @@ package ourstory.spells;
 import java.util.List;
 import org.bukkit.entity.Entity;
 
-public class Concentration implements Skills {
+public class Concentration implements Spells {
 
 	@Override
 	public void cast(Entity caster, List<Entity> targets, int level) {

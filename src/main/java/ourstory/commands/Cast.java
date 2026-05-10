@@ -10,7 +10,7 @@ import ourstory.utils.Permissions;
 
 public class Cast implements BasicCommand {
 
-	private final Map<String, Skills> skills = Map.of(
+	private final Map<String, Spells> skills = Map.of(
 			"Annihilation", new Annihilation(),
 			"LaserMatrix", new LaserMatrix(),
 			"LaserExplosion", new LaserExplosion(),

@@ -9,7 +9,7 @@ import org.bukkit.entity.WitherSkull;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-public class WitherRage implements Skills {
+public class WitherRage implements Spells {
 
 	@Override
 	public void cast(Entity caster, List<Entity> targets, int level) {
