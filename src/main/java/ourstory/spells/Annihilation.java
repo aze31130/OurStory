@@ -1,13 +1,14 @@
 package ourstory.spells;
 
+
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
+import net.kyori.adventure.text.Component;
 
 
 
@@ -26,26 +27,37 @@ public class Annihilation extends Spell {
 	private int t;
 
 
+
+	private Entity caster;
+
+
+	private int level;
+
 	public Annihilation(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
+		this.caster = caster;
+		this.level = level;
 	}
 
 	@Override
-	void setup() {
+	public void setup() {
 		// TODO Auto-generated method stub
-		Location loc = caster.getLocation();
-		int pointCount = 6;
-		double radius = 20;
-		int totalSteps = 40;
-		double radiusIncrease = 0.5;
-		double startRadius = 0.5;
-		double endRadius = 20;
-		int t = 0;
-		// throw new UnsupportedOperationException("Unimplemented method 'setup'");
+
+		Bukkit.getServer().broadcast(Component.text("Prepare for Annihilation"));
+
+
+		this.loc = caster.getLocation();
+		this.pointCount = 6;
+		this.radius = 20;
+		this.totalSteps = 40;
+		this.radiusIncrease = 0.5;
+		this.startRadius = 0.5;
+		this.endRadius = 20;
+		this.t = 0;
 	}
 
 	@Override
-	void tick() {
+	public void tick() {
 		for (int i = 0; i < pointCount; i++) {
 			double angle = 2 * Math.PI * i / pointCount;
 
@@ -78,17 +90,14 @@ public class Annihilation extends Spell {
 			Vector direction = entity.getLocation().toVector().subtract(loc.toVector()).normalize();
 			entity.setVelocity(direction.multiply(0.7));
 
+
+
 			// Damage if player
-			if (entity instanceof Player) {
-				Player player = (Player) entity;
-				player.damage(7.0);
-			}
+			LivingEntity livingTarget = (LivingEntity) entity;
+			livingTarget.damage(7.0);
 		}
 
-		// throw new UnsupportedOperationException("Unimplemented method 'tick'");
-
 	}
-
 
 	@Override
 	public boolean shouldStop() {
@@ -96,23 +105,14 @@ public class Annihilation extends Spell {
 
 	}
 
-
-
 	@Override
-	void stop() {}
-
-	// // setup
-
-	// // tick
-
-	// // stop
-
-
+	public void stop() {}
 
 	private static void playCircleEffect(Entity caster, Location loc, double radius) {
 		for (double angle = 0; angle < 2 * Math.PI; angle += Math.PI / 150) {
 			final double x = radius * Math.cos(angle);
 			final double z = radius * Math.sin(angle);
+
 
 			loc.add(x, 0, z);
 			caster.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0, 0, 0);
