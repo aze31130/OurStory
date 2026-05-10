@@ -2,7 +2,10 @@ package ourstory.commands;
 
 import java.util.Collection;
 import java.util.Map;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import ourstory.spells.*;
@@ -10,11 +13,17 @@ import ourstory.utils.Permissions;
 
 public class Cast implements BasicCommand {
 
-	private final Map<String, Spell> skills = Map.of(
-			"Annihilation", new Annihilation(null, null, 0),
-			"LaserMatrix", new LaserMatrix(null, null, 0),
-			"LaserExplosion", new LaserExplosion(null, null, 0),
-			"ArrowWall", new ArrowWall(null, null, 0));
+	public Map<String, Spell> skills;
+	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
+
+	static {
+		final Map<String, Spell> skills = Map.of(
+				"Annihilation", new Annihilation(null, null, 0),
+				"LaserMatrix", new LaserMatrix(null, null, 0),
+				"LaserExplosion", new LaserExplosion(null, null, 0),
+				"ArrowWall", new ArrowWall(null, null, 0));
+	}
+
 
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {
@@ -28,15 +37,37 @@ public class Cast implements BasicCommand {
 			return;
 		}
 
-		for (String s : args) {
-			if (!skills.containsKey(s))
-				continue;
-			if (s.equalsIgnoreCase("Annihilation")) {
-				new Annihilation(player, player.getNearbyEntities(50, 50, 50), 1);
-			}
+		Spell test = new Annihilation(player, player.getNearbyEntities(50, 50, 50), 1);
 
-			// skills.get(s).cast(player, player.getNearbyEntities(50, 50, 50), 1);
-		}
+		Thread t = new Thread() {
+			@Override
+			public void run() {
+				// System.out.println("Test1");
+				test.setup();
+
+				// System.out.println("Test2");
+
+				while (!test.shouldStop()) {
+					// System.out.println("Test3");
+					test.tick();
+				}
+				// System.out.println("Test4");
+				test.stop();
+			}
+		};
+		t.start();
+
+		// for (String s : args) {
+		// if (!skills.containsKey(s))
+		// continue;
+		// if (s.equalsIgnoreCase("Annihilation")) {
+		// new Annihilation(player, player.getNearbyEntities(50, 50, 50), 1);
+
+
+		// }
+
+		// // skills.get(s).cast(player, player.getNearbyEntities(50, 50, 50), 1);
+		// }
 	}
 
 	/*

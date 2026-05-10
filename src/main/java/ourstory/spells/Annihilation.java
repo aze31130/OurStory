@@ -15,24 +15,25 @@ public class Annihilation extends Spell {
 	}
 
 	@Override
-	void setup() {
-		duration = 300 * level;
+	public synchronized void setup() {
+		duration = 300000000 * level;
 		currentTicks = 0;
 		caster.sendMessage("Init Annihilation");
 	}
 
 	@Override
-	void tick() {
+	public synchronized void tick() {
 		caster.sendMessage("Annihilation casting...");
+		currentTicks++;
 	}
 
 	@Override
-	void stop() {
+	public synchronized void stop() {
 		caster.sendMessage("End Annihilation");
 	}
 
 	@Override
-	boolean shouldStop() {
+	public synchronized boolean shouldStop() {
 		return currentTicks > duration;
 	}
 
