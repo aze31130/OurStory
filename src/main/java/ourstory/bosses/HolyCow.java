@@ -1,23 +1,19 @@
 package ourstory.bosses;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import org.bukkit.Bukkit;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import com.destroystokyo.paper.entity.ai.MobGoals;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import ourstory.goal.ChargeClosestGoal;
 import ourstory.goal.SleepGoal;
-import ourstory.spells.Annihilation;
-import ourstory.spells.Spell;
 
+/**
+ * - Invocation => Buter X vaches (en mode punition divine) 1. Elle descend du ciel avec un halo de
+ * lumière autour de sa tête 2. Un meuh qui stun (Spell) 3. Lancé de seau de laits (Spell) 4. Charge
+ * les joueurs
+ */
 public class HolyCow extends Boss {
 	/**
 	 * @param mob : Entity attached to the boss
@@ -34,7 +30,7 @@ public class HolyCow extends Boss {
 	public void registerGoals(MobGoals goals) {
 		goals.removeAllGoals(this.entity);
 		goals.addGoal(this.entity, 0, new SleepGoal(this)); // Phase 1
-		// goals.addGoal(this.entity, 1, new ChargeClosestGoal(this)); // Phase 2
+		goals.addGoal(this.entity, 1, new ChargeClosestGoal(this)); // Phase 2
 	}
 
 	// @Override
