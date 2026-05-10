@@ -3,7 +3,7 @@ set -e
 
 TARGET_DIR="./target"
 DATAPACK_SRC="./datapack/OurStory"
-SERVER_DIR="/home/Elouan/Documents/TestServ"
+SERVER_DIR="$HOME/Documents/TestServ"
 
 PLUGIN_DIR="$SERVER_DIR/plugins"
 DATAPACK_DEST="$SERVER_DIR/world/datapacks/OurStory"
