@@ -25,6 +25,7 @@ public class Annihilation extends Spell {
 	private double endRadius;
 	private int t;
 
+
 	public Annihilation(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
 	}
@@ -85,12 +86,14 @@ public class Annihilation extends Spell {
 		}
 
 		// throw new UnsupportedOperationException("Unimplemented method 'tick'");
+
 	}
 
 
 	@Override
-	boolean shouldStop() {
+	public boolean shouldStop() {
 		return (startRadius >= endRadius) || (t > totalSteps);
+
 	}
 
 

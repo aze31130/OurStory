@@ -19,19 +19,19 @@ public class SummonWarden extends Spell {
 	}
 
 	@Override
-	void setup() {
+	public void setup() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'setup'");
 	}
 
 	@Override
-	void tick() {
+	public void tick() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'tick'");
 	}
 
 	@Override
-	void stop() {
+	public void stop() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'stop'");
 	}
@@ -41,6 +41,12 @@ public class SummonWarden extends Spell {
 	// caster.getLocation().add(caster.getLocation().getDirection().normalize().multiply(1.5)).add(0,
 	// 0.57, 0);
 	// World world = summonPlace.getWorld();
+
+	@Override
+	public boolean shouldStop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+	}
 
 	// world.spawnParticle(Particle.REVERSE_PORTAL, summonPlace, 80, 0.7, 1, 0.7, 0.02);
 	// world.playSound(summonPlace, Sound.ENTITY_WARDEN_NEARBY_CLOSE, 100, 0.8f);

@@ -28,27 +28,24 @@ public abstract class Spell {
 	/**
 	 * Récupère le contexte pour exécuter le spell
 	 */
-	abstract void setup();
+	public abstract void setup();
 
 	/**
 	 * Update du tick
 	 */
-	abstract void tick();
+	public abstract void tick();
 
 	/**
 	 * Le dernier tick. Si on veut faire un truc à la fin, avant de passer a un autre spell
 	 */
-	abstract void stop();
 
-
+	public abstract void stop();
 
 	/**
 	 * Returns true
 	 */
-	abstract boolean shouldStop();
 
-
-
+	public abstract boolean shouldStop();
 	/*
 	 * The caster is the boss who casted the spell. The targets are all the entities targeted by the
 	 * spell

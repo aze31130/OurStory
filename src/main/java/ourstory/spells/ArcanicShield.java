@@ -39,23 +39,28 @@ public class ArcanicShield extends Spell {
 	}
 
 	@Override
-	void setup() {
+	public void setup() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'setup'");
 	}
 
 	@Override
-	void tick() {
+	public void tick() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'tick'");
 	}
 
 	@Override
-	void stop() {
+	public void stop() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'stop'");
 	}
 
+	@Override
+	public boolean shouldStop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+	}
 
 	// @Override
 	// public void cast(Entity caster, List<Entity> targets, int level) {

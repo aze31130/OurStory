@@ -15,25 +15,31 @@ public class DarkAura extends Spell {
 	}
 
 	@Override
-	void setup() {
+	public void setup() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'setup'");
 	}
 
 	@Override
-	void tick() {
+	public void tick() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'tick'");
 	}
 
 	@Override
-	void stop() {
+	public void stop() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'stop'");
 	}
 	// @Override
 	// public void cast(Entity caster, List<Entity> targets, int level) {
 	// spawnDarkFaceEffect(caster.getLocation());
+
+	@Override
+	public boolean shouldStop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+	}
 
 	// // animation()
 	// // sort()
