@@ -47,6 +47,12 @@ public class RavenousVortex extends Spell {
 	// final static double effectGravityRadius = 2;
 	// final static double skillDuration = 40;
 
+	@Override
+	boolean shouldStop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+	}
+
 	// @Override
 	// public void cast(Entity caster, List<Entity> targets, int level) {
 	// List<Location> targetsLocation = new ArrayList<>();

@@ -35,6 +35,12 @@ public class DarkAura extends Spell {
 	// public void cast(Entity caster, List<Entity> targets, int level) {
 	// spawnDarkFaceEffect(caster.getLocation());
 
+	@Override
+	boolean shouldStop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+	}
+
 	// // animation()
 	// // sort()
 	// }

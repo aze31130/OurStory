@@ -27,4 +27,10 @@ public class Teleport extends Spell {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'stop'");
 	}
+
+	@Override
+	boolean shouldStop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+	}
 }

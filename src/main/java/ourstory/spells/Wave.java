@@ -30,6 +30,12 @@ public class Wave extends Spell {
 		throw new UnsupportedOperationException("Unimplemented method 'stop'");
 	}
 
+	@Override
+	boolean shouldStop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+	}
+
 	// @Override
 	// public void cast(Entity caster, List<Entity> targets, int level) {
 	// for (Entity entity : targets) {

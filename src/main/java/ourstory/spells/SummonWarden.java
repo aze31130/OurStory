@@ -42,6 +42,12 @@ public class SummonWarden extends Spell {
 	// 0.57, 0);
 	// World world = summonPlace.getWorld();
 
+	@Override
+	boolean shouldStop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+	}
+
 	// world.spawnParticle(Particle.REVERSE_PORTAL, summonPlace, 80, 0.7, 1, 0.7, 0.02);
 	// world.playSound(summonPlace, Sound.ENTITY_WARDEN_NEARBY_CLOSE, 100, 0.8f);
 

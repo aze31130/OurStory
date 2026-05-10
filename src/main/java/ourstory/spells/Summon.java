@@ -44,6 +44,12 @@ public class Summon extends Spell {
 	// public void run() {
 	// Zombie minion = (Zombie) caster.getWorld().spawnEntity(caster.getLocation(), EntityType.ZOMBIE);
 
+	@Override
+	boolean shouldStop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+	}
+
 	// EntityEquipment equipment = minion.getEquipment();
 	// ItemStack[] armor = {
 	// EnchantItem.createEnchantedItem(Material.GOLDEN_BOOTS, Map.of(Enchantment.THORNS, 3)),

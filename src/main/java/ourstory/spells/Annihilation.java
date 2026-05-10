@@ -8,26 +8,32 @@ public class Annihilation extends Spell {
 	 * Special skill, last skill only used in chaos mode. Triggers at 20% HP remaining. The boss invokes
 	 * a flame circle arround him and deals a lot of damages.
 	 */
+	int duration, currentTicks;
+
 	public Annihilation(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
 	}
 
 	@Override
 	void setup() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setup'");
+		duration = 300 * level;
+		currentTicks = 0;
+		caster.sendMessage("Init Annihilation");
 	}
 
 	@Override
 	void tick() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'tick'");
+		caster.sendMessage("Annihilation casting...");
 	}
 
 	@Override
 	void stop() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'stop'");
+		caster.sendMessage("End Annihilation");
+	}
+
+	@Override
+	boolean shouldStop() {
+		return currentTicks > duration;
 	}
 
 	// @Override

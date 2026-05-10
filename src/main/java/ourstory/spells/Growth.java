@@ -38,6 +38,12 @@ public class Growth extends Spell {
 		throw new UnsupportedOperationException("Unimplemented method 'stop'");
 	}
 
+	@Override
+	boolean shouldStop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+	}
+
 	// static NamespacedKey GrowthKey = new
 	// NamespacedKey(Bukkit.getPluginManager().getPlugin("OurStory"), "boss_scale_skill");
 	// /*

@@ -31,6 +31,9 @@ public class Cast implements BasicCommand {
 		for (String s : args) {
 			if (!skills.containsKey(s))
 				continue;
+			if (s.equalsIgnoreCase("Annihilation")) {
+				new Annihilation(player, player.getNearbyEntities(50, 50, 50), 1);
+			}
 
 			// skills.get(s).cast(player, player.getNearbyEntities(50, 50, 50), 1);
 		}
