@@ -11,27 +11,24 @@ import org.bukkit.entity.LivingEntity;
 
 
 public class GravityWell extends Spell {
-
-    private Entity caster;
-
-    private double maxRadius;
-    private double pullStrength;
-    private double explosionDamage;
-    private double shrinkSpeedBase;
-    private double acceleration;
-    private Location startLocation;
+	private Entity caster;
+	private double maxRadius;
+	private double pullStrength;
+	private double explosionDamage;
+	private double shrinkSpeedBase;
+	private double acceleration;
+	private Location startLocation;
 
 	private double currentRadius;
 	private double shrinkSpeed;
 
+	public GravityWell(Entity caster, List<Entity> targets, int level) {
+		super(caster, targets, level);
+		this.caster = caster;
+	}
 
-	// private final Plugin plugin = Bukkit.getPluginManager().getPlugin("OurStory");
-
-    @Override
-    public void setup() {
-
-        level = 10;
-
+	@Override
+	public void setup() {
 		this.maxRadius = 1 + (level * 1.2);
 		this.pullStrength = 0.08 + (level * 0.05);
 		this.explosionDamage = (3.5f * level) / 2;
@@ -43,17 +40,13 @@ public class GravityWell extends Spell {
 
 		this.currentRadius = maxRadius;
 		this.shrinkSpeed = shrinkSpeedBase;
+	}
 
-    }
-
-    @Override
-    public void tick() {
-
+	@Override
+	public void tick() {
 		// Attraction
 		for (Entity entity : startLocation.getWorld().getNearbyEntities(
 				startLocation, maxRadius, maxRadius, maxRadius)) {
-			// for (Entity entity : targets) {
-
 
 			if (!(entity instanceof LivingEntity target))
 				continue;
@@ -79,28 +72,17 @@ public class GravityWell extends Spell {
 		// Fermeture + accélération
 		currentRadius -= shrinkSpeed;
 		shrinkSpeed += acceleration;
+	}
 
-    }
+	@Override
+	public void stop() {
+		explode(startLocation, explosionDamage, maxRadius, caster);
+	}
 
-    @Override
-    public void stop() {
-
-		/* Dernier appel avant le dernier tick */
-
-        explode(startLocation, explosionDamage, maxRadius, caster);
-    }
-
-    @Override
-    public boolean shouldStop() {
-		/* Renvoie vrai ou faux si le skill est censé s'arreter */
-		return currentRadius <= 0.3; 
-    }
-
-    public GravityWell(Entity caster, List<Entity> targets, int level){
-        super(caster, targets, level);
-        this.caster = caster;
-    }
-
+	@Override
+	public boolean shouldStop() {
+		return currentRadius <= 0.3;
+	}
 
 	private void drawGroundCircle(Location center, double radius, Particle particle, int points) {
 		World world = center.getWorld();
@@ -111,11 +93,7 @@ public class GravityWell extends Spell {
 			double x = Math.cos(angle) * radius;
 			double z = Math.sin(angle) * radius;
 
-			Location particleLoc = new Location(
-					world,
-					center.getX() + x,
-					y,
-					center.getZ() + z);
+			Location particleLoc = new Location(world, center.getX() + x, y, center.getZ() + z);
 
 			if (particle.getDataType().equals(Float.class))
 				world.spawnParticle(particle, particleLoc, 1, 0d, 0d, 0d, 0d, 0f);
@@ -124,16 +102,12 @@ public class GravityWell extends Spell {
 		}
 	}
 
-
 	private void explode(Location center, double damage, double radius, Entity caster) {
-
 		World world = center.getWorld();
-
 		world.spawnParticle(Particle.EXPLOSION, center, 3);
 		world.playSound(center, Sound.ENTITY_GENERIC_EXPLODE, 1f, 0.7f);
 
 		for (Entity entity : world.getNearbyEntities(center, radius, radius, radius)) {
-
 			if (!(entity instanceof LivingEntity living))
 				continue;
 			if (living.equals(caster))
@@ -149,5 +123,4 @@ public class GravityWell extends Spell {
 			living.setVelocity(knockback);
 		}
 	}
-
 }
