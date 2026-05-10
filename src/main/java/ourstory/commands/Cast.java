@@ -1,6 +1,7 @@
 package ourstory.commands;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -38,24 +39,19 @@ public class Cast implements BasicCommand {
 		}
 
 		Spell test = new Annihilation(player, player.getNearbyEntities(50, 50, 50), 1);
+		test.setup();
 
-		Thread t = new Thread() {
+		new BukkitRunnable() {
 			@Override
 			public void run() {
-				// System.out.println("Test1");
-				test.setup();
-
-				// System.out.println("Test2");
-
-				while (!test.shouldStop()) {
-					// System.out.println("Test3");
-					test.tick();
+				if (test.shouldStop()) {
+					test.stop();
+					cancel();
 				}
-				// System.out.println("Test4");
-				test.stop();
+				test.tick();
 			}
-		};
-		t.start();
+		}.runTaskTimer(p, 0, 1);
+
 
 		// for (String s : args) {
 		// if (!skills.containsKey(s))
@@ -75,6 +71,7 @@ public class Cast implements BasicCommand {
 	 */
 	@Override
 	public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
-		return skills.keySet();
+		// return skills.keySet();
+		return List.of("Annihilation");
 	}
 }
