@@ -9,7 +9,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 
-public class LaserMatrix implements Skills {
+public class LaserMatrix implements Spells {
 
 	@Override
 	public void cast(Entity caster, List<Entity> targets, int level) {

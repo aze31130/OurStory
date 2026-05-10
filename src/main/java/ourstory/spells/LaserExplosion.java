@@ -9,7 +9,7 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class LaserExplosion implements Skills {
+public class LaserExplosion implements Spells {
 
 	@Override
 	public void cast(Entity caster, List<Entity> targets, int level) {

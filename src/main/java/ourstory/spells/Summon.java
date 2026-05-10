@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import ourstory.utils.EnchantItem;
 
-public class Summon implements Skills {
+public class Summon implements Spells {
 	@Override
 	public void cast(Entity caster, List<Entity> targets, int level) {
 		for (int i = 0; i < 15; i++) {

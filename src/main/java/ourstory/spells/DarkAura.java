@@ -7,7 +7,7 @@ import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 
-public class DarkAura implements Skills {
+public class DarkAura implements Spells {
 
 	@Override
 	public void cast(Entity caster, List<Entity> targets, int level) {

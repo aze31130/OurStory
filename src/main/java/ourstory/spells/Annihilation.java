@@ -10,7 +10,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-public class Annihilation implements Skills {
+public class Annihilation implements Spells {
 	/*
 	 * Special skill, last skill only used in chaos mode. Triggers at 20% HP remaining. The boss invokes
 	 * a flame circle arround him and deals a lot of damages.

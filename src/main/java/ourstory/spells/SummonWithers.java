@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 
-public class SummonWithers implements Skills {
+public class SummonWithers implements Spells {
 	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
 
 	@Override

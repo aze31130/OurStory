@@ -5,7 +5,7 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-public class Wave implements Skills {
+public class Wave implements Spells {
 
 	@Override
 	public void cast(Entity caster, List<Entity> targets, int level) {

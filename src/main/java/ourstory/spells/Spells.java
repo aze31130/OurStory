@@ -5,9 +5,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 
-public interface Skills {
+public interface Spells {
 
 	public final Plugin plugin = Bukkit.getPluginManager().getPlugin("OurStory");
+
+	// public void setup();
+
+	// public void tick();
+
+	// public boolean stop();
 
 	/*
 	 * The caster is the boss who casted the spell. The targets are all the entities targeted by the

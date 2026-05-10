@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import ourstory.skills.Skills;
+import ourstory.spells.*;
 
 public abstract class Boss {
 	public Thread skills;
@@ -22,7 +22,7 @@ public abstract class Boss {
 	public int phase;
 	public BossBar healthBar;
 
-	public List<Skills> capabilites = new ArrayList<>();
+	public List<Spells> capabilites = new ArrayList<>();
 
 	public Boss(String name, Location spawnLocation, List<Player> targets) {
 		this.name = name;

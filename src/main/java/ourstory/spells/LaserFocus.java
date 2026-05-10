@@ -3,7 +3,7 @@ package ourstory.spells;
 import java.util.List;
 import org.bukkit.entity.Entity;
 
-public class LaserFocus implements Skills {
+public class LaserFocus implements Spells {
 
 	@Override
 	public void cast(Entity caster, List<Entity> targets, int level) {
