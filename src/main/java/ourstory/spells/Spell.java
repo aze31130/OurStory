@@ -38,13 +38,11 @@ public abstract class Spell {
 	/**
 	 * Le dernier tick. Si on veut faire un truc à la fin, avant de passer a un autre spell
 	 */
-
 	public abstract void stop();
 
 	/**
 	 * Returns true
 	 */
-
 	public abstract boolean shouldStop();
 	/*
 	 * The caster is the boss who casted the spell. The targets are all the entities targeted by the

@@ -1,6 +1,5 @@
 package ourstory.spells;
 
-
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -9,8 +8,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
 import net.kyori.adventure.text.Component;
-
-
 
 public class Annihilation extends Spell {
 	/*
@@ -21,17 +18,9 @@ public class Annihilation extends Spell {
 	private int pointCount;
 	private double radius;
 	private int totalSteps;
-	private double radiusIncrease;
-	private double startRadius;
-	private double endRadius;
+	private double radiusIncrease, startRadius, endRadius;
 	private int t;
-
-
-
 	private Entity caster;
-
-
-	private int level;
 
 	public Annihilation(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
@@ -41,10 +30,7 @@ public class Annihilation extends Spell {
 
 	@Override
 	public void setup() {
-		// TODO Auto-generated method stub
-
 		Bukkit.getServer().broadcast(Component.text("Prepare for Annihilation"));
-
 
 		this.loc = caster.getLocation();
 		this.pointCount = 6;
@@ -61,12 +47,7 @@ public class Annihilation extends Spell {
 		for (int i = 0; i < pointCount; i++) {
 			double angle = 2 * Math.PI * i / pointCount;
 
-			int t = 0;
-
-			if (t > totalSteps) {
-				this.stop();
-				return;
-			}
+			this.t = 0;
 
 			double progress = (double) t / totalSteps;
 			double easedProgress = 1 - Math.pow(1 - progress, 2);
@@ -90,8 +71,6 @@ public class Annihilation extends Spell {
 			Vector direction = entity.getLocation().toVector().subtract(loc.toVector()).normalize();
 			entity.setVelocity(direction.multiply(0.7));
 
-
-
 			// Damage if player
 			LivingEntity livingTarget = (LivingEntity) entity;
 			livingTarget.damage(7.0);
@@ -102,7 +81,6 @@ public class Annihilation extends Spell {
 	@Override
 	public boolean shouldStop() {
 		return (startRadius >= endRadius) || (t > totalSteps);
-
 	}
 
 	@Override
@@ -112,7 +90,6 @@ public class Annihilation extends Spell {
 		for (double angle = 0; angle < 2 * Math.PI; angle += Math.PI / 150) {
 			final double x = radius * Math.cos(angle);
 			final double z = radius * Math.sin(angle);
-
 
 			loc.add(x, 0, z);
 			caster.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0, 0, 0);
