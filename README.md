@@ -1,6 +1,6 @@
 # Ourstory, a minecraft plugin
 
-Ourstory is a private minecraft server between long time friends. This plugin aims to provide a vanilla+ experience by adding challenges trough custom advancements, bosses and enchantments.
+Ourstory is a private minecraft server between long time friends. This plugin aims to provide a vanilla+ experience by adding challenges through custom advancements, bosses and enchantments.
 
 ## All gameplay features
 
