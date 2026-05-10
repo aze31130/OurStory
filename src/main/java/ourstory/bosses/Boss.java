@@ -14,24 +14,19 @@ import com.destroystokyo.paper.entity.ai.MobGoals;
 import ourstory.spells.*;
 
 public abstract class Boss {
-	public Thread skills;
-
 	// Entity that reprensent the boss
 	public Mob entity;
 	public List<Player> targets;
-
 	public String name;
 	public int level;
-	public int phase;
 	public BossBar healthBar;
 
-	public Set<Spell> capabilites = new HashSet<>();
+	public Set<Spell> spells = new HashSet<>();
 
 	public Boss(String name, Mob mob, List<Player> targets, int level) {
 		this.name = name;
 		this.entity = mob;
 		this.targets = targets;
-		this.phase = 1;
 		this.level = level;
 	}
 
