@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import ourstory.spells.*;
@@ -70,7 +72,7 @@ public class Cast implements BasicCommand {
 	 * /boss <bossname> <difficulty>
 	 */
 	@Override
-	public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
+	public @NonNull Collection<String> suggest(@NonNull CommandSourceStack commandSourceStack, String[] args) {
 		// return skills.keySet();
 		return List.of("Annihilation");
 	}
