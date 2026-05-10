@@ -7,20 +7,28 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import com.destroystokyo.paper.entity.ai.MobGoals;
 import ourstory.goal.ChargeClosestGoal;
-import ourstory.goal.SleepGoal;
+import ourstory.goal.DivineDescentPhase;
 
 /**
- * - Invocation => Buter X vaches (en mode punition divine) 1. Elle descend du ciel avec un halo de
- * lumière autour de sa tête 2. Un meuh qui stun (Spell) 3. Lancé de seau de laits (Spell) 4. Charge
- * les joueurs
+ * - Invocation => Buter X vaches (en mode punition divine)
+ * 
+ * 1. Elle descend du ciel avec un halo de lumière autour de sa tête
+ * 
+ * 2. Un meuh qui stun (Spell)
+ * 
+ * 3. Lancé de seau de laits (Spell)
+ * 
+ * 4. Charge les joueurs
  */
 public class HolyCow extends Boss {
-	/**
-	 * @param mob : Entity attached to the boss
-	 * @param engaged : The players involved in the fight.
-	 */
+	private State state;
+
 	public HolyCow(Mob mob, List<Player> engagedPlayers, int level) {
 		super("Holy Cow", mob, engagedPlayers, level);
+	}
+
+	public State getState() {
+		return state;
 	}
 
 	/**
@@ -29,7 +37,7 @@ public class HolyCow extends Boss {
 	 */
 	public void registerGoals(MobGoals goals) {
 		goals.removeAllGoals(this.entity);
-		goals.addGoal(this.entity, 0, new SleepGoal(this)); // Phase 1
+		goals.addGoal(this.entity, 0, new DivineDescentPhase(this));
 		goals.addGoal(this.entity, 1, new ChargeClosestGoal(this)); // Phase 2
 	}
 
@@ -45,19 +53,16 @@ public class HolyCow extends Boss {
 
 	@Override
 	public void onSpawn() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'onSpawn'");
+		this.state = State.DESCENDING;
 	}
 
 	@Override
-	public void onHit(EntityDamageByEntityEvent event) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'onHit'");
-	}
+	public void onHit(EntityDamageByEntityEvent event) {}
 
 	@Override
-	public void onDeath(EntityDeathEvent event) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'onDeath'");
+	public void onDeath(EntityDeathEvent event) {}
+
+	public static enum State {
+		DESCENDING, INVINCIBLE, DEFAULT
 	}
 }
