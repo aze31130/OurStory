@@ -7,31 +7,26 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
-
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import ourstory.Main;
 import ourstory.utils.Permissions;
 
 public class Dummy implements BasicCommand {
 
-	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
-
-	private final Map<String, String> DummyName = Map.of(
+	private static final Map<String, String> DUMMY_NAME = Map.of(
 			"Normal", "Classic",
 			"Undead", "Undead",
 			"Spider", "Crawling",
 			"Marin", "Aquatic");
 
-	private final Map<String, String> DummyTag = Map.of(
+	private static final Map<String, String> DUMMY_TAG = Map.of(
 			"Undead", "sensitive_smite",
 			"Spider", "sensitive_boa",
 			"Marin", "sensitive_impaling");
@@ -41,30 +36,25 @@ public class Dummy implements BasicCommand {
 		if (!Permissions.checkPermissions(sender.getSender(), "ourstory.dummy"))
 			return;
 
-		if (!(sender.getSender() instanceof Player)) {
+		if (!(sender.getSender() instanceof Player player)) {
 			sender.getSender().sendMessage("Only a player can run this command !");
 			return;
 		}
 
-		Player player = (Player) sender.getSender();
 		World w = player.getWorld();
-
 		ArmorStand dummy = (ArmorStand) w.spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
 
-		Set<String> baseName = new HashSet<String>();
-
-		for (String argus : args) {
-			if (DummyName.containsKey(argus))
-				baseName.add(DummyName.get(argus));
-			if (DummyTag.containsKey(argus))
-				dummy.setMetadata(DummyTag.get(argus), new FixedMetadataValue(p, true));
+		Set<String> baseName = new HashSet<>();
+		for (String arg : args) {
+			if (DUMMY_NAME.containsKey(arg))
+				baseName.add(DUMMY_NAME.get(arg));
+			if (DUMMY_TAG.containsKey(arg))
+				dummy.setMetadata(DUMMY_TAG.get(arg), new FixedMetadataValue(Main.plugin, true));
 		}
 
 		if (baseName.isEmpty())
 			baseName.add("Classic");
 
-		// Don't let duplicate name be there and sort them like : Undead Crawling Aquatic Dummy. Moreover,
-		// remove Classic if another one is there
 		String finalName = new ArrayList<>(baseName).stream()
 				.filter(word -> !(word.equals("Classic") && baseName.size() > 1))
 				.sorted(Comparator.reverseOrder())
@@ -72,12 +62,11 @@ public class Dummy implements BasicCommand {
 
 		dummy.customName(Component.text(finalName + " Dummy"));
 		dummy.setCustomNameVisible(true);
-
-		dummy.setMetadata("isDummy", new FixedMetadataValue(p, true));
+		dummy.setMetadata("isDummy", new FixedMetadataValue(Main.plugin, true));
 	}
 
 	@Override
 	public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
-		return DummyName.keySet();
+		return DUMMY_NAME.keySet();
 	}
 }

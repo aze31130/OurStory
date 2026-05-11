@@ -2,78 +2,65 @@ package ourstory.commands;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import org.bukkit.Bukkit;
+import java.util.function.BiFunction;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import ourstory.spells.*;
+import ourstory.Main;
+import ourstory.spells.Annihilation;
+import ourstory.spells.GravityWell;
+import ourstory.spells.Spell;
 import ourstory.utils.Permissions;
+import org.bukkit.entity.Entity;
+import java.util.ArrayList;
 
 public class Cast implements BasicCommand {
 
-	public Map<String, Spell> skills;
-	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
-
-	static {
-		final Map<String, Spell> skills = Map.of(
-				"Annihilation", new Annihilation(null, null, 0),
-				"LaserMatrix", new LaserMatrix(null, null, 0),
-				"LaserExplosion", new LaserExplosion(null, null, 0),
-				"ArrowWall", new ArrowWall(null, null, 0));
-	}
-
+	private static final java.util.Map<String, BiFunction<Player, List<Entity>, Spell>> SPELLS = java.util.Map.of(
+			"Annihilation", (p, t) -> new Annihilation(p, t, 1),
+			"GravityWell", (p, t) -> new GravityWell(p, t, 1));
 
 	@Override
 	public void execute(CommandSourceStack sender, String[] args) {
 		if (!Permissions.checkPermissions(sender.getSender(), "ourstory.cast"))
 			return;
 
-		Player player = (Player) sender.getSender();
-
-		if (args.length == 0) {
-			player.sendMessage("You need to provide a skill name");
+		if (!(sender.getSender() instanceof Player player)) {
+			sender.getSender().sendMessage("Only a player can run this command !");
 			return;
 		}
 
-		Spell test = new Annihilation(player, player.getNearbyEntities(50, 50, 50), 1);
-		test.setup();
+		if (args.length == 0) {
+			player.sendMessage("You need to provide a spell name. Available: " + String.join(", ", SPELLS.keySet()));
+			return;
+		}
+
+		BiFunction<Player, List<Entity>, Spell> factory = SPELLS.get(args[0]);
+		if (factory == null) {
+			player.sendMessage("Unknown spell: " + args[0]);
+			return;
+		}
+
+		Spell spell = factory.apply(player, new ArrayList<>(player.getNearbyEntities(50, 50, 50)));
+		spell.setup();
 
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				if (test.shouldStop()) {
-					test.stop();
+				if (spell.shouldStop()) {
+					spell.stop();
 					cancel();
+					return;
 				}
-				test.tick();
+				spell.tick();
 			}
-		}.runTaskTimer(p, 0, 1);
-
-
-		// for (String s : args) {
-		// if (!skills.containsKey(s))
-		// continue;
-		// if (s.equalsIgnoreCase("Annihilation")) {
-		// new Annihilation(player, player.getNearbyEntities(50, 50, 50), 1);
-
-
-		// }
-
-		// // skills.get(s).cast(player, player.getNearbyEntities(50, 50, 50), 1);
-		// }
+		}.runTaskTimer(Main.plugin, 0, 1);
 	}
 
-	/*
-	 * /boss <bossname> <difficulty>
-	 */
 	@Override
 	public @NonNull Collection<String> suggest(@NonNull CommandSourceStack commandSourceStack, String[] args) {
-		// return skills.keySet();
-		return List.of("Annihilation");
+		return SPELLS.keySet();
 	}
 }
