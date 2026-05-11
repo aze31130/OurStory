@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import com.destroystokyo.paper.entity.ai.MobGoals;
-import ourstory.goal.ChargeClosestGoal;
 import ourstory.goal.DivineDescentPhase;
 
 /**
@@ -38,7 +37,7 @@ public class HolyCow extends Boss {
 	public void registerGoals(MobGoals goals) {
 		goals.removeAllGoals(this.entity);
 		goals.addGoal(this.entity, 0, new DivineDescentPhase(this));
-		goals.addGoal(this.entity, 1, new ChargeClosestGoal(this)); // Phase 2
+		// goals.addGoal(this.entity, 1, new ChargeClosestGoal(this)); // Phase 2
 	}
 
 	// @Override
@@ -52,15 +51,16 @@ public class HolyCow extends Boss {
 	// }
 
 	@Override
-	public void onSpawn() {
+	protected void onSpawn() {
 		this.state = State.DESCENDING;
 	}
 
 	@Override
-	public void onHit(EntityDamageByEntityEvent event) {}
+	protected void onHit() {}
 
 	@Override
-	public void onDeath(EntityDeathEvent event) {}
+	protected void onDeath() {}
+
 
 	public static enum State {
 		DESCENDING, INVINCIBLE, DEFAULT
