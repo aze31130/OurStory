@@ -4,16 +4,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
+import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import com.destroystokyo.paper.entity.ai.MobGoals;
-import ourstory.spells.*;
+import ourstory.Main;
+import ourstory.spells.Spell;
 
-public abstract class Boss {
+public abstract class Boss implements Listener {
 	// Entity that reprensent the boss
 	public Mob entity;
 	public List<Player> targets;
@@ -23,11 +31,16 @@ public abstract class Boss {
 
 	public Set<Spell> spells = new HashSet<>();
 
+	private final NamespacedKey attachedEntityUUIDKey;
+
 	public Boss(String name, Mob mob, List<Player> targets, int level) {
 		this.name = name;
 		this.entity = mob;
 		this.targets = targets;
 		this.level = level;
+		this.attachedEntityUUIDKey = NamespacedKey.fromString("bossUUID",
+				Bukkit.getPluginManager().getPlugin(Main.namespace));
+		mob.getPersistentDataContainer().set(attachedEntityUUIDKey, PersistentDataType.STRING, mob.getUniqueId().toString());
 	}
 
 	/**
@@ -35,14 +48,46 @@ public abstract class Boss {
 	 */
 	public abstract void registerGoals(final MobGoals goals);
 
-	/*
-	 * Some dialogue / effects here
+	@EventHandler
+	public void onSpawn(EntitySpawnEvent event) {
+		String uuidstr = event.getEntity().getPersistentDataContainer().get(attachedEntityUUIDKey, PersistentDataType.STRING);
+		UUID uuid = UUID.fromString(uuidstr);
+		if (uuid != entity.getUniqueId()) {
+			return;
+		}
+		onSpawn();
+	}
+
+	/**
+	 * |!| THIS METHOD IS CALLED BEFORE `registerGoals(...)`
 	 */
-	public abstract void onSpawn();
+	protected abstract void onSpawn();
 
-	public abstract void onHit(EntityDamageByEntityEvent event);
+	@EventHandler
+	public void onHit(EntityDamageByEntityEvent event) {
+		String uuidstr = event.getEntity().getPersistentDataContainer().get(attachedEntityUUIDKey, PersistentDataType.STRING);
+		UUID uuid = UUID.fromString(uuidstr);
+		if (uuid != entity.getUniqueId()) {
+			return;
+		}
+		onHit();
+	}
 
-	public abstract void onDeath(EntityDeathEvent event);
+	protected abstract void onHit();
+
+
+	@EventHandler
+	public void onDeath(EntityDeathEvent event) {
+		String uuidstr = event.getEntity().getPersistentDataContainer().get(attachedEntityUUIDKey, PersistentDataType.STRING);
+		UUID uuid = UUID.fromString(uuidstr);
+		if (uuid != entity.getUniqueId()) {
+			return;
+		}
+		onDeath();
+	}
+
+	protected abstract void onDeath();
+
 
 	/*
 	 * If a boss is killed in hard mode, then we trigger all loots tables bellow
