@@ -54,6 +54,7 @@
 				<directory>configs</directory>
 				<includes>
 					<include>plugin.yml</include>
+					<include>messages.json</include>
 				</includes>
 			</resource>
 		</resources>
