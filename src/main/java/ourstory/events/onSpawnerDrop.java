@@ -18,41 +18,40 @@ import ourstory.utils.EnchantItem;
 import ourstory.utils.MonsterUtils;
 
 public class onSpawnerDrop implements Listener {
-	/*
-	 * Event that computes if a spawner should drop
-	 */
+
+	private static final int[] RATES = {
+			1000000, 975000, 900000, 825000, 750000,
+			600000, 500000, 350000, 200000, 100000, 10000
+	};
+
 	@EventHandler
 	public void spawnerDrop(EntityDeathEvent entity) {
-		// Cancel if not player
-		if (!(entity.getEntity().getKiller() instanceof Player))
+		if (!(entity.getEntity().getKiller() instanceof Player killer))
 			return;
 
-		Player killer = (Player) entity.getEntity().getKiller();
-
-		// Compute looting enchant
 		ItemStack weapon = killer.getInventory().getItemInMainHand();
 		int totalLootingLevel = EnchantItem.getEnchantAmount(weapon, "looting");
-
-		int rates[] = {1000000, 975000, 900000, 825000, 750000, 600000, 500000, 350000, 200000, 100000, 10000};
+		int index = Math.min(Math.max(totalLootingLevel, 0), RATES.length - 1);
 
 		Random rng = new Random();
+		if (rng.nextInt(RATES[index]) != 1)
+			return;
 
-		if (rng.nextInt(rates[totalLootingLevel]) == 1) {
-			EntityType entityType = entity.getEntity().getType();
-			Material spawnEgg = MonsterUtils.getMonsterEgg(entityType);
+		EntityType entityType = entity.getEntity().getType();
+		Material spawnEgg = MonsterUtils.getMonsterEgg(entityType);
 
-			ItemStack eggItem = new ItemStack(spawnEgg, 1);
-			ItemMeta eggMeta = eggItem.getItemMeta();
-
+		ItemStack eggItem = new ItemStack(spawnEgg, 1);
+		ItemMeta eggMeta = eggItem.getItemMeta();
+		if (eggMeta != null) {
 			eggMeta.itemName(Component.text("Mythical " + spawnEgg.name()).color(NamedTextColor.DARK_PURPLE).decorate(TextDecoration.BOLD));
 			eggItem.setItemMeta(eggMeta);
-
-			entity.getDrops().add(eggItem);
-
-			Bukkit.broadcast(Component.text("Player " + killer.getName() + " just dropped a Mythical " + spawnEgg.toString() + " !").color(NamedTextColor.DARK_PURPLE));
-			Bukkit.broadcast(Component.text("Congratulation on such an amazing achievement !").color(NamedTextColor.DARK_PURPLE));
-
-			killer.playSound(killer.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, 1000, 1);
 		}
+
+		entity.getDrops().add(eggItem);
+
+		Bukkit.broadcast(Component.text("Player " + killer.getName() + " just dropped a Mythical " + spawnEgg.toString() + " !").color(NamedTextColor.DARK_PURPLE));
+		Bukkit.broadcast(Component.text("Congratulation on such an amazing achievement !").color(NamedTextColor.DARK_PURPLE));
+
+		killer.playSound(killer.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, 1000, 1);
 	}
 }

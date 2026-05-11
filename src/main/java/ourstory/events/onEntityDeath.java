@@ -10,16 +10,14 @@ import ourstory.utils.EnchantItem;
 public class onEntityDeath implements Listener {
 	@EventHandler
 	public void entityDeath(EntityDeathEvent entity) {
-		// Cancel if not player
-		if (!(entity.getEntity().getKiller() instanceof Player))
+		if (!(entity.getEntity().getKiller() instanceof Player killer))
 			return;
 
-		Player killer = (Player) entity.getEntity().getKiller();
-
-		// Compute Leech enchant
 		ItemStack weapon = killer.getInventory().getItemInMainHand();
 		int totalLeechLevel = EnchantItem.getEnchantAmount(weapon, "leech");
+		if (totalLeechLevel <= 0)
+			return;
 
-		killer.heal(totalLeechLevel / 2);
+		killer.heal(totalLeechLevel / 2.0);
 	}
 }
