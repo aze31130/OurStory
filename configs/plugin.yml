@@ -1,6 +1,6 @@
 name: OurStory
 description: OurStory's main plugin
-version: 2.0.8
+version: 2.0.9
 api-version: '1.20'
 author: aze31130
 website: https://www.aze.sh
@@ -9,3 +9,35 @@ main: ourstory.Main
 
 depend:
   - Vault
+
+permissions:
+  ourstory.boss:
+    description: Spawn a boss via /boss
+    default: op
+  ourstory.cast:
+    description: Cast a spell via /cast
+    default: op
+  ourstory.chall:
+    description: Display advancement progress via /chall
+    default: true
+  ourstory.count:
+    description: Count items in inventory via /count
+    default: true
+  ourstory.dummy:
+    description: Spawn a training dummy via /dummy
+    default: op
+  ourstory.goal:
+    description: Spawn a Holy Cow boss via /goal
+    default: op
+  ourstory.guild:
+    description: Use guild commands
+    default: true
+  ourstory.itemlock:
+    description: Toggle drop-lock on the held item via /itemlock
+    default: true
+  ourstory.split:
+    description: Split an enchanted book via /split
+    default: true
+  ourstory.test:
+    description: Internal /test command
+    default: op
