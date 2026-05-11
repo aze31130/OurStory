@@ -1,9 +1,8 @@
 package ourstory.events;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -16,12 +15,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-
+import ourstory.Main;
 import ourstory.utils.EnchantItem;
 
 /**
@@ -30,73 +29,103 @@ import ourstory.utils.EnchantItem;
  */
 public class onArrowRain implements Listener {
 
-	private final Plugin plugin = Bukkit.getPluginManager().getPlugin("OurStory");
-	private final NamespacedKey bowEnchantSaver = new NamespacedKey(plugin, "bowEnchantSaver");
-	private final NamespacedKey bowForceSaver = new NamespacedKey(plugin, "bowForceSaver");
-	private final HashMap<UUID, Integer> currentActiveArrows = new HashMap<UUID, Integer>();
-	private final int maxGeneratingArrowsPerPlayer = 10;
-	private final int arrowDespawnRate = 1200;
-	private final int arrowLifeTime = 40;
+	private static final int MAX_GENERATING_ARROWS_PER_PLAYER = 10;
+	private static final int ARROW_DESPAWN_RATE = 1200;
+	private static final int ARROW_LIFE_TIME = 40;
+
+	private final Map<UUID, Integer> currentActiveArrows = new HashMap<>();
+
+	private NamespacedKey bowEnchantSaver() {
+		return new NamespacedKey(Main.plugin, "bowEnchantSaver");
+	}
+
+	private NamespacedKey bowForceSaver() {
+		return new NamespacedKey(Main.plugin, "bowForceSaver");
+	}
 
 	@EventHandler
 	public void onLaunch(EntityShootBowEvent e) {
 		ItemStack bow = e.getBow();
-		if (bow.getType() != Material.BOW)
+		if (bow == null || bow.getType() != Material.BOW)
 			return;
-		if (EnchantItem.getEnchantAmount(bow, "arrow_rain") == 0)
+		int enchantAmount = EnchantItem.getEnchantAmount(bow, "arrow_rain");
+		if (enchantAmount == 0)
 			return;
 
-		e.getProjectile().getPersistentDataContainer().set(bowEnchantSaver, PersistentDataType.INTEGER, EnchantItem.getEnchantAmount(e.getBow(), "arrow_rain"));
-		e.getProjectile().getPersistentDataContainer().set(bowForceSaver, PersistentDataType.FLOAT, e.getForce());
+		e.getProjectile().getPersistentDataContainer().set(bowEnchantSaver(), PersistentDataType.INTEGER, enchantAmount);
+		e.getProjectile().getPersistentDataContainer().set(bowForceSaver(), PersistentDataType.FLOAT, e.getForce());
 	}
 
 	@EventHandler
 	public void arrowRain(ProjectileHitEvent event) {
-		if (!event.getEntity().getPersistentDataContainer().has(bowEnchantSaver, PersistentDataType.INTEGER))
+		if (!(event.getEntity() instanceof Arrow arrowOrigin))
+			return;
+		if (!arrowOrigin.getPersistentDataContainer().has(bowEnchantSaver(), PersistentDataType.INTEGER))
 			return;
 
-		Arrow arrowOrigin = (Arrow) event.getEntity();
-		LivingEntity player = (LivingEntity) arrowOrigin.getShooter();
-		UUID playerId = player.getUniqueId();
+		if (!(arrowOrigin.getShooter() instanceof LivingEntity shooter))
+			return;
+		UUID shooterId = shooter.getUniqueId();
 
-		int enchantLevel = arrowOrigin.getPersistentDataContainer().get(bowEnchantSaver, PersistentDataType.INTEGER);
-		float force = arrowOrigin.getPersistentDataContainer().get(bowForceSaver, PersistentDataType.FLOAT);
-
-		Entity hitty = event.getHitEntity();
-		if (hitty == null)
+		Integer enchantLevel = arrowOrigin.getPersistentDataContainer().get(bowEnchantSaver(), PersistentDataType.INTEGER);
+		Float force = arrowOrigin.getPersistentDataContainer().get(bowForceSaver(), PersistentDataType.FLOAT);
+		if (enchantLevel == null || force == null)
 			return;
 
-		if (!currentActiveArrows.containsKey(playerId))
-			currentActiveArrows.put(playerId, 0);
-		if (currentActiveArrows.get(playerId) >= maxGeneratingArrowsPerPlayer)
+		Entity hitEntity = event.getHitEntity();
+		if (hitEntity == null)
 			return;
-		currentActiveArrows.replace(playerId, currentActiveArrows.get(playerId) + 1);
+
+		Location anchor = hitEntity.getLocation();
+
+		int active = currentActiveArrows.getOrDefault(shooterId, 0);
+		if (active >= MAX_GENERATING_ARROWS_PER_PLAYER)
+			return;
+		currentActiveArrows.put(shooterId, active + 1);
+
+		final int levels = enchantLevel;
+		final float launchForce = force;
 		new BukkitRunnable() {
 			int counter = 0;
 
 			@Override
 			public void run() {
-				if (counter >= enchantLevel) {
-					currentActiveArrows.replace(playerId, currentActiveArrows.get(playerId) - 1);
+				if (counter >= levels || !shooter.isValid()) {
+					Integer remaining = currentActiveArrows.get(shooterId);
+					if (remaining != null) {
+						int newValue = remaining - 1;
+						if (newValue <= 0)
+							currentActiveArrows.remove(shooterId);
+						else
+							currentActiveArrows.put(shooterId, newValue);
+					}
 					this.cancel();
 					return;
 				}
-				Location entityLoc = event.getHitEntity().getLocation().add(0, 8, 0);
-				while (!entityLoc.getBlock().isPassable())
+
+				Location entityLoc = anchor.clone().add(0, 8, 0);
+				int safety = 0;
+				while (!entityLoc.getBlock().isPassable() && safety++ < 64)
 					entityLoc.add(0, 1, 0);
-				Arrow arrow = player.getWorld().spawnArrow(entityLoc, new Vector(0, -1, 0), force, 0);
-				arrow.setBasePotionType((arrowOrigin).getBasePotionType());
-				arrow.setLifetimeTicks(arrowDespawnRate - arrowLifeTime);
-				arrow.setShooter(player);
-				arrow.setDamage((arrowOrigin).getDamage());
-				arrow.setWeapon((arrowOrigin).getWeapon());
-				arrow.setCritical((arrowOrigin).isCritical());
+
+				Arrow arrow = shooter.getWorld().spawnArrow(entityLoc, new Vector(0, -1, 0), launchForce, 0);
+				arrow.setBasePotionType(arrowOrigin.getBasePotionType());
+				arrow.setLifetimeTicks(ARROW_DESPAWN_RATE - ARROW_LIFE_TIME);
+				arrow.setShooter(shooter);
+				arrow.setDamage(arrowOrigin.getDamage());
+				arrow.setWeapon(arrowOrigin.getWeapon());
+				arrow.setCritical(arrowOrigin.isCritical());
 				arrow.setHitSound(Sound.BLOCK_END_PORTAL_FRAME_FILL);
 				arrow.setGlowing(true);
 				arrow.setPickupStatus(PickupStatus.DISALLOWED);
 				arrow.setPierceLevel(127);
 				counter++;
 			}
-		}.runTaskTimer(plugin, 20, 20);
+		}.runTaskTimer(Main.plugin, 20, 20);
+	}
+
+	@EventHandler
+	public void onQuit(PlayerQuitEvent event) {
+		currentActiveArrows.remove(event.getPlayer().getUniqueId());
 	}
 }

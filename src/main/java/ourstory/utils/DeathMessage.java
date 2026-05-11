@@ -1,19 +1,29 @@
 package ourstory.utils;
 
 import java.util.Locale;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.entity.Player;
 import org.json.JSONArray;
+import org.json.JSONException;
 import ourstory.Main;
 
-public class DeathMessage {
+public final class DeathMessage {
+	private DeathMessage() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	public static String getRandomDeathMessage(Locale locale, Player player) {
-		JSONArray deathMessages = Main.messages.getJSONArray("death");
-		Random random = new Random();
-		int rng = random.nextInt(deathMessages.length());
+		JSONArray deathMessages;
+		try {
+			deathMessages = Main.messages.getJSONArray("death");
+		} catch (JSONException e) {
+			return player.getName() + " died.";
+		}
 
-		String deathMessage = deathMessages.getString(rng).replace("[player]", player.getName());
+		if (deathMessages.length() == 0)
+			return player.getName() + " died.";
 
-		return deathMessage;
+		int rng = ThreadLocalRandom.current().nextInt(deathMessages.length());
+		return deathMessages.getString(rng).replace("[player]", player.getName());
 	}
 }

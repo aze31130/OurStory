@@ -22,11 +22,9 @@ public class Guild {
 	}
 
 	public JSONObject toJson() {
-		JSONObject guild = new JSONObject()
-				.put("id", id)
+		return new JSONObject()
+				.put("uuid", id.toString())
 				.put("name", name)
 				.put("bank", bank);
-
-		return guild;
 	}
 }

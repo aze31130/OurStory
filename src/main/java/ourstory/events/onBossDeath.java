@@ -9,12 +9,15 @@ import ourstory.Main;
 public class onBossDeath implements Listener {
 	@EventHandler
 	public void bossDeath(EntityDeathEvent entity) {
-		// Cancel if not player
+		if (Main.runningInstance == null)
+			return;
+
 		if (!(entity.getEntity().getKiller() instanceof Player))
 			return;
 
-		// Call onHit method for boss monsters
-		if (!entity.getEntity().getMetadata("isBoss").isEmpty())
-			Main.runningInstance.boss.onDeath(entity);
+		if (entity.getEntity().getMetadata("isBoss").isEmpty())
+			return;
+
+		Main.runningInstance.boss.onDeath(entity);
 	}
 }

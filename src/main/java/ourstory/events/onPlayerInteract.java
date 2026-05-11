@@ -1,6 +1,7 @@
 package ourstory.events;
 
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -12,11 +13,14 @@ public class onPlayerInteract implements Listener {
 	 */
 	@EventHandler
 	public void cancelPlayerJumpOnFarmland(PlayerInteractEvent e) {
-		if (e == null)
+		if (e.getAction() != Action.PHYSICAL)
 			return;
 
-		// Disable jumping on farmlands
-		if (e.getAction() == Action.PHYSICAL && e.getClickedBlock().getType().equals(Material.FARMLAND))
+		Block clicked = e.getClickedBlock();
+		if (clicked == null)
+			return;
+
+		if (clicked.getType() == Material.FARMLAND)
 			e.setCancelled(true);
 	}
 }

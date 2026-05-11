@@ -15,23 +15,20 @@ import com.destroystokyo.paper.entity.ai.GoalKey;
 import com.destroystokyo.paper.entity.ai.GoalType;
 import com.google.common.collect.ImmutableSet;
 import io.papermc.paper.entity.LookAnchor;
-import net.kyori.adventure.text.Component;
 import ourstory.bosses.Boss;
 import ourstory.spells.Spell;
 
 public final class ChargeClosestGoal implements Goal<Mob> {
-	private static final Integer COOLDOWN = 20 * 10;
-	private static final Integer SCAN_RADIUS = 20;
+	private static final int COOLDOWN_TICKS = 20 * 10;
+	private static final int SCAN_RADIUS = 20;
+
 	private final Boss boss;
+	private final ImmutableSet<Spell> spells;
+
 	private Player target;
 	private Location lastTargetLoc;
 	private Location originalLoc;
-
-	private final ImmutableSet<Spell> spells;
-	/**
-	 * Last time (in server ticks) the behaviour has been triggered
-	 */
-	private Integer lastTickActivated;
+	private int lastTickActivated = Integer.MIN_VALUE / 2;
 
 	public ChargeClosestGoal(final Boss boss, final ImmutableSet<Spell> spells) {
 		this.boss = boss;
@@ -39,19 +36,23 @@ public final class ChargeClosestGoal implements Goal<Mob> {
 	}
 
 	private Optional<Player> getClosest(Collection<Player> players) {
-		double mindist = Integer.MAX_VALUE;
-		Player player = null;
-		for (var p : players) {
-			if (p.getLocation().distance(boss.entity.getLocation()) < mindist) {
-				player = p;
+		double minDistance = Double.MAX_VALUE;
+		Player closest = null;
+		Location bossLoc = boss.entity.getLocation();
+		for (Player p : players) {
+			double d = p.getLocation().distance(bossLoc);
+			if (d < minDistance) {
+				minDistance = d;
+				closest = p;
 			}
 		}
-		return Optional.ofNullable(player);
+		return Optional.ofNullable(closest);
 	}
 
 	@Override
 	public void start() {
-		Bukkit.getServer().broadcast(Component.text("[ChargeGoal] - Targetting ").append(target.name()));
+		if (target == null)
+			return;
 		boss.entity.lookAt(
 				target.getEyeLocation().x(),
 				target.getEyeLocation().y(),
@@ -64,18 +65,8 @@ public final class ChargeClosestGoal implements Goal<Mob> {
 
 	@Override
 	public void tick() {
-		// if (!("should spell stop")) {
-		// // tick spell
-		// return;
-		// }
-		// stop du spell
-
-		// quand on tire un spell
-		// le spell s'exécute
-		// setup du spell
-
-
-		Bukkit.getServer().broadcast(Component.text(String.format("[ChargeGoal] - Charging!!!")));
+		if (lastTargetLoc == null)
+			return;
 		boss.entity.lookAt(lastTargetLoc);
 		boss.entity.getPathfinder().moveTo(lastTargetLoc, 2);
 		boss.entity.getWorld().spawnParticle(Particle.ANGRY_VILLAGER,
@@ -84,19 +75,14 @@ public final class ChargeClosestGoal implements Goal<Mob> {
 
 	@Override
 	public void stop() {
+		if (target == null)
+			return;
 		if (target.getLocation().distance(boss.entity.getLocation()) < 5.0D) {
-			var delta = new Vector(
-					target.getX(),
-					target.getY(),
-					target.getZ()).subtract(
-							new Vector(
-									boss.entity.getX(),
-									boss.entity.getY(),
-									boss.entity.getZ()));
+			Vector delta = new Vector(target.getX(), target.getY(), target.getZ())
+					.subtract(new Vector(boss.entity.getX(), boss.entity.getY(), boss.entity.getZ()));
 			target.knockback(2, -delta.getX(), -delta.getZ());
 		}
-		Bukkit.broadcast(Component.text("[ChargeGoal] - Stop"));
-		this.lastTickActivated = Bukkit.getCurrentTick();
+		lastTickActivated = Bukkit.getCurrentTick();
 	}
 
 	@Override
@@ -104,8 +90,7 @@ public final class ChargeClosestGoal implements Goal<Mob> {
 		Collection<Player> nearbyPlayers = boss.entity.getLocation().getNearbyPlayers(SCAN_RADIUS, boss.targets::contains);
 		Optional<Player> closest = getClosest(nearbyPlayers);
 		int currentTick = Bukkit.getCurrentTick();
-		Bukkit.broadcast(Component.text(String.format("[ChargeGoal] - cooldown=%d", currentTick - lastTickActivated)));
-		if (closest.isPresent() && currentTick - lastTickActivated > COOLDOWN) {
+		if (closest.isPresent() && currentTick - lastTickActivated > COOLDOWN_TICKS) {
 			this.target = closest.get();
 			this.lastTickActivated = currentTick;
 			return true;
@@ -115,16 +100,13 @@ public final class ChargeClosestGoal implements Goal<Mob> {
 
 	@Override
 	public boolean shouldStayActive() {
-		boolean f = boss.entity.getLocation().distance(lastTargetLoc) > 2.0D;
-		Bukkit.broadcast(Component.text(String.format("[ChargeGoal] - ShouldStayActive=%b", f)));
-		return f;
+		return lastTargetLoc != null
+				&& boss.entity.getLocation().distance(lastTargetLoc) > 2.0D;
 	}
 
 	@Override
 	public GoalKey<Mob> getKey() {
-		return GoalKey.of(
-				Mob.class,
-				new NamespacedKey("ourstory", "boss_goal_charge"));
+		return GoalKey.of(Mob.class, new NamespacedKey("ourstory", "boss_goal_charge"));
 	}
 
 	@Override

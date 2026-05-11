@@ -1,8 +1,9 @@
 package ourstory.commands;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Locale;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,16 +19,15 @@ public class Count implements BasicCommand {
 		if (!Permissions.checkPermissions(sender.getSender(), "ourstory.count"))
 			return;
 
-		if (!(sender.getSender() instanceof Player)) {
+		if (!(sender.getSender() instanceof Player p)) {
 			sender.getSender().sendMessage("Only a player can run this command !");
 			return;
 		}
 
-		Player p = (Player) sender.getSender();
 		Material material = null;
 
 		if (args.length > 0) {
-			material = Material.getMaterial(args[0]);
+			material = Material.matchMaterial(args[0]);
 		} else {
 			ItemStack item = p.getInventory().getItemInMainHand();
 			if (!item.isEmpty())
@@ -35,7 +35,7 @@ public class Count implements BasicCommand {
 		}
 
 		if (material == null) {
-			sender.getSender().sendMessage(Component.text("You need to provide an item name !").color(NamedTextColor.RED));
+			sender.getSender().sendMessage(Component.text("You need to provide a valid item name !").color(NamedTextColor.RED));
 			return;
 		}
 
@@ -49,24 +49,24 @@ public class Count implements BasicCommand {
 
 	@Override
 	public Collection<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
+		String prefix = args.length == 0 ? "" : args[0].toUpperCase(Locale.ROOT);
 		List<String> suggestions = new ArrayList<>();
-		for (Material material : Material.values())
-			if (material.toString().startsWith(args[0].toUpperCase()))
-				suggestions.add(material.toString());
+		for (Material material : Material.values()) {
+			String name = material.toString();
+			if (prefix.isEmpty() || name.startsWith(prefix))
+				suggestions.add(name);
+		}
 		return suggestions;
 	}
 
 	private static int countItems(Player player, Material material) {
 		int count = 0;
-
 		for (ItemStack item : player.getInventory().getContents()) {
 			if (item == null)
 				continue;
-
 			if (item.getType().equals(material))
 				count += item.getAmount();
 		}
-
 		return count;
 	}
 }

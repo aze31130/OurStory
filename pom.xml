@@ -9,7 +9,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
 	</properties>
@@ -55,6 +54,7 @@
 				<directory>configs</directory>
 				<includes>
 					<include>plugin.yml</include>
+					<include>messages.json</include>
 				</includes>
 			</resource>
 		</resources>
