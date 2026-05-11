@@ -52,20 +52,17 @@ public class Talven extends Boss {
 
 	@Override
 	public void onSpawn() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'onSpawn'");
+		// no-op: spawn sequence still under development (see commented WIP below)
 	}
 
 	@Override
 	public void onHit(EntityDamageByEntityEvent event) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'onHit'");
+		// no-op: phase transitions still under development (see commented WIP below)
 	}
 
 	@Override
 	public void onDeath(EntityDeathEvent event) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'onDeath'");
+		// no-op: death sequence still under development (see commented WIP below)
 	}
 
 	// private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");

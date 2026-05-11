@@ -1,13 +1,11 @@
 package ourstory.goal;
 
 import java.util.EnumSet;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Mob;
 import com.destroystokyo.paper.entity.ai.Goal;
 import com.destroystokyo.paper.entity.ai.GoalKey;
 import com.destroystokyo.paper.entity.ai.GoalType;
-import net.kyori.adventure.text.Component;
 import ourstory.bosses.Boss;
 
 public class SleepGoal implements Goal<Mob> {
@@ -24,14 +22,12 @@ public class SleepGoal implements Goal<Mob> {
 
 	@Override
 	public void tick() {
-		Bukkit.getServer().broadcast(Component.text("[SleepGoal] - zZz...zZz"));
+		// no-op: boss is "sleeping"
 	}
 
 	@Override
 	public GoalKey<Mob> getKey() {
-		return GoalKey.of(
-				Mob.class,
-				new NamespacedKey("ourstory", "boss_goal_sleep"));
+		return GoalKey.of(Mob.class, new NamespacedKey("ourstory", "boss_goal_sleep"));
 	}
 
 	@Override
