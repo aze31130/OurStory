@@ -14,26 +14,22 @@ public class Wave extends Spell {
 
 	@Override
 	public void setup() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setup'");
+		// not yet implemented; see commented WIP below
 	}
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'tick'");
+		// not yet implemented
 	}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'stop'");
+		// not yet implemented
 	}
 
 	@Override
 	public boolean shouldStop() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+		return true;
 	}
 
 	// @Override

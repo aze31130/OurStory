@@ -27,20 +27,17 @@ public class RavenousVortex extends Spell {
 
 	@Override
 	public void setup() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setup'");
+		// not yet implemented; see commented WIP below
 	}
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'tick'");
+		// not yet implemented
 	}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'stop'");
+		// not yet implemented
 	}
 	// final static NamespacedKey GravityKey = new NamespacedKey(plugin, "boss_ravenous_vortex");
 	// final static double effectRange = 10;
@@ -49,8 +46,7 @@ public class RavenousVortex extends Spell {
 
 	@Override
 	public boolean shouldStop() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+		return true;
 	}
 
 	// @Override

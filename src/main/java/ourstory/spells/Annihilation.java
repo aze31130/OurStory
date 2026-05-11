@@ -11,21 +11,20 @@ import net.kyori.adventure.text.Component;
 
 public class Annihilation extends Spell {
 	/*
-	 * Special skill, last skill only used in chaos mode. Triggers at 20% HP remaining. The boss invokes
-	 * a flame circle arround him and deals a lot of damages.
+	 * Special skill, last skill only used in chaos mode. Triggers at 20% HP remaining.
+	 * The caster invokes a flame circle around itself and deals heavy damage.
 	 */
 	private Location loc;
 	private int pointCount;
 	private double radius;
 	private int totalSteps;
-	private double radiusIncrease, startRadius, endRadius;
+	private double radiusIncrease;
+	private double startRadius;
+	private double endRadius;
 	private int t;
-	private Entity caster;
 
 	public Annihilation(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
-		this.caster = caster;
-		this.level = level;
 	}
 
 	@Override
@@ -44,14 +43,11 @@ public class Annihilation extends Spell {
 
 	@Override
 	public void tick() {
+		double progress = (double) t / totalSteps;
+		double easedProgress = 1 - Math.pow(1 - progress, 2);
+
 		for (int i = 0; i < pointCount; i++) {
 			double angle = 2 * Math.PI * i / pointCount;
-
-			this.t = 0;
-
-			double progress = (double) t / totalSteps;
-			double easedProgress = 1 - Math.pow(1 - progress, 2);
-
 			double currentRadius = radius * (1 - easedProgress);
 			double currentAngle = angle + Math.PI * easedProgress;
 
@@ -60,22 +56,21 @@ public class Annihilation extends Spell {
 			Location particleLoc = loc.clone().add(x, 0, z);
 
 			caster.getWorld().spawnParticle(Particle.LARGE_SMOKE, particleLoc, 0, 0, 0, 0, 0);
-			t++;
 		}
+		t++;
 
 		playCircleEffect(caster, loc, startRadius);
 		startRadius += radiusIncrease;
-		List<Entity> nearbyEntities = caster.getNearbyEntities(startRadius, 2, startRadius);
-		for (Entity entity : nearbyEntities) {
-			// Push the entity
+		for (Entity entity : caster.getNearbyEntities(startRadius, 2, startRadius)) {
+			if (!(entity instanceof LivingEntity livingTarget))
+				continue;
+			if (entity.equals(caster))
+				continue;
+
 			Vector direction = entity.getLocation().toVector().subtract(loc.toVector()).normalize();
 			entity.setVelocity(direction.multiply(0.7));
-
-			// Damage if player
-			LivingEntity livingTarget = (LivingEntity) entity;
 			livingTarget.damage(7.0);
 		}
-
 	}
 
 	@Override
@@ -84,7 +79,9 @@ public class Annihilation extends Spell {
 	}
 
 	@Override
-	public void stop() {}
+	public void stop() {
+		// no-op
+	}
 
 	private static void playCircleEffect(Entity caster, Location loc, double radius) {
 		for (double angle = 0; angle < 2 * Math.PI; angle += Math.PI / 150) {
