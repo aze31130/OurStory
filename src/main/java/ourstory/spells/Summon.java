@@ -9,60 +9,48 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import ourstory.utils.EnchantItem;
 
 public class Summon extends Spell {
 
 	public Summon(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
-		// TODO Auto-generated constructor stub
+		this.level = level;
 	}
+
+	private int cpt, level, max, enchantlevel;
 
 	@Override
 	public void setup() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setup'");
+		this.cpt = 0;
+		this.enchantlevel = 3 * level;
 	}
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'tick'");
+
+		Zombie minion = (Zombie) caster.getWorld().spawnEntity(caster.getLocation(), EntityType.ZOMBIE);
+		this.max = 15 + 5 * level;
+		cpt++;
+		EntityEquipment equipment = minion.getEquipment();
+		ItemStack[] armor = {
+				EnchantItem.createEnchantedItem(Material.GOLDEN_BOOTS, Map.of(Enchantment.THORNS, enchantlevel)),
+				EnchantItem.createEnchantedItem(Material.GOLDEN_LEGGINGS, Map.of(Enchantment.THORNS, enchantlevel)),
+				EnchantItem.createEnchantedItem(Material.GOLDEN_CHESTPLATE, Map.of(Enchantment.THORNS, enchantlevel)),
+				EnchantItem.createEnchantedItem(Material.GOLDEN_HELMET, Map.of(Enchantment.THORNS, enchantlevel)),
+		};
+
+		ItemStack weapon = EnchantItem.createEnchantedItem(Material.GOLDEN_SWORD, Map.of(Enchantment.SHARPNESS, enchantlevel));
+		equipment.setArmorContents(armor);
+		equipment.setItemInMainHand(weapon);
+		minion.setBaby();
 	}
 
 	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'stop'");
-	}
-	// @Override
-	// public void cast(Entity caster, List<Entity> targets, int level) {
-	// for (int i = 0; i < 15; i++) {
-	// new BukkitRunnable() {
-	// @Override
-	// public void run() {
-	// Zombie minion = (Zombie) caster.getWorld().spawnEntity(caster.getLocation(), EntityType.ZOMBIE);
+	public void stop() {}
 
 	@Override
 	public boolean shouldStop() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+		return cpt > max;
 	}
-
-	// EntityEquipment equipment = minion.getEquipment();
-	// ItemStack[] armor = {
-	// EnchantItem.createEnchantedItem(Material.GOLDEN_BOOTS, Map.of(Enchantment.THORNS, 3)),
-	// EnchantItem.createEnchantedItem(Material.GOLDEN_LEGGINGS, Map.of()),
-	// EnchantItem.createEnchantedItem(Material.GOLDEN_CHESTPLATE, Map.of(Enchantment.THORNS, 1)),
-	// EnchantItem.createEnchantedItem(Material.GOLDEN_HELMET, Map.of(Enchantment.THORNS, 3))
-	// };
-
-	// equipment.setArmorContents(armor);
-
-	// minion.setBaby();
-	// }
-	// }.runTaskLater(plugin, i * 2);
-	// }
-	// }
 }
