@@ -1,14 +1,12 @@
 package ourstory.spells;
 
 import java.util.List;
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Particle.DustTransition;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import net.kyori.adventure.text.Component;
 
 public class LaserMatrix extends Spell {
 	public LaserMatrix(Entity caster, List<Entity> targets, int level) {
