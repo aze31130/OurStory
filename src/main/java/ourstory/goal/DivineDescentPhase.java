@@ -36,7 +36,7 @@ public class DivineDescentPhase extends AbstractBossGoal<HolyCow> {
 
 	@Override
 	public boolean shouldStayActive() {
-		return Math.abs(boss.entity.getVelocity().getY()) < 0.01F;
+		return Math.abs(boss.entity.getVelocity().getY()) > 0.01F;
 	}
 
 	/* ------------------------------- Prepare ------------------------------- */
