@@ -7,8 +7,9 @@ import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import ourstory.bosses.HolyCow;
+import ourstory.Main;
 import ourstory.bosses.Boss;
+import ourstory.bosses.HolyCow;
 
 public class MobGoalCommand implements BasicCommand {
 	@Override
@@ -17,8 +18,10 @@ public class MobGoalCommand implements BasicCommand {
 			return;
 		}
 		Player sender = (Player) cmdSource.getExecutor();
-		Mob holyCowMob = (Mob) sender.getWorld().spawn(sender.getLocation(), Cow.class);
-		Boss boss = new HolyCow(holyCowMob, List.of(sender), 0);
-		boss.registerGoals(Bukkit.getServer().getMobGoals());
+		var engagedPlayers = List.of(sender);
+		Boss boss = new HolyCow(engagedPlayers, 0);
+
+		boss.spawn(sender.getWorld(), sender.getLocation());
+		Bukkit.getPluginManager().registerEvents(boss, Bukkit.getPluginManager().getPlugin(Main.namespace));
 	}
 }
