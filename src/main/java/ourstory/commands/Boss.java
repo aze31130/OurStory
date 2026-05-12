@@ -1,19 +1,14 @@
 package ourstory.commands;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import io.papermc.paper.command.brigadier.BasicCommand;
-import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Cow;
 import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import io.papermc.paper.command.brigadier.BasicCommand;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
 import ourstory.Main;
-import ourstory.bosses.HolyCow;
-import ourstory.bosses.Instance;
 import ourstory.bosses.Talven;
 import ourstory.utils.Permissions;
 
@@ -31,10 +26,11 @@ public class Boss implements BasicCommand {
 		}
 
 		Player playerSender = (Player) sender.getExecutor();
-		Mob test = (Mob) playerSender.getWorld().spawn(sender.getLocation(), IronGolem.class);
-		ourstory.bosses.Boss boss = new Talven("Talven", test, List.of(playerSender), 0);
-		boss.registerGoals(Bukkit.getServer().getMobGoals());
+		List<Player> engagedPlayers = List.of(playerSender);
+		ourstory.bosses.Boss boss = new Talven(engagedPlayers, 0);
 
+		boss.spawn(playerSender.getWorld(), playerSender.getLocation());
+		Bukkit.getPluginManager().registerEvents(boss, Bukkit.getPluginManager().getPlugin(Main.namespace));
 		// String bossName = args[0];
 
 		// ourstory.bosses.Boss boss = null;

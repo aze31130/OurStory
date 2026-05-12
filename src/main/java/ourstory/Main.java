@@ -24,8 +24,6 @@ import ourstory.commands.MobGoalCommand;
 import ourstory.commands.Split;
 import ourstory.commands.Test;
 import ourstory.events.onArrowRain;
-import ourstory.events.onBossDeath;
-import ourstory.events.onBossHit;
 import ourstory.events.onBreakVeine;
 import ourstory.events.onDisplayItem;
 import ourstory.events.onDummyHit;
@@ -82,7 +80,7 @@ public class Main extends JavaPlugin {
 		 * Registers all events
 		 */
 		Listener[] eventsToRegister = {
-				new onArrowRain(), new onBossDeath(), new onBossHit(), new onDisplayItem(), new onDummyHit(), new onEntityDeath(),
+				new onArrowRain(), new onDisplayItem(), new onDummyHit(), new onEntityDeath(),
 				new onEntityHit(), new onFinalDamage(), new onHeadDrop(), new onItemConsume(), new onMineAmethyst(),
 				new onMineDeepslate(), new onPhoenixDeath(), new onPlayerDeath(), new onPlayerInteract(), new onPlayerJoin(),
 				new onPlayerPlace(), new onPlayerSit(), new onReachEquip(), new onSpawnerDrop(), new onTeleport(),
