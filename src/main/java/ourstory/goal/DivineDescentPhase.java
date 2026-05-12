@@ -31,11 +31,13 @@ public class DivineDescentPhase extends AbstractBossGoal<HolyCow> {
 	@Override
 	public boolean shouldActivate() {
 		System.out.println("State=" + boss.getState());
-		return boss.getState() == HolyCow.State.DESC	}
+		return boss.getState() == HolyCow.State.DESCENDING;
+	}
 
 	@Override
 	public boolean shouldStayActive() {
-		return Math.abs(boss.	}
+		return Math.abs(boss.entity.getVelocity().getY()) < 0.01F;
+	}
 
 	/* ------------------------------- Prepare ------------------------------- */
 	@Override
