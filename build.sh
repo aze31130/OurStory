@@ -20,5 +20,5 @@ cp -r "$DATAPACK_SRC" "$DATAPACK_DEST"
 
 # Start the test server
 pushd "$SERVER_DIR"
-java -jar paper-*.jar nogui
+java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar paper-*.jar nogui
 popd
