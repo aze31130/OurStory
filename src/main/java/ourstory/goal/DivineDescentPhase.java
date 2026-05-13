@@ -1,15 +1,17 @@
 package ourstory.goal;
 
 import java.util.EnumSet;
+import java.util.function.Supplier;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.util.Vector;
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import com.destroystokyo.paper.entity.ai.GoalType;
 import net.kyori.adventure.util.TriState;
+import ourstory.Main;
 import ourstory.bosses.HolyCow;
 import ourstory.bosses.HolyCow.State;
 
@@ -21,8 +23,8 @@ public class DivineDescentPhase extends AbstractBossGoal<HolyCow> {
 	BlockDisplay glow1;
 	private Matrix4f transformation;
 
-	private static final int ANIM_DURATION = 20;
-	private int tickCount;
+	private static final int ANIM_DURATION = 1;
+	// private int tickCount;
 
 	public DivineDescentPhase(final HolyCow boss) {
 		super(boss);
@@ -43,6 +45,7 @@ public class DivineDescentPhase extends AbstractBossGoal<HolyCow> {
 	@Override
 	public void start() {
 		var str = String.format("[DivineDescentPhase] start()");
+
 		/* Logic */
 		boss.targets.forEach(p -> p.sendMessage(str));
 		boss.entity.setGravity(false);
@@ -50,45 +53,73 @@ public class DivineDescentPhase extends AbstractBossGoal<HolyCow> {
 		boss.entity.setFrictionState(TriState.FALSE);
 		boss.entity.setVelocity(new Vector(0.0f, -0.1f, 0.0f));
 		boss.entity.setInvulnerable(true);
+
 		/* Visuals */
 		World world = boss.entity.getWorld();
+		Supplier<Location> supp = () -> {
+			var bb = boss.entity.getBoundingBox();
+			return new Location(
+					boss.entity.getWorld(),
+					bb.getCenterX(),
+					bb.getCenterY(),
+					bb.getCenterZ());
+		};
+		var scale = 4.0f;
 		this.transformation = new Matrix4f()
-				.translate(new Vector3f(0.5f, 0f, 0.5f));
-		this.glow1 = world.spawn(boss.entity.getLocation(), BlockDisplay.class, entity -> {
-			entity.setBlock(Material.CYAN_STAINED_GLASS.createBlockData());
+				.rotateXYZ(
+						(float) Math.toRadians(45f),
+						0f,
+						(float) Math.toRadians(45f))
+				.translate(-scale / 2f, -scale / 2f, -scale / 2f)
+				.scale(scale);
+		this.glow1 = world.spawn(supp.get(), BlockDisplay.class, entity -> {
+			entity.setBlock(Material.GLASS.createBlockData());
 			entity.setTransformationMatrix(transformation);
-			// entity.setTransformation(
-			// new Transformation(
-			// new Vector3f(0.5f, 0.5f, 0.5f),
-			// new AxisAngle4f((float) Math.toRadians(45.0D), 1f, 0f, 0f),
-			// new Vector3f(2f, 2f, 2f),
-			// new AxisAngle4f()));
-			entity.setInterpolationDelay(1);
-			entity.setInterpolationDuration(ANIM_DURATION);
 		});
-		this.tickCount = 0;
-		tickRotation(glow1); // create interp
+		Bukkit.getScheduler().runTaskTimer(Bukkit.getPluginManager().getPlugin(Main.namespace), task -> {
+			if (!boss.entity.isValid() || !glow1.isValid()) { // display was removed from the world, abort task
+				task.cancel();
+				return;
+			}
+
+			transformation = transformation
+					.rotateX(((float) Math.toRadians(360f)) + 0.1F)
+					.rotateY(((float) Math.toRadians(360f)) + 0.1F)
+					.rotateZ(((float) Math.toRadians(360f)) + 0.1F);
+			glow1.setTeleportDuration(1);
+			// var bb = boss.entity.getBoundingBox();
+			glow1.teleport(supp.get());
+			// glow1.teleport(new Location(
+			// boss.entity.getWorld(),
+			// bb.getCenterX(),
+			// bb.getCenterY(),
+			// bb.getCenterZ()));
+
+			glow1.setInterpolationDelay(0);
+			glow1.setInterpolationDuration(ANIM_DURATION);
+			glow1.setTransformationMatrix(transformation);
+		}, 1, ANIM_DURATION);
 	}
 	/* ---------------------------------------------------------------------- */
 
 	/* ------------------------------- Update ------------------------------- */
-	void tickRotation(BlockDisplay disp) {
-		disp.setInterpolationDelay(1);
-		disp.setInterpolationDuration(ANIM_DURATION); // bah jsp...
-		disp.setTransformationMatrix(transformation
-				// .rotateX(((float) Math.toRadians(360f)) + 0.1F)
-				.rotateY(((float) Math.toRadians(180f)) + 0.1F /* Avoid client interpolation */));
-	}
+	// void tickRotation(BlockDisplay disp) {
+	// disp.setInterpolationDelay(1);
+	// disp.setInterpolationDuration(ANIM_DURATION); // bah jsp...
+	// disp.setTransformationMatrix(transformation
+	// // .rotateX(((float) Math.toRadians(360f)) + 0.1F)
+	// .rotateY(((float) Math.toRadians(180f)) + 0.1F /* Avoid client interpolation */));
+	// }
 
 	@Override
 	public void tick() {
-		boss.targets.forEach(p -> p.sendMessage("tickCount=" + tickCount));
-		if (tickCount < ANIM_DURATION) {
-			tickCount++;
-			return;
-		}
-		tickCount = 0;
-		tickRotation(glow1);
+		// boss.targets.forEach(p -> p.sendMessage("tickCount=" + tickCount));
+		// if (tickCount < ANIM_DURATION) {
+		// tickCount++;
+		// return;
+		// }
+		// tickCount = 0;
+		// tickRotation(glow1);
 	}
 	/* ---------------------------------------------------------------------- */
 

@@ -44,8 +44,8 @@ public class HolyCow extends Boss {
 	 */
 	public void registerGoals(MobGoals goals) {
 		goals.removeAllGoals(this.entity);
-		goals.addGoal(this.entity, 1, new NoopGoal<HolyCow>(this));
 		goals.addGoal(this.entity, 0, new DivineDescentPhase(this));
+		goals.addGoal(this.entity, 1, new NoopGoal<HolyCow>(this));
 		// goals.addGoal(this.entity, 1, new ChargeClosestGoal(this)); // Phase 2
 	}
 
