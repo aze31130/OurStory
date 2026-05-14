@@ -1,13 +1,12 @@
 package ourstory.spells;
 
+import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
-import net.kyori.adventure.text.Component;
 
 public class LaserExplosion extends Spell {
 
@@ -19,65 +18,60 @@ public class LaserExplosion extends Spell {
 
 	private Entity caster;
 	private int level;
-	private int laserAmount, cpt;
+	private int laserAmount;
 	private double laserRange;
 	private double speed;
 	private double damage;
 	private Location startLocation;
-	private Location currentLocation;
 	private double traveledDistance;
+	List<Laser> lstLasers = new ArrayList<Laser>();
 
+	private record Laser(Location location, Vector direction) {
+	}
 
 
 	@Override
 	public void setup() {
-		this.laserAmount = 250;
-		this.laserRange = 50;
+		this.laserAmount = 250 + 50 * level;
+		this.laserRange = 30;
 		this.speed = 0.3;
 		this.damage = 65.0 + 20 * level;
-		this.cpt = 0;
 		this.startLocation = caster.getLocation().clone().add(0, 18, 0);
-		this.currentLocation = startLocation.clone();
-		Bukkit.getServer().broadcast(Component.text("setup ended"));
-
+		this.traveledDistance = 0;
+		// lst of lasers
+		for (int i = 0; i < laserAmount; i++) {
+			lstLasers.add(new Laser(startLocation.clone(), getRandomDirection()));
+		}
 	}
 
 	@Override
 	public void tick() {
 		// Spawn lasers in random directions
-		Vector direction = getRandomDirection();
-		spawnLaser(startLocation, direction, laserRange, speed, damage, caster, targets);
-		cpt++;
+		for (Laser l : lstLasers) {
+			spawnLaser(l, laserRange, speed, damage, caster, targets);
+		}
+		traveledDistance += speed;
 	}
 
 	@Override
-	public void stop() {
-
-		Bukkit.getServer().broadcast(Component.text("stop ended"));
-	}
+	public void stop() {}
 
 	@Override
 	public boolean shouldStop() {
-		return cpt > laserAmount;
+		return traveledDistance >= laserRange;
 	}
 
-	private void spawnLaser(Location startLocation, Vector direction, double range, double speed, double damage, Entity caster, List<Entity> targets) {
+	private void spawnLaser(Laser l, double range, double speed, double damage, Entity caster, List<Entity> targets) {
 
-		this.traveledDistance = 0;
-		if (traveledDistance >= range) {
-			Bukkit.getServer().broadcast(Component.text("nah-uh"));
-			return;
-		}
-		currentLocation.getWorld().spawnParticle(Particle.FIREWORK, currentLocation, 0, 0, 0, 0, 0.1);
 
+		l.location.getWorld().spawnParticle(Particle.FIREWORK, l.location, 0, 0, 0, 0, 0.1);
 		// Check for collisions
-		for (Entity entity : currentLocation.getWorld().getNearbyEntities(currentLocation, 0.5, 0.5, 0.5))
+		for (Entity entity : l.location.getWorld().getNearbyEntities(l.location, 0.5, 0.5, 0.5))
 			if (entity instanceof LivingEntity)
 				((LivingEntity) entity).damage(damage);
 
 		// Move the laser forward
-		currentLocation.add(direction.clone().multiply(speed));
-		traveledDistance += speed;
+		l.location.add(l.direction.clone().multiply(speed));
 	}
 
 
