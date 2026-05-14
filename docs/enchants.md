@@ -3,11 +3,11 @@
 ## Phoenix
 - **Description:** Keep your inventory after death. Each level gives you 2.5% chance to trigger the effect.
 - **Max Level:** 10 per item (40 in total)
-- **Applies To:** All armor slots
+- **Applies To:** All armor slots, no matter the item in the armor slot (elytra, block hat...)
 - **Drop Source:**
   - Enchant table
   - Villager Trade (max level in trade: 4)
-- **Effect Per Total Level:** 
+- **Effect Per Total Level:**
   - Level 1: 2.5% (2.5 * 1) chance to keep your inventory on death
   - Level 2: 5%   (2.5 * 2) chance to keep your inventory on death
   - Level 3: 7.5% (2.5 * 3) chance to keep your inventory on death
@@ -22,7 +22,7 @@
 - **Drop Source:**
   - Enchant table
   - Villager Trade (max level in trade: 3)
-- **Effect Per Total Level:** 
+- **Effect Per Total Level:**
   - Level 1: Adds 5%  (5 * 1) of your physical damage each hit.
   - Level 2: Adds 10% (5 * 2) of your physical damage each hit.
   - Level 3: Adds 15% (5 * 3) of your physical damage each hit.
@@ -37,7 +37,7 @@
 - **Drop Source:**
   - Enchant table
   - Villager Trade (max level in trade: 2)
-- **Effect Per Total Level:** 
+- **Effect Per Total Level:**
   - Level 1: Heals 0.5 heath (0.5 * 1) on any entity kill
   - Level 2: Heals 1.0 heath (0.5 * 2) on any entity kill
   - Level 3: Heals 1.5 heath (0.5 * 3) on any entity kill
@@ -48,11 +48,11 @@
 ## XP Hunter
 - **Description:** Increase the amount of experience you earn
 - **Max Level:** 1 per item (4 in total)
-- **Applies To:** All armor slots
+- **Applies To:** All armor slots, no matter the item in the armor slot (elytra, block hat...)
 - **Drop Source:**
   - Enchant table
   - Villager Trade (max level in trade: 1)
-- **Effect Per Total Level:** 
+- **Effect Per Total Level:**
   - Level 1: Increase obtained exp by 25%  (25 * 1) on any exp acquired
   - Level 2: Increase obtained exp by 50%  (25 * 2) on any exp acquired
   - Level 3: Increase obtained exp by 75%  (25 * 3) on any exp acquired
@@ -65,7 +65,7 @@
 - **Drop Source:**
   - Enchant table
   - Villager Trade (max level in trade: 6)
-- **Effect Per Total Level:** 
+- **Effect Per Total Level:**
   - Level 1: Spawns 1 arrow  (1 * 1) on top of the hitted entity
   - Level 2: Spawns 2 arrows (1 * 2) on top of the hitted entity
   - Level 3: Spawns 3 arrows (1 * 3) on top of the hitted entity
@@ -79,7 +79,7 @@
 - **Applies To:** Spyglass only
 - **Drop Source:**
   - Villager Trade (max level in trade: 1)
-- **Effect Per Total Level:** 
+- **Effect Per Total Level:**
   - Level 1: Applies Slowness and Weakness for 60 seconds
 
 ## Reach
@@ -88,8 +88,35 @@
 - **Applies To:** All armor slots
 - **Drop Source:**
   - Enchant table
-- **Effect Per Total Level:** 
+- **Effect Per Total Level:**
   - Level 1: Increase your block interaction distance by 1 block
   - Level 2: Increase your block interaction distance by 2 blocks
   - Level 3: Increase your block interaction distance by 3 blocks
   - Level 4: Increase your block interaction distance by 4 blocks
+
+## Veine Miner
+- **Description:** Mine all the block in a vein of ore
+- **Max Level:** 1
+- **Applies To:** All items
+- **Drop Source:**
+  - Enchant table
+
+# Vanilla enchantments
+
+Every vanilla enchantement can be upgrade to level 10. But some enchantement stop working after a certain level. Here's a known list of this enchantement with the issue :
+
+| Enchantement    | Max Working Level | Issue                                                                           |
+|-----------------|-------------------|---------------------------------------------------------------------------------|
+| Depth Strider   | 3                 | No speed gain                                                                   |
+| Fire Protection | 8                 | Can't burn for less than one tick (is only required on one piece of equipement) |
+| Flame           | 1                 | No duration change                                                              |
+| Infinity        | 1                 | No effect change                                                                |
+| Mending         | 1                 | No repair gain                                                                  |
+| Quick Charge    | 5                 | The crossbow stops loading                                                      |
+| Silk Touch      | 1                 | No gain                                                                         |
+| Swift Sneak     | 5                 | No speed gain                                                                   |
+
+
+## Channelling
+
+Works independantly from weather
