@@ -31,26 +31,23 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import com.destroystokyo.paper.entity.ai.MobGoals;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import ourstory.goal.*;
 import ourstory.spells.*;
 import ourstory.utils.EnchantItem;
 
-public class Talven extends Boss implements Runnable {
+public class Talven extends Boss {
 
 	public Talven(String name, Mob mob, List<Player> targets, int level) {
 		super(name, mob, targets, level);
 	}
 
 	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'run'");
-	}
-
-	@Override
 	public void registerGoals(MobGoals goals) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'registerGoals'");
+		goals.removeAllGoals(this.entity);
+		goals.addGoal(this.entity, 0, new Phase1(this, this.spells));
+		goals.addGoal(this.entity, 1, new Phase2(this, this.spells));
 	}
 
 	@Override

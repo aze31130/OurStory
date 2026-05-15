@@ -16,7 +16,7 @@ import net.kyori.adventure.text.Component;
 import ourstory.bosses.Boss;
 import ourstory.spells.Spell;
 
-public final class Phase1 implements Goal<Mob> {
+public final class Phase2 implements Goal<Mob> {
 	private final Boss boss;
 	private Player target;
 	private Location lastTargetLoc;
@@ -27,34 +27,34 @@ public final class Phase1 implements Goal<Mob> {
 	 */
 	private Integer lastTickActivated;
 
-	public Phase1(final Boss boss, final Set<Spell> spells) {
+	public Phase2(final Boss boss, final Set<Spell> spells) {
 		this.boss = boss;
 		this.spells = spells;
 	}
 
 	@Override
 	public void start() {
-		Bukkit.getServer().broadcast(Component.text("[Phase1] - Setup "));
+		Bukkit.getServer().broadcast(Component.text("[Phase2] - Setup "));
 	}
 
 	@Override
 	public void tick() {
-		Bukkit.getServer().broadcast(Component.text("[Phase1] - Running "));
+		Bukkit.getServer().broadcast(Component.text("[Phase2] - Running "));
 	}
 
 	@Override
 	public void stop() {
-		Bukkit.getServer().broadcast(Component.text("[Phase1] - Stop "));
+		Bukkit.getServer().broadcast(Component.text("[Phase2] - Stop "));
 	}
 
 	@Override
 	public boolean shouldActivate() {
-		return (this.boss.entity.getHealth() / this.boss.entity.getAttribute(Attribute.MAX_HEALTH).getValue()) > 0.5;
+		return (this.boss.entity.getHealth() / this.boss.entity.getAttribute(Attribute.MAX_HEALTH).getValue()) < 0.5;
 	}
 
 	@Override
 	public GoalKey<Mob> getKey() {
-		return GoalKey.of(Mob.class, new NamespacedKey("ourstory", "boss_phase1"));
+		return GoalKey.of(Mob.class, new NamespacedKey("ourstory", "boss_phase2"));
 	}
 
 	@Override
