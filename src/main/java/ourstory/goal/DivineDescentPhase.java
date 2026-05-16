@@ -1,17 +1,15 @@
 package ourstory.goal;
 
 import java.util.EnumSet;
-import java.util.function.Supplier;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 import org.joml.Matrix4f;
 import com.destroystokyo.paper.entity.ai.GoalType;
 import net.kyori.adventure.util.TriState;
-import ourstory.Main;
 import ourstory.bosses.HolyCow;
 import ourstory.bosses.HolyCow.State;
 
@@ -20,11 +18,11 @@ import ourstory.bosses.HolyCow.State;
  * sang froid par les joueurs.
  */
 public class DivineDescentPhase extends AbstractBossGoal<HolyCow> {
-	BlockDisplay glow1;
-	private Matrix4f transformation;
+	BlockDisplay glassShield;
+	private Matrix4f shieldTransformation;
+	private float shieldScale;
 
-	private static final int ANIM_DURATION = 1;
-	// private int tickCount;
+	private static final int ANIM_DURATION = 20;
 
 	public DivineDescentPhase(final HolyCow boss) {
 		super(boss);
@@ -32,13 +30,21 @@ public class DivineDescentPhase extends AbstractBossGoal<HolyCow> {
 
 	@Override
 	public boolean shouldActivate() {
-		System.out.println("State=" + boss.getState());
 		return boss.getState() == HolyCow.State.DESCENDING;
 	}
 
 	@Override
 	public boolean shouldStayActive() {
 		return Math.abs(boss.entity.getVelocity().getY()) > 0.01F;
+	}
+
+	private Location getBossLocation() {
+		var bb = boss.entity.getBoundingBox();
+		return new Location(
+				boss.entity.getWorld(),
+				bb.getCenterX(),
+				bb.getCenterY(),
+				bb.getCenterZ());
 	}
 
 	/* ------------------------------- Prepare ------------------------------- */
@@ -56,70 +62,51 @@ public class DivineDescentPhase extends AbstractBossGoal<HolyCow> {
 
 		/* Visuals */
 		World world = boss.entity.getWorld();
-		Supplier<Location> supp = () -> {
-			var bb = boss.entity.getBoundingBox();
-			return new Location(
-					boss.entity.getWorld(),
-					bb.getCenterX(),
-					bb.getCenterY(),
-					bb.getCenterZ());
-		};
-		var scale = 4.0f;
-		this.transformation = new Matrix4f()
+		this.shieldScale = 4.0f;
+		/* Initial transformation */
+		this.shieldTransformation = new Matrix4f()
 				.rotateXYZ(
-						(float) Math.toRadians(45f),
-						0f,
-						(float) Math.toRadians(45f))
-				.translate(-scale / 2f, -scale / 2f, -scale / 2f)
-				.scale(scale);
-		this.glow1 = world.spawn(supp.get(), BlockDisplay.class, entity -> {
+						(float) Math.toRadians(90f) + 0.001f,
+						(float) Math.toRadians(90f) + 0.001f,
+						(float) Math.toRadians(90f) + 0.001f)
+				.translate(
+						-shieldScale / 2f,
+						-shieldScale / 2f,
+						-shieldScale / 2f)
+				.scale(shieldScale);
+		this.glassShield = world.spawn(getBossLocation(), BlockDisplay.class, entity -> {
 			entity.setBlock(Material.GLASS.createBlockData());
-			entity.setTransformationMatrix(transformation);
+			entity.setTransformationMatrix(shieldTransformation);
+			/* this avoids flickering */
+			entity.setTeleportDuration(2);
 		});
-		Bukkit.getScheduler().runTaskTimer(Bukkit.getPluginManager().getPlugin(Main.namespace), task -> {
-			if (!boss.entity.isValid() || !glow1.isValid()) { // display was removed from the world, abort task
-				task.cancel();
-				return;
-			}
-
-			transformation = transformation
-					.rotateX(((float) Math.toRadians(360f)) + 0.1F)
-					.rotateY(((float) Math.toRadians(360f)) + 0.1F)
-					.rotateZ(((float) Math.toRadians(360f)) + 0.1F);
-			glow1.setTeleportDuration(1);
-			// var bb = boss.entity.getBoundingBox();
-			glow1.teleport(supp.get());
-			// glow1.teleport(new Location(
-			// boss.entity.getWorld(),
-			// bb.getCenterX(),
-			// bb.getCenterY(),
-			// bb.getCenterZ()));
-
-			glow1.setInterpolationDelay(0);
-			glow1.setInterpolationDuration(ANIM_DURATION);
-			glow1.setTransformationMatrix(transformation);
-		}, 1, ANIM_DURATION);
 	}
 	/* ---------------------------------------------------------------------- */
 
 	/* ------------------------------- Update ------------------------------- */
-	// void tickRotation(BlockDisplay disp) {
-	// disp.setInterpolationDelay(1);
-	// disp.setInterpolationDuration(ANIM_DURATION); // bah jsp...
-	// disp.setTransformationMatrix(transformation
-	// // .rotateX(((float) Math.toRadians(360f)) + 0.1F)
-	// .rotateY(((float) Math.toRadians(180f)) + 0.1F /* Avoid client interpolation */));
-	// }
-
 	@Override
 	public void tick() {
+		if (!boss.entity.isValid() || !glassShield.isValid()) {
+			return;
+		}
+		/* Rotate glassShield */
+		glassShield.teleport(getBossLocation());
 		// boss.targets.forEach(p -> p.sendMessage("tickCount=" + tickCount));
-		// if (tickCount < ANIM_DURATION) {
-		// tickCount++;
-		// return;
-		// }
-		// tickCount = 0;
-		// tickRotation(glow1);
+		this.shieldTransformation = shieldTransformation
+				.rotateXYZ(
+						(float) Math.toRadians(360f) + 0.1f,
+						(float) Math.toRadians(360f) + 0.1f,
+						(float) Math.toRadians(360f) + 0.1f);
+		glassShield.setInterpolationDelay(0);
+		glassShield.setInterpolationDuration(ANIM_DURATION);
+		glassShield.setTransformationMatrix(shieldTransformation);
+		/* Repell entities */
+		for (Entity e : boss.entity.getLocation().getNearbyEntitiesByType(Entity.class, shieldScale)) {
+			if (e.getUniqueId() == boss.entity.getUniqueId() || e.getUniqueId() == glassShield.getUniqueId())
+				continue;
+			Vector dir = e.getLocation().subtract(boss.entity.getLocation()).getDirection();
+			e.setVelocity(e.getVelocity().subtract(dir));
+		}
 	}
 	/* ---------------------------------------------------------------------- */
 
@@ -132,7 +119,7 @@ public class DivineDescentPhase extends AbstractBossGoal<HolyCow> {
 		boss.entity.setFrictionState(TriState.TRUE);
 		boss.entity.setInvulnerable(false);
 		// boss.entity.setAI(true);
-		glow1.remove();
+		glassShield.remove();
 		boss.setState(State.SLEEPING);
 	}
 	/* ---------------------------------------------------------------------- */
