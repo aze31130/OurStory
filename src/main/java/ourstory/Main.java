@@ -59,13 +59,12 @@ public class Main extends JavaPlugin {
 		 * Registers all commands
 		 */
 		Map<String, BasicCommand> commandsToRegister = Map.of(
-				"goal", new MobGoalCommand(),
+				// "goal", new MobGoalCommand(),
 				"boss", new Boss(),
 				"dummy", new Dummy(),
-				// "reset", new Reset(),
-				"test", new Test(),
+				"reset", new Reset(),
 				"split", new Split(),
-				// "rankup", new RankUp(),
+				"rankup", new RankUp(),
 				"count", new Count(),
 				"chall", new Chall(),
 				"itemlock", new CancelDrop(),
