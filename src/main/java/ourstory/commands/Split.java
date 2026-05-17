@@ -26,9 +26,10 @@ public class Split implements BasicCommand {
 
 		Player p = (Player) sender.getSender();
 		ItemStack item = p.getInventory().getItemInMainHand();
+		Boolean isBook = item.getType().equals(Material.ENCHANTED_BOOK);
 
-		if (!item.getType().equals(Material.ENCHANTED_BOOK)) {
-			sender.getSender().sendMessage(Component.text("You need to hold an enchanted book !").color(NamedTextColor.RED));
+		if (!item.getEnchantments().isEmpty()) {
+			sender.getSender().sendMessage(Component.text("You need to hold an enchanted item !").color(NamedTextColor.RED));
 			return;
 		}
 
@@ -41,7 +42,7 @@ public class Split implements BasicCommand {
 
 		int levelPrice = enchantAmount * 3 + totalLevel;
 
-		if (enchantAmount <= 1) {
+		if (enchantAmount <= 1 && isBook) {
 			sender.getSender().sendMessage(Component.text("You need at least two enchant to split a book !").color(NamedTextColor.RED));
 			return;
 		}
@@ -62,8 +63,8 @@ public class Split implements BasicCommand {
 			if (content == null || content.getType() == Material.AIR)
 				emptySlots++;
 
-		if (emptySlots < enchantAmount) {
-			sender.getSender().sendMessage(Component.text("You need at least " + enchantAmount + " empty inventory slots to split this book!").color(NamedTextColor.RED));
+		if (emptySlots < (enchantAmount + (isBook ? 0 : 1))) {
+			sender.getSender().sendMessage(Component.text("You need at least " + (enchantAmount + (isBook ? 0 : 1)) + " empty inventory slots to split this book!").color(NamedTextColor.RED));
 			return;
 		}
 
@@ -72,10 +73,11 @@ public class Split implements BasicCommand {
 		sender.getSender().sendMessage(Component.text("Successfully splitted for " + levelPrice + " levels.").color(NamedTextColor.GREEN));
 	}
 
-	private static void splitEnchants(Player player, ItemStack book) {
-		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) book.getItemMeta();
+	private static void splitEnchants(Player player, ItemStack item) {
+		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
 		Map<Enchantment, Integer> enchants = meta.getStoredEnchants();
 		Iterator<Enchantment> var5 = enchants.keySet().iterator();
+		Boolean isBook = item.getType().equals(Material.ENCHANTED_BOOK);
 
 		while (var5.hasNext()) {
 			Enchantment enchant = (Enchantment) var5.next();
@@ -90,7 +92,12 @@ public class Split implements BasicCommand {
 			player.sendMessage("Obtained " + enchant.getKey() + " book");
 		}
 
-		player.getInventory().remove(book);
+		if (isBook) {
+			player.getInventory().remove(item);
+		} else {
+			meta.getStoredEnchants().clear();
+			item.setItemMeta(meta);
+		}
 		player.updateInventory();
 	}
 }
