@@ -24,7 +24,6 @@ public class GravityWell extends Spell {
 
 	public GravityWell(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
-		this.caster = caster;
 	}
 
 	@Override

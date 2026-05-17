@@ -11,9 +11,6 @@ import org.bukkit.entity.LivingEntity;
 public class LaserMatrix extends Spell {
 	public LaserMatrix(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
-		this.caster = caster;
-		this.level = level;
-		this.targets = targets;
 	}
 
 	private List<Entity> targets;

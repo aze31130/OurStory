@@ -15,7 +15,6 @@ public class Summon extends Spell {
 
 	public Summon(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
-		this.level = level;
 	}
 
 	private int cpt, level, max, enchantlevel;

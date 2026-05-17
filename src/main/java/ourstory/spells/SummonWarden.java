@@ -16,8 +16,6 @@ public class SummonWarden extends Spell {
 
 	public SummonWarden(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
-		this.level = level;
-		this.caster = caster;
 	}
 
 	private Entity caster;
@@ -65,7 +63,6 @@ public class SummonWarden extends Spell {
 		world.playSound(summonPlace, Sound.ENTITY_WARDEN_ROAR, 100, 0.5f);
 
 
-		List<Warden> wardens = new ArrayList<>();
 
 		for (int i = 0; i < level; i++) {
 			Warden warden = (Warden) world.spawn(summonPlace, Warden.class, w -> {

@@ -12,8 +12,6 @@ public class LaserExplosion extends Spell {
 
 	public LaserExplosion(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
-		this.caster = caster;
-		this.level = level;
 	}
 
 	private Entity caster;

@@ -19,26 +19,17 @@ public class ArrowWall extends Spell {
 	 */
 
 	private List<Entity> targets;
-	private Entity caster;
-	private int level, cpt, cptmax, speed, effectduration;
+	private Entity caster, target;
+	private int level, cpt, cptmax, speed;
 	private Location bossLocation;
-	private Entity target;
-
-
 	private List<PotionType> arroweffect;
 
 	public ArrowWall(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
-		this.targets = targets;
-		this.caster = caster;
-		this.level = level;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void setup() {
-		// TODO Auto-generated method stub
-
 		Bukkit.getServer().broadcast(Component.text("number of targets =" + targets.size()));
 		this.cpt = 0;
 		this.cptmax = 80 * level;
@@ -51,14 +42,10 @@ public class ArrowWall extends Spell {
 				PotionType.LONG_POISON,
 				PotionType.OOZING,
 				PotionType.AWKWARD);
-
-
 	}
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
-
 		this.bossLocation = caster.getLocation().add(0, 4, 0);
 		this.target = targets.get(new Random().nextInt(targets.size()));
 		Vector direction = new Vector(
@@ -82,5 +69,4 @@ public class ArrowWall extends Spell {
 	public boolean shouldStop() {
 		return cpt > cptmax;
 	}
-
 }

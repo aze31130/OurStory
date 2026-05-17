@@ -24,8 +24,6 @@ public class Annihilation extends Spell {
 
 	public Annihilation(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
-		this.caster = caster;
-		this.level = level;
 	}
 
 	@Override
