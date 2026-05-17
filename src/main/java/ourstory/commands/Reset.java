@@ -52,7 +52,8 @@ public class Reset implements BasicCommand {
 			return;
 		}
 
-		if (args.length == 0 || !args[0].equalsIgnoreCase("confirm")) {
+		// Ask for confirmation if the cost is higher than 1000
+		if ((args.length == 0 || !args[0].equalsIgnoreCase("confirm")) && cost > 1000) {
 			player.sendMessage(Component.text("You are about to reset your item for " + cost + " money !").color(NamedTextColor.YELLOW));
 			player.sendMessage(Component.text("Use /reset confirm to perform the action !").color(NamedTextColor.YELLOW));
 			return;
