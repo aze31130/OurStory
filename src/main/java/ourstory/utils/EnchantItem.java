@@ -2,13 +2,11 @@ package ourstory.utils;
 
 import java.util.Map;
 import java.util.Map.Entry;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import net.kyori.adventure.text.Component;
 
 public class EnchantItem {
 	public static ItemStack createEnchantedItem(Material item, Map<Enchantment, Integer> enchantments) {
@@ -50,10 +48,18 @@ public class EnchantItem {
 		if (item == null)
 			return totalLevels;
 
-		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
-
-		for (Map.Entry<Enchantment, Integer> entry : meta.getStoredEnchants().entrySet())
+		// Adds all the enchantments levels
+		for (Map.Entry<Enchantment, Integer> entry : item.getEnchantments().entrySet())
 			totalLevels += entry.getValue();
+
+		// Adds all the stored enchantments (for books)
+		ItemMeta meta = item.getItemMeta();
+		if (meta instanceof EnchantmentStorageMeta) {
+			EnchantmentStorageMeta enchantMeta = (EnchantmentStorageMeta) meta;
+
+			for (Map.Entry<Enchantment, Integer> entry : enchantMeta.getStoredEnchants().entrySet())
+				totalLevels += entry.getValue();
+		}
 
 		return totalLevels;
 	}
