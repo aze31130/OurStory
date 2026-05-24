@@ -29,6 +29,9 @@ public class onItemDrop implements Listener {
 
 		boolean isLocked = item.getItemStack().getItemMeta().getPersistentDataContainer().getOrDefault(ItemIsLocked, PersistentDataType.BOOLEAN, false);
 
+		if (isLocked && player.getInventory().firstEmpty() == -1)
+			return;
+
 		if (isLocked) {
 			event.setCancelled(true);
 			player.sendActionBar(Component.text("You can't drop : " + event.getItemDrop().getName() + ", you've locked it !").color(NamedTextColor.YELLOW));
