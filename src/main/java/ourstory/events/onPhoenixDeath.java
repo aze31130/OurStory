@@ -33,7 +33,7 @@ public class onPhoenixDeath implements Listener {
 		for (ItemStack armor : armorContents)
 			totalPhoenixLevel += EnchantItem.getEnchantAmount(armor, "phoenix");
 
-		if (random.nextInt(0, 101) < (totalPhoenixLevel * 2.5)) {
+		if (random.nextInt(0, 101) <= (totalPhoenixLevel * 2.5)) {
 			player.sendMessage(Component.text("You got blessed by the Phoenix enchant ! Your inventory and effects have been safeguarded !").color(NamedTextColor.GREEN));
 			event.setKeepInventory(true);
 			event.setKeepLevel(false);
