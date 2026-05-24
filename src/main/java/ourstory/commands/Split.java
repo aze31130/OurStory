@@ -27,17 +27,19 @@ public class Split implements BasicCommand {
 		Player p = (Player) sender.getSender();
 		ItemStack item = p.getInventory().getItemInMainHand();
 		Boolean isBook = item.getType().equals(Material.ENCHANTED_BOOK);
+		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
 
-		if (!item.getEnchantments().isEmpty()) {
+		if (!item.getEnchantments().isEmpty() || !(meta.getStoredEnchants().size() < 2)) {
 			sender.getSender().sendMessage(Component.text("You need to hold an enchanted item !").color(NamedTextColor.RED));
 			return;
 		}
 
-		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
-		int enchantAmount = meta.getStoredEnchants().size();
+		int enchantAmount = meta.getStoredEnchants().size() + item.getEnchantments().size();
 
 		int totalLevel = 0;
 		for (Integer value : meta.getStoredEnchants().values())
+			totalLevel += value;
+		for (Integer value : item.getEnchantments().values())
 			totalLevel += value;
 
 		int levelPrice = enchantAmount * 3 + totalLevel;
@@ -76,11 +78,12 @@ public class Split implements BasicCommand {
 	private static void splitEnchants(Player player, ItemStack item) {
 		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
 		Map<Enchantment, Integer> enchants = meta.getStoredEnchants();
-		Iterator<Enchantment> var5 = enchants.keySet().iterator();
+		enchants.putAll(item.getEnchantments());
+		Iterator<Enchantment> iterator = enchants.keySet().iterator();
 		Boolean isBook = item.getType().equals(Material.ENCHANTED_BOOK);
 
-		while (var5.hasNext()) {
-			Enchantment enchant = (Enchantment) var5.next();
+		while (iterator.hasNext()) {
+			Enchantment enchant = (Enchantment) iterator.next();
 			ItemStack is = new ItemStack(Material.ENCHANTED_BOOK);
 			EnchantmentStorageMeta im = (EnchantmentStorageMeta) is.getItemMeta();
 			im.addStoredEnchant(enchant, (Integer) enchants.get(enchant), true);
@@ -95,8 +98,7 @@ public class Split implements BasicCommand {
 		if (isBook) {
 			player.getInventory().remove(item);
 		} else {
-			meta.getStoredEnchants().clear();
-			item.setItemMeta(meta);
+			item.removeEnchantments();
 		}
 		player.updateInventory();
 	}
