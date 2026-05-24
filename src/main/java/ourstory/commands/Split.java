@@ -72,8 +72,8 @@ public class Split implements BasicCommand {
 			if (content == null || content.getType() == Material.AIR)
 				emptySlots++;
 
-		if (emptySlots < (enchantAmount + (isBook ? 0 : 1))) {
-			sender.getSender().sendMessage(Component.text("You need at least " + (enchantAmount + (isBook ? 0 : 1)) + " empty inventory slots to split this book!").color(NamedTextColor.RED));
+		if (emptySlots < (enchantAmount + 1)) {
+			sender.getSender().sendMessage(Component.text("You need at least " + (enchantAmount + 1) + " empty inventory slots to split this book!").color(NamedTextColor.RED));
 			return;
 		}
 
@@ -83,10 +83,7 @@ public class Split implements BasicCommand {
 	}
 
 	private static void splitEnchants(Player player, ItemStack item, Map<Enchantment, Integer> enchants, Boolean isBook) {
-		Iterator<Enchantment> iterator = enchants.keySet().iterator();
-
-		while (iterator.hasNext()) {
-			Enchantment enchant = (Enchantment) iterator.next();
+		for (Enchantment enchant : enchants.keySet()) {
 			ItemStack is = new ItemStack(Material.ENCHANTED_BOOK);
 			EnchantmentStorageMeta im = (EnchantmentStorageMeta) is.getItemMeta();
 			im.addStoredEnchant(enchant, (Integer) enchants.get(enchant), true);
