@@ -38,6 +38,11 @@ public class Split implements BasicCommand {
 			enchants = item.getEnchantments();
 		}
 
+		if (item.getMaxStackSize() != 1) {
+			sender.getSender().sendMessage(Component.text("You can only split items that have a max stack size of 1 !").color(NamedTextColor.RED));
+			return;
+		}
+
 		if (enchants.isEmpty() || (isBook && enchants.size() < 2)) {
 			sender.getSender().sendMessage(Component.text("You need to hold an enchanted item !").color(NamedTextColor.RED));
 			return;
