@@ -58,17 +58,18 @@ public class Main extends JavaPlugin {
 		/*
 		 * Registers all commands
 		 */
-		Map<String, BasicCommand> commandsToRegister = Map.of(
-				// "goal", new MobGoalCommand(),
-				"boss", new Boss(),
-				"dummy", new Dummy(),
-				"reset", new Reset(),
-				"split", new Split(),
-				"rankup", new RankUp(),
-				"count", new Count(),
-				"chall", new Chall(),
-				"itemlock", new CancelDrop(),
-				"cast", new Cast());
+		Map<String, BasicCommand> commandsToRegister = Map.ofEntries(
+				Map.entry("goal", new MobGoalCommand()),
+				Map.entry("map", new ourstory.commands.Map()),
+				Map.entry("boss", new Boss()),
+				Map.entry("dummy", new Dummy()),
+				Map.entry("reset", new Reset()),
+				Map.entry("split", new Split()),
+				Map.entry("rankup", new RankUp()),
+				Map.entry("count", new Count()),
+				Map.entry("chall", new Chall()),
+				Map.entry("itemlock", new CancelDrop()),
+				Map.entry("cast", new Cast()));
 
 		var manager = this.getLifecycleManager();
 		manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
