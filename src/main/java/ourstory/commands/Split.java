@@ -12,6 +12,7 @@ import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import ourstory.utils.ItemUtils;
 import ourstory.utils.Permissions;
 
 public class Split implements BasicCommand {
@@ -38,8 +39,8 @@ public class Split implements BasicCommand {
 			enchants = item.getEnchantments();
 		}
 
-		if (item.getMaxStackSize() != 1) {
-			sender.getSender().sendMessage(Component.text("You can only split items that have a max stack size of 1 !").color(NamedTextColor.RED));
+		if (!ItemUtils.isTool(item) && !ItemUtils.isArmor(item)) {
+			sender.getSender().sendMessage(Component.text("You can only split armors and tools !").color(NamedTextColor.RED));
 			return;
 		}
 
