@@ -1,5 +1,6 @@
 package ourstory.commands;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import org.bukkit.Material;
@@ -11,6 +12,7 @@ import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import ourstory.utils.ItemUtils;
 import ourstory.utils.Permissions;
 
 public class Split implements BasicCommand {
@@ -26,22 +28,36 @@ public class Split implements BasicCommand {
 
 		Player p = (Player) sender.getSender();
 		ItemStack item = p.getInventory().getItemInMainHand();
+		Boolean isBook = item.getType().equals(Material.ENCHANTED_BOOK);
 
-		if (!item.getType().equals(Material.ENCHANTED_BOOK)) {
-			sender.getSender().sendMessage(Component.text("You need to hold an enchanted book !").color(NamedTextColor.RED));
+		Map<Enchantment, Integer> enchants;
+
+		if (isBook) {
+			EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
+			enchants = meta.getStoredEnchants();
+		} else {
+			enchants = item.getEnchantments();
+		}
+
+		if (!ItemUtils.isTool(item) && !ItemUtils.isArmor(item)) {
+			sender.getSender().sendMessage(Component.text("You can only split armors and tools !").color(NamedTextColor.RED));
 			return;
 		}
 
-		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
-		int enchantAmount = meta.getStoredEnchants().size();
+		if (enchants.isEmpty() || (isBook && enchants.size() < 2)) {
+			sender.getSender().sendMessage(Component.text("You need to hold an enchanted item !").color(NamedTextColor.RED));
+			return;
+		}
+
+		int enchantAmount = enchants.size();
 
 		int totalLevel = 0;
-		for (Integer value : meta.getStoredEnchants().values())
+		for (Integer value : enchants.values())
 			totalLevel += value;
 
 		int levelPrice = enchantAmount * 3 + totalLevel;
 
-		if (enchantAmount <= 1) {
+		if (enchantAmount <= 1 && isBook) {
 			sender.getSender().sendMessage(Component.text("You need at least two enchant to split a book !").color(NamedTextColor.RED));
 			return;
 		}
@@ -62,35 +78,34 @@ public class Split implements BasicCommand {
 			if (content == null || content.getType() == Material.AIR)
 				emptySlots++;
 
-		if (emptySlots < enchantAmount) {
-			sender.getSender().sendMessage(Component.text("You need at least " + enchantAmount + " empty inventory slots to split this book!").color(NamedTextColor.RED));
+		if (emptySlots < (enchantAmount + 1)) {
+			sender.getSender().sendMessage(Component.text("You need at least " + (enchantAmount + 1) + " empty inventory slots to split this book!").color(NamedTextColor.RED));
 			return;
 		}
 
 		p.setLevel(p.getLevel() - levelPrice);
-		splitEnchants(p, item);
+		splitEnchants(p, item, enchants, isBook);
 		sender.getSender().sendMessage(Component.text("Successfully splitted for " + levelPrice + " levels.").color(NamedTextColor.GREEN));
 	}
 
-	private static void splitEnchants(Player player, ItemStack book) {
-		EnchantmentStorageMeta meta = (EnchantmentStorageMeta) book.getItemMeta();
-		Map<Enchantment, Integer> enchants = meta.getStoredEnchants();
-		Iterator<Enchantment> var5 = enchants.keySet().iterator();
-
-		while (var5.hasNext()) {
-			Enchantment enchant = (Enchantment) var5.next();
+	private static void splitEnchants(Player player, ItemStack item, Map<Enchantment, Integer> enchants, Boolean isBook) {
+		for (Enchantment enchant : enchants.keySet()) {
 			ItemStack is = new ItemStack(Material.ENCHANTED_BOOK);
 			EnchantmentStorageMeta im = (EnchantmentStorageMeta) is.getItemMeta();
 			im.addStoredEnchant(enchant, (Integer) enchants.get(enchant), true);
 			is.setItemMeta(im);
 
-			player.getInventory().addItem(new ItemStack[] {is});
 			player.getInventory().removeItem(new ItemStack[] {new ItemStack(Material.BOOK)});
+			player.getInventory().addItem(new ItemStack[] {is});
 
 			player.sendMessage("Obtained " + enchant.getKey() + " book");
 		}
 
-		player.getInventory().remove(book);
+		if (isBook) {
+			player.getInventory().remove(item);
+		} else {
+			item.removeEnchantments();
+		}
 		player.updateInventory();
 	}
 }
