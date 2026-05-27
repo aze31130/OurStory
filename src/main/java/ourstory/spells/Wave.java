@@ -9,42 +9,28 @@ public class Wave extends Spell {
 
 	public Wave(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void setup() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setup'");
-	}
+	public void setup() {}
 
 	@Override
-	public void tick() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'tick'");
-	}
+	public void tick() {}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'stop'");
+		for (Entity entity : targets) {
+			double x = entity.getLocation().getX() - caster.getLocation().getX();
+			double y = entity.getLocation().getY() - caster.getLocation().getY();
+			double z = entity.getLocation().getZ() - caster.getLocation().getZ();
+
+			entity.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, entity.getLocation(), 1, 0, 0, 0, 0);
+			entity.setVelocity(new Vector(x, y, z).multiply(level + 1));
+		}
 	}
 
 	@Override
 	public boolean shouldStop() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'shouldStop'");
+		return true;
 	}
-
-	// @Override
-	// public void cast(Entity caster, List<Entity> targets, int level) {
-	// for (Entity entity : targets) {
-	// double x = entity.getLocation().getX() - caster.getLocation().getX();
-	// double y = entity.getLocation().getY() - caster.getLocation().getY();
-	// double z = entity.getLocation().getZ() - caster.getLocation().getZ();
-
-	// entity.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, entity.getLocation(), 1, 0, 0, 0, 0);
-	// entity.setVelocity(new Vector(x, y, z).multiply(2));
-	// }
-	// }
 }
