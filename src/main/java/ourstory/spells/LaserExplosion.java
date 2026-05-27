@@ -14,8 +14,6 @@ public class LaserExplosion extends Spell {
 		super(caster, targets, level);
 	}
 
-	private Entity caster;
-	private int level;
 	private int laserAmount;
 	private double laserRange;
 	private double speed;

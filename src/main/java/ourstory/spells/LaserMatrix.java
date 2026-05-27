@@ -13,9 +13,7 @@ public class LaserMatrix extends Spell {
 		super(caster, targets, level);
 	}
 
-	private List<Entity> targets;
-	private Entity caster;
-	private int laserAmount, laserRange, orientation, durationSeconds, ticks, level;
+	private int laserAmount, laserRange, orientation, durationSeconds, ticks;
 	private double rotationSpeed, currentAngle;
 	private Location center;
 

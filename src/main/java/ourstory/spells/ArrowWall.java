@@ -18,9 +18,8 @@ public class ArrowWall extends Spell {
 	 * floor (entity in caves...)
 	 */
 
-	private List<Entity> targets;
-	private Entity caster, target;
-	private int level, cpt, cptmax, speed;
+	private Entity target;
+	private int cpt, cptmax, speed;
 	private Location bossLocation;
 	private List<PotionType> arroweffect;
 

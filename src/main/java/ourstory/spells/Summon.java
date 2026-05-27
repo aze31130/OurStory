@@ -17,7 +17,7 @@ public class Summon extends Spell {
 		super(caster, targets, level);
 	}
 
-	private int cpt, level, max, enchantlevel;
+	private int cpt, max, enchantlevel;
 
 	@Override
 	public void setup() {

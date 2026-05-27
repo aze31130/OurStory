@@ -11,7 +11,6 @@ import org.bukkit.entity.LivingEntity;
 
 
 public class GravityWell extends Spell {
-	private Entity caster;
 	private double maxRadius;
 	private double pullStrength;
 	private double explosionDamage;

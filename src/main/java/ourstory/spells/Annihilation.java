@@ -20,7 +20,6 @@ public class Annihilation extends Spell {
 	private int totalSteps;
 	private double radiusIncrease, startRadius, endRadius;
 	private int t;
-	private Entity caster;
 
 	public Annihilation(Entity caster, List<Entity> targets, int level) {
 		super(caster, targets, level);

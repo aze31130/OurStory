@@ -18,8 +18,6 @@ public class SummonWarden extends Spell {
 		super(caster, targets, level);
 	}
 
-	private Entity caster;
-	private int level;
 	private int ticks;
 	private Location summonPlace;
 	private World world;
