@@ -49,14 +49,4 @@ public class WitherRage extends Spell {
 		return cpt >= stop;
 	}
 
-	// @Override
-	// public void cast(Entity caster, List<Entity> targets, int level) {
-	// for (int i = 0; i < 15; i++) {
-	// new BukkitRunnable() {
-	// @Override
-	// public void run() {
-	// }
-	// }.runTaskLater(plugin, 20 + i * 4);
-	// }
-	// }
 }
