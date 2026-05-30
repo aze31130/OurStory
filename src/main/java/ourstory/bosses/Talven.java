@@ -1,142 +1,125 @@
 package ourstory.bosses;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
-import org.bukkit.Particle.DustOptions;
-import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Mob;
-import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 import com.destroystokyo.paper.entity.ai.MobGoals;
-import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import ourstory.goal.*;
-import ourstory.spells.*;
 import ourstory.utils.EnchantItem;
 
 public class Talven extends Boss {
+	private final Plugin plugin = Bukkit.getPluginManager().getPlugin("OurStory");
+	private final NamespacedKey bossKey = new NamespacedKey(plugin, "isBoss");
 
-	public Talven(String name, Mob mob, List<Player> targets, int level) {
-		super(name, mob, targets, level);
+	private Map<Attribute, Double> attributes = Map.of(
+			Attribute.MAX_HEALTH, 20.0,
+			Attribute.MOVEMENT_SPEED, 0.2,
+			Attribute.ATTACK_DAMAGE, 35.0,
+			Attribute.SCALE, 1.4,
+			Attribute.KNOCKBACK_RESISTANCE, 1.0);
+
+	ItemStack[] armor = {
+			EnchantItem.createEnchantedItem(Material.NETHERITE_BOOTS,
+					Map.of(Enchantment.VANISHING_CURSE, 1)),
+			EnchantItem.createEnchantedItem(Material.NETHERITE_LEGGINGS,
+					Map.of(Enchantment.VANISHING_CURSE, 1)),
+			EnchantItem.createEnchantedItem(Material.NETHERITE_CHESTPLATE,
+					Map.of(Enchantment.VANISHING_CURSE, 1)),
+			EnchantItem.createEnchantedItem(Material.NETHERITE_HELMET, Map.of(Enchantment.VANISHING_CURSE, 1))
+	};
+
+	public Talven(Location spawn, List<Player> targets, int level) {
+		super("Talven", targets, level);
+
+		this.entity = (Mob) spawn.getWorld().spawnEntity(spawn, EntityType.EVOKER);
+
+		// Equip entity
+		EntityEquipment equipment = entity.getEquipment();
+		equipment.setArmorContents(armor);
+		equipment.setItemInMainHand(EnchantItem.createEnchantedItem(Material.BREEZE_ROD, Map.of(Enchantment.VANISHING_CURSE, 1)));
+		entity.customName(Component.text(this.name));
+		entity.setCustomNameVisible(true);
+		entity.setAggressive(true);
+		entity.setLootTable(Bukkit.getLootTable(NamespacedKey.fromString("ourstory:boss/talven")));
+
+		PersistentDataContainer container = entity.getPersistentDataContainer();
+		container.set(bossKey, PersistentDataType.BOOLEAN, true);
+
+		// // Apply attributes modifiers
+		for (Map.Entry<Attribute, Double> entry : attributes.entrySet()) {
+			AttributeInstance a = entity.getAttribute(entry.getKey());
+			a.setBaseValue(entry.getValue());
+		}
+		entity.setHealth(attributes.get(Attribute.MAX_HEALTH));
+
+
+		registerGoals(Bukkit.getServer().getMobGoals());
+		onSpawn();
+
+		// // Define HealthBar
+		// this.healthBar = Bukkit.createBossBar(this.name, BarColor.PURPLE, BarStyle.SOLID);
+		// this.healthBar.setVisible(true);
+
+		// double progress = entity.getHealth() /
+		// entity.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH).getValue();
+		// this.healthBar.setProgress(progress);
+		// }
 	}
 
 	@Override
 	public void registerGoals(MobGoals goals) {
 		goals.removeAllGoals(this.entity);
-		goals.addGoal(this.entity, 0, new Phase1(this, this.spells));
-		goals.addGoal(this.entity, 1, new Phase2(this, this.spells));
+		goals.addGoal(this.entity, 0, new TalvenPhase1(this, this.spells));
+		goals.addGoal(this.entity, 1, new TalvenPhase2(this, this.spells));
+		goals.addGoal(this.entity, 2, new TalvenPhase3(this, this.spells));
 	}
 
 	@Override
 	public void onSpawn() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'onSpawn'");
+		for (Player p : this.targets)
+			p.sendMessage("You dare challenge me ? Witness power beyond your comprehension !");
 	}
 
 	@Override
 	public void onHit(EntityDamageByEntityEvent event) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'onHit'");
+		for (Player p : this.targets)
+			p.sendMessage("Hit" + this.entity.getHealth() + " " + this.entity.getAttribute(Attribute.MAX_HEALTH).getValue());
 	}
 
 	@Override
 	public void onDeath(EntityDeathEvent event) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'onDeath'");
+		for (Player p : this.targets)
+			p.sendMessage("No... Impossible... You can't defeat me");
+		Bukkit.broadcast(Component.text(this.name + " has been defeated !"));
+
+		// this.healthBar.removeAll();
+
+		// Death animation
+		Location bossDeath = event.getEntity().getLocation();
+
+		for (int i = -10; i < 10; i++)
+			event.getEntity().getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, bossDeath.getX() + i, bossDeath.getY(), bossDeath.getZ() + i, 50);
 	}
 
-	// private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
-
-	// private Map<Attribute, Double> attributes = Map.of(
-	// Attribute.MAX_HEALTH, 500.0,
-	// Attribute.MOVEMENT_SPEED, 0.2,
-	// Attribute.ATTACK_DAMAGE, 35.0,
-	// Attribute.SCALE, 1.5,
-	// Attribute.KNOCKBACK_RESISTANCE, 1.0);
-
-	// private List<LootEntry> loots = List.of(
-	// new LootEntry(new ItemStack(Material.GOLDEN_CARROT), 15, 80.0),
-	// new LootEntry(new ItemStack(Material.GOLDEN_APPLE), 5, 80.0),
-	// new LootEntry(new ItemStack(Material.DIAMOND), 20, 75.0),
-	// new LootEntry(new ItemStack(Material.NETHERITE_INGOT), 3, 40.0),
-	// new LootEntry(new ItemStack(Material.TOTEM_OF_UNDYING), 3, 40.0),
-	// new LootEntry(new ItemStack(Material.NETHER_STAR), 2, 40.0),
-	// new LootEntry(new ItemStack(Material.SPAWNER), 1, 35.0),
-	// new LootEntry(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), 5, 30.0),
-	// new LootEntry(new ItemStack(Material.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE), 1, 2.0));
-
-	// public Thread skills = new Thread(this);
-
-	// public Talven(Location l) {
-	// super("Talven", l, new ArrayList<>());
-
-	// this.entity = (Monster) l.getWorld().spawnEntity(l, EntityType.EVOKER);
-
-	// EntityEquipment equipment = entity.getEquipment();
-	// ItemStack[] armor = {
-	// EnchantItem.createEnchantedItem(Material.NETHERITE_BOOTS, Map.of(Enchantment.VANISHING_CURSE,
-	// 1)),
-	// EnchantItem.createEnchantedItem(Material.NETHERITE_LEGGINGS, Map.of(Enchantment.VANISHING_CURSE,
-	// 1)),
-	// EnchantItem.createEnchantedItem(Material.NETHERITE_CHESTPLATE,
-	// Map.of(Enchantment.VANISHING_CURSE, 1)),
-	// EnchantItem.createEnchantedItem(Material.NETHERITE_HELMET, Map.of(Enchantment.VANISHING_CURSE,
-	// 1))
-	// };
-
-	// equipment.setArmorContents(armor);
-	// equipment.setItemInMainHand(EnchantItem.createEnchantedItem(Material.BREEZE_ROD,
-	// Map.of(Enchantment.VANISHING_CURSE, 1)));
-	// entity.customName(Component.text(this.name));
-	// entity.setCustomNameVisible(true);
-
-	// entity.setMetadata("isBoss", new FixedMetadataValue(p, true));
-	// entity.setAggressive(true);
-
-	// // Apply attributes modifiers
-	// for (Map.Entry<Attribute, Double> entry : attributes.entrySet()) {
-	// AttributeInstance a = entity.getAttribute(entry.getKey());
-	// a.setBaseValue(entry.getValue());
-	// }
-
-	// // Set entity to max life
-	// entity.setHealth(attributes.get(Attribute.MAX_HEALTH));
-
-	// // Define HealthBar
-	// this.healthBar = Bukkit.createBossBar(this.name, BarColor.PURPLE, BarStyle.SOLID);
-	// this.healthBar.setVisible(true);
-
-	// double progress = entity.getHealth() /
-	// entity.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH).getValue();
-	// this.healthBar.setProgress(progress);
-	// }
-
 	// public void onSpawn() {
-	// for (Player p : this.targets)
-	// p.sendMessage("You dare challenge me ? Witness power beyond your comprehension !");
 
 	// World w = this.bossSpawn.getWorld();
 	// Location center = this.bossSpawn.clone().add(0, 15, 0);
@@ -337,26 +320,6 @@ public class Talven extends Boss {
 
 	// phase = 3;
 	// }
-	// }
-
-
-	// public void onDeath(EntityDeathEvent event) {
-	// for (Player p : this.targets)
-	// p.sendMessage("No... Impossible... You can't defeat me");
-	// Bukkit.broadcast(Component.text(this.name + " has been defeated !"));
-
-	// // Stop skill loop and removes bossbar
-	// this.skills.interrupt();
-	// this.healthBar.removeAll();
-
-	// Player killer = event.getEntity().getKiller();
-
-	// // Death animation
-	// Location bossDeath = event.getEntity().getLocation();
-	// for (int i = -5; i < 5; i++) {
-	// event.getEntity().getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, bossDeath.getX() + i,
-	// bossDeath.getY(), bossDeath.getZ() + i, 50);
-
 	// }
 
 	// // for (Map.Entry<Player, Double> entry : s.bossInstance.damage.entrySet())

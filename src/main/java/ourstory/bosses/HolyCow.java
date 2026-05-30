@@ -24,7 +24,7 @@ public class HolyCow extends Boss {
 	 * @param engaged : The players involved in the fight.
 	 */
 	public HolyCow(Mob mob, List<Player> engagedPlayers, int level) {
-		super("Holy Cow", mob, engagedPlayers, level);
+		super("Holy Cow", engagedPlayers, level);
 	}
 
 	/**

@@ -1,18 +1,13 @@
 package ourstory.commands;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Cow;
-import org.bukkit.entity.IronGolem;
-import org.bukkit.entity.Mob;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
 import ourstory.Main;
-import ourstory.bosses.HolyCow;
 import ourstory.bosses.Instance;
 import ourstory.bosses.Talven;
 import ourstory.utils.Permissions;
@@ -30,10 +25,24 @@ public class Boss implements BasicCommand {
 			return;
 		}
 
+		Entity executor = sender.getExecutor();
+
+		if (!(executor instanceof Player)) {
+			sender.getSender().sendMessage("Only a player can run this command !");
+			return;
+		}
+
 		Player playerSender = (Player) sender.getExecutor();
-		Mob test = (Mob) playerSender.getWorld().spawn(sender.getLocation(), IronGolem.class);
-		ourstory.bosses.Boss boss = new Talven("Talven", test, List.of(playerSender), 0);
-		boss.registerGoals(Bukkit.getServer().getMobGoals());
+		Location spawn = playerSender.getLocation();
+
+		List<Player> players = List.of(playerSender);
+
+		Talven boss = new Talven(spawn, players, 0);
+
+		Instance instance = new Instance(boss, players, 10, 5, "world");
+		Main.runningInstance = instance;
+
+		// boss.registerGoals(Bukkit.getServer().getMobGoals());
 
 		// String bossName = args[0];
 
@@ -53,9 +62,6 @@ public class Boss implements BasicCommand {
 		// // Register boss instance
 		// List<Player> players = new ArrayList<>();
 		// players.add((Player) sender.getSender());
-		// Instance instance = new Instance(boss, players, 10, 5, "world");
-
-		// Main.runningInstance = instance;
 	}
 
 	/*
@@ -68,8 +74,6 @@ public class Boss implements BasicCommand {
 
 		String input = args[0].toLowerCase();
 
-		return availableBoss.stream()
-				.filter(boss -> boss.toLowerCase().startsWith(input))
-				.collect(Collectors.toList());
+		return availableBoss.stream().filter(boss -> boss.toLowerCase().startsWith(input)).collect(Collectors.toList());
 	}
 }

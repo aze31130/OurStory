@@ -56,7 +56,7 @@ public class Instance {
 
 	public void fail() {
 		this.timer.cancel();
-		this.boss.entity.remove();
+		// this.boss.entity.remove();
 
 		World spawn = Bukkit.getWorld("world");
 
@@ -68,6 +68,6 @@ public class Instance {
 
 	public void finish() {
 		this.timer.cancel();
-		this.boss.entity.remove();
+		// this.boss.entity.remove();
 	}
 }
