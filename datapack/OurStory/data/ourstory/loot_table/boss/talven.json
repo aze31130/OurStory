@@ -2,11 +2,29 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 5,
+      "rolls": 2,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:golden_carrot"
+          "name": "minecraft:golden_carrot",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.9
+            }
+          ],
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 10
+              },
+              "add": false,
+              "conditions": []
+            }
+          ]
         }
       ]
     },
@@ -61,15 +79,6 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:enchanted_golden_apple"
-        }
-      ]
-    },
-    {
-      "rolls": 2,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:dolphin_spawn_egg"
         }
       ]
     }
