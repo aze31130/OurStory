@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
 public class Instance {
 	public Boss boss;
-	public Map<Player, Integer> players;
+	public Map<Entity, Integer> players;
 	public LocalDateTime start;
 	public LocalDateTime limit;
 	public int maxRespawn;
@@ -24,7 +25,7 @@ public class Instance {
 	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
 
 
-	public Instance(Boss boss, List<Player> players, int durationMinutes, int maxRespawn, String arena) {
+	public Instance(Boss boss, List<Entity> players, int durationMinutes, int maxRespawn, String arena) {
 		this.boss = boss;
 		this.start = LocalDateTime.now();
 		this.limit = this.start.plusMinutes(durationMinutes);
@@ -34,7 +35,7 @@ public class Instance {
 		this.players = new HashMap<>();
 
 		// Init damage hashmap and warp player to arena
-		for (Player p : players) {
+		for (Entity p : players) {
 			this.players.put(p, 0);
 			p.teleport(this.arena.getSpawnLocation());
 		}
@@ -45,7 +46,7 @@ public class Instance {
 			int minutesLeft = (int) java.time.Duration.between(now, this.limit).toMinutes();
 
 			if (timerWarnings.contains(minutesLeft))
-				for (Player p : this.players.keySet())
+				for (Entity p : this.players.keySet())
 					p.sendMessage(minutesLeft + " minutes lef to defeat " + this.boss.name);
 
 			if (minutesLeft <= 0) {
@@ -56,11 +57,11 @@ public class Instance {
 
 	public void fail() {
 		this.timer.cancel();
-		// this.boss.entity.remove();
+		this.boss.entity.remove();
 
 		World spawn = Bukkit.getWorld("world");
 
-		for (Player p : this.players.keySet()) {
+		for (Entity p : this.players.keySet()) {
 			p.sendMessage("You failed to defeat" + this.boss.name + " in time. Warping you back...");
 			p.teleport(spawn.getSpawnLocation());
 		}
@@ -68,6 +69,6 @@ public class Instance {
 
 	public void finish() {
 		this.timer.cancel();
-		// this.boss.entity.remove();
+		this.boss.entity.remove();
 	}
 }

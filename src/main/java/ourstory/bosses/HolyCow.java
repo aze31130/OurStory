@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -23,7 +24,7 @@ public class HolyCow extends Boss {
 	 * @param mob : Entity attached to the boss
 	 * @param engaged : The players involved in the fight.
 	 */
-	public HolyCow(Mob mob, List<Player> engagedPlayers, int level) {
+	public HolyCow(Mob mob, List<Entity> engagedPlayers, int level) {
 		super("Holy Cow", engagedPlayers, level);
 	}
 

@@ -2,6 +2,7 @@ package ourstory.bosses;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,6 +11,7 @@ import org.bukkit.Particle;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
@@ -23,6 +25,8 @@ import org.bukkit.plugin.Plugin;
 import com.destroystokyo.paper.entity.ai.MobGoals;
 import net.kyori.adventure.text.Component;
 import ourstory.goal.*;
+import ourstory.spells.Annihilation;
+import ourstory.spells.ArrowWall;
 import ourstory.utils.EnchantItem;
 
 public class Talven extends Boss {
@@ -46,7 +50,7 @@ public class Talven extends Boss {
 			EnchantItem.createEnchantedItem(Material.NETHERITE_HELMET, Map.of(Enchantment.VANISHING_CURSE, 1))
 	};
 
-	public Talven(Location spawn, List<Player> targets, int level) {
+	public Talven(Location spawn, List<Entity> targets, int level) {
 		super("Talven", targets, level);
 
 		this.entity = (Mob) spawn.getWorld().spawnEntity(spawn, EntityType.EVOKER);
@@ -87,26 +91,28 @@ public class Talven extends Boss {
 	@Override
 	public void registerGoals(MobGoals goals) {
 		goals.removeAllGoals(this.entity);
-		goals.addGoal(this.entity, 0, new TalvenPhase1(this, this.spells));
+		goals.addGoal(this.entity, 0, new TalvenPhase1(this, Set.of(
+				new ArrowWall(entity, targets, 0),
+				new Annihilation(entity, targets, 0))));
 		goals.addGoal(this.entity, 1, new TalvenPhase2(this, this.spells));
 		goals.addGoal(this.entity, 2, new TalvenPhase3(this, this.spells));
 	}
 
 	@Override
 	public void onSpawn() {
-		for (Player p : this.targets)
+		for (Entity p : this.targets)
 			p.sendMessage("You dare challenge me ? Witness power beyond your comprehension !");
 	}
 
 	@Override
 	public void onHit(EntityDamageByEntityEvent event) {
-		for (Player p : this.targets)
+		for (Entity p : this.targets)
 			p.sendMessage("Hit" + this.entity.getHealth() + " " + this.entity.getAttribute(Attribute.MAX_HEALTH).getValue());
 	}
 
 	@Override
 	public void onDeath(EntityDeathEvent event) {
-		for (Player p : this.targets)
+		for (Entity p : this.targets)
 			p.sendMessage("No... Impossible... You can't defeat me");
 		Bukkit.broadcast(Component.text(this.name + " has been defeated !"));
 

@@ -35,11 +35,11 @@ public class Boss implements BasicCommand {
 		Player playerSender = (Player) sender.getExecutor();
 		Location spawn = playerSender.getLocation();
 
-		List<Player> players = List.of(playerSender);
+		List<Entity> players = List.of(playerSender);
 
 		Talven boss = new Talven(spawn, players, 0);
 
-		Instance instance = new Instance(boss, players, 10, 5, "world");
+		Instance instance = new Instance(boss, players, 10, 5, "ourstory:arena");
 		Main.runningInstance = instance;
 
 		// boss.registerGoals(Bukkit.getServer().getMobGoals());
