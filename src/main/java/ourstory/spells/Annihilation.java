@@ -65,8 +65,7 @@ public class Annihilation extends Spell {
 
 		playCircleEffect(caster, loc, startRadius);
 		startRadius += radiusIncrease;
-		List<Entity> nearbyEntities = caster.getNearbyEntities(startRadius, 2, startRadius);
-		for (Entity entity : nearbyEntities) {
+		for (Entity entity : targets) {
 			// Push the entity
 			Vector direction = entity.getLocation().toVector().subtract(loc.toVector()).normalize();
 			entity.setVelocity(direction.multiply(0.7));
