@@ -1,5 +1,6 @@
 package ourstory.bosses;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,7 +15,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Mob;
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.EntityEquipment;
@@ -24,9 +24,13 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import com.destroystokyo.paper.entity.ai.MobGoals;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.title.Title;
+import net.kyori.adventure.title.TitlePart;
 import ourstory.goal.*;
 import ourstory.spells.Annihilation;
 import ourstory.spells.ArrowWall;
+import ourstory.spells.ZombieSummon;
 import ourstory.utils.EnchantItem;
 
 public class Talven extends Boss {
@@ -77,31 +81,28 @@ public class Talven extends Boss {
 
 		registerGoals(Bukkit.getServer().getMobGoals());
 		onSpawn();
-
-		// // Define HealthBar
-		// this.healthBar = Bukkit.createBossBar(this.name, BarColor.PURPLE, BarStyle.SOLID);
-		// this.healthBar.setVisible(true);
-
-		// double progress = entity.getHealth() /
-		// entity.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH).getValue();
-		// this.healthBar.setProgress(progress);
-		// }
 	}
 
 	@Override
 	public void registerGoals(MobGoals goals) {
 		goals.removeAllGoals(this.entity);
-		goals.addGoal(this.entity, 0, new TalvenPhase1(this, Set.of(
-				new ArrowWall(entity, targets, 0),
+		goals.addGoal(this.entity, 0, new TalvenPhase1(this, List.of(
 				new Annihilation(entity, targets, 0))));
-		goals.addGoal(this.entity, 1, new TalvenPhase2(this, this.spells));
-		goals.addGoal(this.entity, 2, new TalvenPhase3(this, this.spells));
+		goals.addGoal(this.entity, 1, new TalvenPhase2(this, List.of()));
+		goals.addGoal(this.entity, 2, new TalvenPhase3(this, List.of(
+				new ZombieSummon(entity, targets, level))));
 	}
 
 	@Override
 	public void onSpawn() {
-		for (Entity p : this.targets)
-			p.sendMessage("You dare challenge me ? Witness power beyond your comprehension !");
+		for (Entity p : this.targets) {
+			p.sendTitlePart(TitlePart.TITLE, Component.text("Talven").color(NamedTextColor.DARK_RED));
+			p.sendTitlePart(TitlePart.SUBTITLE, Component.text("The dark summoner").color(NamedTextColor.RED));
+			p.sendTitlePart(TitlePart.TIMES, Title.Times.times(
+					Duration.ofSeconds(1),
+					Duration.ofSeconds(3),
+					Duration.ofSeconds(1)));
+		}
 	}
 
 	@Override
@@ -112,12 +113,13 @@ public class Talven extends Boss {
 
 	@Override
 	public void onDeath(EntityDeathEvent event) {
-		for (Entity p : this.targets)
-			p.sendMessage("No... Impossible... You can't defeat me");
-		Bukkit.broadcast(Component.text(this.name + " has been defeated !"));
-
-		// this.healthBar.removeAll();
-
+		for (Entity p : this.targets) {
+			p.sendTitlePart(TitlePart.TITLE, Component.text("Congratulations").color(NamedTextColor.GREEN));
+			p.sendTitlePart(TitlePart.TIMES, Title.Times.times(
+					Duration.ofSeconds(1),
+					Duration.ofSeconds(3),
+					Duration.ofSeconds(1)));
+		}
 		// Death animation
 		Location bossDeath = event.getEntity().getLocation();
 

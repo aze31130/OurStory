@@ -21,31 +21,25 @@ public final class TalvenPhase2 implements Goal<Mob> {
 	private Player target;
 	private Location lastTargetLoc;
 
-	private final Set<Spell> spells;
+	private final List<Spell> spells;
 	/**
 	 * Last time (in server ticks) the behaviour has been triggered
 	 */
 	private Integer lastTickActivated;
 
-	public TalvenPhase2(final Boss boss, final Set<Spell> spells) {
+	public TalvenPhase2(final Boss boss, final List<Spell> spells) {
 		this.boss = boss;
 		this.spells = spells;
 	}
 
 	@Override
-	public void start() {
-		Bukkit.getServer().broadcast(Component.text("[Phase2] - Setup "));
-	}
+	public void start() {}
 
 	@Override
-	public void tick() {
-		Bukkit.getServer().broadcast(Component.text("[Phase2] - Running "));
-	}
+	public void tick() {}
 
 	@Override
-	public void stop() {
-		Bukkit.getServer().broadcast(Component.text("[Phase2] - Stop "));
-	}
+	public void stop() {}
 
 	@Override
 	public boolean shouldActivate() {

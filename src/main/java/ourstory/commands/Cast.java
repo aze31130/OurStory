@@ -39,7 +39,7 @@ public class Cast implements BasicCommand {
 			return;
 		}
 
-		Spell test = new Annihilation(player, player.getNearbyEntities(50, 50, 50), 1);
+		Spell test = new ZombieSummon(player, player.getNearbyEntities(50, 50, 50), 1);
 		test.setup();
 
 		new BukkitRunnable() {

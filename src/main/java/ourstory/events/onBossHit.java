@@ -2,6 +2,8 @@ package ourstory.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,13 +16,14 @@ public class onBossHit implements Listener {
 	private final NamespacedKey bossKey = new NamespacedKey(plugin, "isBoss");
 
 	@EventHandler
-	public void bossHit(EntityDamageByEntityEvent entity) {
-		// Cancel if not player
-		if (!(entity.getDamager() instanceof Player))
+	public void bossHit(EntityDamageByEntityEvent event) {
+		if (!(event.getDamager() instanceof Player))
 			return;
 
 		// Call onHit method for boss monsters
-		if (entity.getEntity().getPersistentDataContainer().has(bossKey))
-			Main.runningInstance.boss.onHit(entity);
+		if (event.getEntity().getPersistentDataContainer().has(bossKey)) {
+			Main.runningInstance.boss.onHit(event);
+			Main.runningInstance.boss.updateBossBar();
+		}
 	}
 }

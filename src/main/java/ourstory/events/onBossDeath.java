@@ -20,7 +20,9 @@ public class onBossDeath implements Listener {
 			return;
 
 		// Call onHit method for boss monsters
-		if (entity.getEntity().getPersistentDataContainer().has(bossKey))
+		if (entity.getEntity().getPersistentDataContainer().has(bossKey)) {
 			Main.runningInstance.boss.onDeath(entity);
+			Main.runningInstance.boss.updateBossBar();
+		}
 	}
 }

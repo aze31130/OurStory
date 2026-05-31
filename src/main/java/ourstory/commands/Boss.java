@@ -39,7 +39,7 @@ public class Boss implements BasicCommand {
 
 		Talven boss = new Talven(spawn, players, 0);
 
-		Instance instance = new Instance(boss, players, 10, 5, "ourstory:arena");
+		Instance instance = new Instance(boss, players, 10, 5);
 		Main.runningInstance = instance;
 
 		// boss.registerGoals(Bukkit.getServer().getMobGoals());

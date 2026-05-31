@@ -7,7 +7,6 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -25,19 +24,19 @@ public class Instance {
 	private Plugin p = Bukkit.getPluginManager().getPlugin("OurStory");
 
 
-	public Instance(Boss boss, List<Entity> players, int durationMinutes, int maxRespawn, String arena) {
+	public Instance(Boss boss, List<Entity> players, int durationMinutes, int maxRespawn) {
 		this.boss = boss;
 		this.start = LocalDateTime.now();
 		this.limit = this.start.plusMinutes(durationMinutes);
 		this.maxRespawn = maxRespawn;
-		this.arena = Bukkit.getWorld(arena);
+		// this.arena = Bukkit.getWorld(arena);
 
 		this.players = new HashMap<>();
 
 		// Init damage hashmap and warp player to arena
 		for (Entity p : players) {
 			this.players.put(p, 0);
-			p.teleport(this.arena.getSpawnLocation());
+			// p.teleport(this.arena.getSpawnLocation());
 		}
 
 		// Exec reminder task every 60 seconds

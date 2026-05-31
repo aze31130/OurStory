@@ -2,6 +2,7 @@ package ourstory.goal;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -20,32 +21,48 @@ public final class TalvenPhase1 implements Goal<Mob> {
 	private final Boss boss;
 	private Player target;
 	private Location lastTargetLoc;
+	private Random random;
 
-	private final Set<Spell> spells;
+	private final List<Spell> spells;
 	/**
 	 * Last time (in server ticks) the behaviour has been triggered
 	 */
 	private Integer lastTickActivated;
+	private Boolean canUseSpell;
+	private Spell currentSpell;
 
-	public TalvenPhase1(final Boss boss, final Set<Spell> spells) {
+	public TalvenPhase1(final Boss boss, final List<Spell> spells) {
 		this.boss = boss;
 		this.spells = spells;
 	}
 
 	@Override
 	public void start() {
-		Bukkit.getServer().broadcast(Component.text("[Phase1] - Setup "));
+		this.random = new Random();
+		this.canUseSpell = true;
 	}
 
 	@Override
 	public void tick() {
-		Bukkit.getServer().broadcast(Component.text("[Phase1] - Running "));
+
+		if (canUseSpell && (random.nextInt(100) < 1)) {
+			this.currentSpell = spells.get(0);
+			this.currentSpell.setup();
+			this.canUseSpell = false;
+		}
+
+		if (this.currentSpell != null) {
+			this.currentSpell.tick();
+
+			if (this.currentSpell.shouldStop()) {
+				this.currentSpell.stop();
+				canUseSpell = true;
+			}
+		}
 	}
 
 	@Override
-	public void stop() {
-		Bukkit.getServer().broadcast(Component.text("[Phase1] - Stop "));
-	}
+	public void stop() {}
 
 	@Override
 	public boolean shouldActivate() {
