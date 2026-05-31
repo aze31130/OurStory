@@ -1,4 +1,4 @@
-package ourstory.goal;
+package ourstory.goal.holy_cow;
 
 import java.util.EnumSet;
 import org.bukkit.Location;
@@ -12,6 +12,7 @@ import com.destroystokyo.paper.entity.ai.GoalType;
 import net.kyori.adventure.util.TriState;
 import ourstory.bosses.HolyCow;
 import ourstory.bosses.HolyCow.State;
+import ourstory.goal.AbstractBossGoal;
 
 /**
  * Première phase de la Sainte Vache. Elle descend des cieux pour venger ses camarades abattus de
@@ -120,7 +121,7 @@ public class DivineDescentPhase extends AbstractBossGoal<HolyCow> {
 		boss.entity.setInvulnerable(false);
 		// boss.entity.setAI(true);
 		glassShield.remove();
-		boss.setState(State.SLEEPING);
+		boss.setState(State.PHASE_1);
 	}
 	/* ---------------------------------------------------------------------- */
 
@@ -130,7 +131,7 @@ public class DivineDescentPhase extends AbstractBossGoal<HolyCow> {
 	}
 
 	@Override
-	String getPhaseKey() {
+	protected String getPhaseKey() {
 		return "holy_cow_descent";
 	}
 }

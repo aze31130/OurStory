@@ -9,8 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import com.destroystokyo.paper.entity.ai.MobGoals;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
-import ourstory.goal.DivineDescentPhase;
 import ourstory.goal.NoopGoal;
+import ourstory.goal.holy_cow.DivineDescentPhase;
+import ourstory.goal.holy_cow.HolyCowPhaseOne;
 
 /**
  * - Invocation => Buter X vaches (en mode punition divine)
@@ -45,7 +46,7 @@ public class HolyCow extends Boss {
 	public void registerGoals(MobGoals goals) {
 		goals.removeAllGoals(this.entity);
 		goals.addGoal(this.entity, 0, new DivineDescentPhase(this));
-		goals.addGoal(this.entity, 1, new NoopGoal<HolyCow>(this));
+		goals.addGoal(this.entity, 1, new HolyCowPhaseOne(this));
 		// goals.addGoal(this.entity, 1, new ChargeClosestGoal(this)); // Phase 2
 	}
 
@@ -67,7 +68,7 @@ public class HolyCow extends Boss {
 	}
 
 	public static enum State {
-		DESCENDING, SLEEPING
+		DESCENDING, PHASE_1, PHASE_2
 	}
 
 	@Override

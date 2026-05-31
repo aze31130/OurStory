@@ -13,7 +13,7 @@ public abstract class AbstractBossGoal<T extends Boss> implements Goal<Mob> {
 		this.boss = boss;
 	}
 
-	abstract String getPhaseKey();
+	protected abstract String getPhaseKey();
 
 	@Override
 	public GoalKey<Mob> getKey() {

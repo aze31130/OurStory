@@ -34,7 +34,7 @@ public class NoopGoal<T extends Boss> extends AbstractBossGoal<T> {
 	}
 
 	@Override
-	String getPhaseKey() {
+	protected String getPhaseKey() {
 		return "boss_sleep";
 	}
 }
